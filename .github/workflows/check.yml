@@ -1,0 +1,53 @@
+name: check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Which plugins changed
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          : > changed.txt
+          if [ "$EVENT" = "pull_request" ]; then
+            git diff --name-only "origin/$BASE_REF...HEAD" -- plugins > changed.txt
+          fi
+          echo "BASE_REF_FULL=origin/$BASE_REF" >> "$GITHUB_ENV"
+          cat changed.txt
+
+      - name: Check every plugin
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            python tools/check.py --base "$BASE_REF_FULL"
+          else
+            python tools/check.py
+          fi
+
+      - name: Permissions summary for the reviewer
+        if: always()
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            mapfile -t files < changed.txt
+            python tools/check.py --changed "${files[@]}" --summary summary.md || true
+          else
+            python tools/check.py --summary summary.md || true
+          fi
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"

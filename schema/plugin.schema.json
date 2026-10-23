@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/LingCore/WinShun-plugins/main/schema/plugin.schema.json",
+  "title": "Win顺 plugin.json",
+  "description": "Win顺 插件的 manifest。规则以 Win顺 源码的 src/plugin/Manifest.cpp 为准；这份只用来在编辑器里补全和提示。未知字段会被 Win顺 忽略。",
+  "type": "object",
+  "required": ["manifest", "id", "name", "version", "commands"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "manifest": {"description": "架构版本，现在是 1", "const": 1},
+    "id": {"description": "作者.名字，只许小写字母、数字、点、连字符、下划线；和文件夹名一致", "type": "string", "pattern": "^[a-z0-9_-]([a-z0-9._-]*[a-z0-9_-])?$", "maxLength": 64},
+    "name": {"$ref": "#/$defs/text"},
+    "version": {"description": "如 1.2.0；本仓库要求三段", "type": "string", "pattern": "^\\d+(\\.\\d+)*([-+][0-9A-Za-z.-]+)?$"},
+    "description": {"$ref": "#/$defs/text"},
+    "author": {"type": "string"},
+    "homepage": {"type": "string", "format": "uri"},
+    "license": {"description": "许可证，如 MIT（本仓库要求写）", "type": "string"},
+    "icon": {"description": "插件文件夹里的 PNG / JPG / ICO，不支持 SVG", "type": "string", "pattern": "^(?!.*\\.[sS][vV][gG]$)[^/\\\\:][^:]*$"},
+    "minWinShun": {"description": "低于它不启用，如 0.12.0", "type": "string", "pattern": "^\\d+(\\.\\d+)*([-+][0-9A-Za-z.-]+)?$"},
+    "runtime": {"$ref": "#/$defs/runtime"},
+    "permissions": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/permission"},
+          {
+            "description": "带范围的权限，如 {\"files:read\": [\"%LOCALAPPDATA%\\\\…\"]}",
+            "type": "object",
+            "propertyNames": {"$ref": "#/$defs/permission"},
+            "additionalProperties": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]}
+          }
+        ]
+      }
+    },
+    "commands": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/command"}},
+    "settings": {"type": "array", "items": {"$ref": "#/$defs/setting"}},
+    "ai": {
+      "description": "允许命令成为 AI 的工具（用户还要在设置里打开）",
+      "type": "object",
+      "properties": {"expose": {"type": "boolean"}}
+    }
+  },
+  "$defs": {
+    "text": {
+      "description": "字符串，或 {\"zh\": …, \"en\": …} 按界面语言取",
+      "oneOf": [
+        {"type": "string"},
+        {"type": "object", "properties": {"zh": {"type": "string"}, "en": {"type": "string"}}, "anyOf": [{"required": ["zh"]}, {"required": ["en"]}]}
+      ]
+    },
+    "permission": {
+      "enum": ["files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network", "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read"]
+    },
+    "relativePath": {
+      "description": "插件文件夹里的相对路径，不能出界",
+      "type": "string",
+      "pattern": "^(?![/\\\\])(?!.*:)(?!(.*[/\\\\])?\\.\\.([/\\\\]|$)).+$"
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["mode", "program"],
+      "properties": {
+        "mode": {"enum": ["once", "resident"]},
+        "program": {"description": "本仓库只收 python、pwsh、powershell、node", "enum": ["python", "pwsh", "powershell", "node"]},
+        "script": {"description": "入口脚本，默认 main.py / main.ps1 / main.js", "$ref": "#/$defs/relativePath"},
+        "args": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]},
+        "cwd": {"$ref": "#/$defs/relativePath"},
+        "env": {"type": "object", "propertyNames": {"not": {"pattern": "^[wW][sS]_"}}, "additionalProperties": {"type": "string"}},
+        "encoding": {"enum": ["utf-8", "oem"]},
+        "timeoutMs": {"type": "number", "minimum": 100, "maximum": 10000},
+        "debounceMs": {"type": "number", "minimum": 0, "maximum": 2000},
+        "idleExitSec": {"type": "number", "minimum": 0, "maximum": 86400},
+        "start": {"enum": ["lazy", "eager"]},
+        "memoryMB": {"type": "number", "minimum": 64, "maximum": 2048},
+        "sandbox": {"enum": ["normal", "strict"]}
+      }
+    },
+    "command": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {"description": "命令 id，插件内唯一", "type": "string", "pattern": "^[a-z0-9._-]+$"},
+        "title": {"$ref": "#/$defs/text"},
+        "description": {"$ref": "#/$defs/text"},
+        "hint": {"$ref": "#/$defs/text"},
+        "icon": {"description": "icon.png（文件夹里的 PNG/JPG/ICO）、ext:pdf、file:路径、app:AUMID、glyph:U+E8E5、color:#ff8800、data:image/png;base64,…、site:https://…；不支持 SVG", "type": "string", "not": {"pattern": "\\.[sS][vV][gG]$"}},
+        "keyword": {
+          "description": "输入关键字 + 空格进入关键字模式；不能含空格和引号",
+          "oneOf": [{"$ref": "#/$defs/keyword"}, {"type": "array", "items": {"$ref": "#/$defs/keyword"}}]
+        },
+        "triggers": {"type": "array", "items": {"$ref": "#/$defs/trigger"}},
+        "mode": {"enum": ["list", "instant"]},
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {"id": {"type": "string", "minLength": 1}, "title": {"$ref": "#/$defs/text"}, "key": {"type": "string"}}
+          }
+        },
+        "run": {"$ref": "#/$defs/run"},
+        "cache": {"oneOf": [{"type": "object", "properties": {"seconds": {"type": "number", "minimum": 0, "maximum": 86400}}}, {"type": "number"}]},
+        "ai": {
+          "type": "object",
+          "properties": {"description": {"type": "string"}, "parameters": {"type": "object"}}
+        }
+      }
+    },
+    "keyword": {"type": "string", "pattern": "^[^\\s\"]+$"},
+    "trigger": {
+      "type": "object",
+      "oneOf": [
+        {"required": ["regex"], "properties": {"regex": {"type": "string", "format": "regex"}, "minLength": {"type": "number"}, "maxLength": {"type": "number"}}},
+        {"required": ["push"], "properties": {"push": {"type": "object", "properties": {"minLength": {"type": "number"}, "maxLength": {"type": "number"}, "maxItems": {"type": "number", "maximum": 3}}}}},
+        {"required": ["files"], "properties": {"files": {"type": "object", "properties": {"kind": {"enum": ["file", "folder", "any"]}, "extensions": {"type": "array", "items": {"type": "string"}}, "max": {"type": "number"}}}}},
+        {"required": ["clipboard"], "properties": {"clipboard": {"type": "object", "properties": {"regex": {"type": "string", "format": "regex"}}}}}
+      ]
+    },
+    "run": {
+      "description": "零代码：下面五种里选一种",
+      "type": "object",
+      "oneOf": [
+        {"required": ["url"], "properties": {"url": {"type": "string", "description": "%s 是输入的文字"}, "home": {"type": "string"}}},
+        {"required": ["program"], "properties": {"program": {"type": "string", "minLength": 1}, "args": {"type": "string"}, "cwd": {"type": "string"}}},
+        {"required": ["folder"], "properties": {"folder": {"type": "string", "minLength": 1}}},
+        {"required": ["search"], "properties": {"search": {"oneOf": [{"type": "string"}, {"type": "object", "properties": {"query": {"type": "string"}, "scope": {"enum": ["all", "files", "folders", "content"]}}}]}}},
+        {"required": ["items"], "properties": {"items": {"type": "array", "items": {"type": "object", "required": ["title"], "properties": {"title": {"type": "string"}}}}}}
+      ]
+    },
+    "setting": {
+      "type": "object",
+      "required": ["key", "type"],
+      "properties": {
+        "key": {"type": "string", "minLength": 1},
+        "type": {"enum": ["text", "password", "bool", "number", "choice", "folder", "file", "hotkey"]},
+        "title": {"$ref": "#/$defs/text"},
+        "hint": {"$ref": "#/$defs/text"},
+        "default": {},
+        "options": {"type": "array"}
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Win顺 本身的问题或建议
+    url: https://github.com/LingCore/WinShun/issues
+    about: 这里只管插件。Win顺 程序本身的问题请去主仓库

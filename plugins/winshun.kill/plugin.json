@@ -1,0 +1,30 @@
+{
+  "manifest": 1,
+  "id": "winshun.kill",
+  "name": {"zh": "结束进程", "en": "Kill process"},
+  "version": "1.0.0",
+  "description": {"zh": "kill 进程名或 PID：列出进程，Enter 结束，Ctrl+Enter 连同子进程", "en": "kill <name or PID>: lists processes; Enter ends one, Ctrl+Enter with its children"},
+  "author": "LingCore",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "license": "MIT",
+  "runtime": {"mode": "resident", "program": "powershell", "script": "main.ps1", "timeoutMs": 5000, "memoryMB": 256},
+  "permissions": ["processes"],
+  "commands": [{
+    "id": "kill",
+    "keyword": ["kill", "jc"],
+    "title": {"zh": "结束进程", "en": "Kill process"},
+    "description": {"zh": "按名字或 PID 找到进程，结束它", "en": "Find a process by name or PID and end it"},
+    "icon": "glyph:U+E711",
+    "hint": {"zh": "进程名或 PID；留空列出占内存最多的", "en": "a process name or PID; empty lists the biggest"},
+    "actions": [
+      {"id": "kill", "title": {"zh": "结束", "en": "Kill"}, "key": "Enter"},
+      {"id": "killTree", "title": {"zh": "连同子进程一起结束", "en": "Kill with children"}, "key": "Ctrl+Enter"}
+    ],
+    "ai": {"description": "List running processes whose name contains the query (or whose PID equals it): name, PID, memory in MB and the executable's path. The query may be empty for the biggest ones."}
+  }],
+  "settings": [
+    {"key": "showSystem", "type": "bool", "title": {"zh": "也列出系统进程", "en": "Include system processes"}, "hint": {"zh": "svchost、csrss 这类没有窗口的 Windows 进程", "en": "svchost, csrss and other windowless Windows processes"}, "default": false},
+    {"key": "maxRows", "type": "number", "title": {"zh": "最多列出", "en": "Rows at most"}, "default": 30}
+  ],
+  "ai": {"expose": true}
+}

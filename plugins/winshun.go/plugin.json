@@ -1,0 +1,48 @@
+{
+  "manifest": 1,
+  "id": "winshun.go",
+  "name": {"zh": "快捷跳转", "en": "Go to"},
+  "version": "1.0.0",
+  "description": {"zh": "零代码示例：code 用 VS Code 打开、dl 下载文件夹、pdf 找 PDF、go 常用位置", "en": "Zero-code sample: code opens in VS Code, dl Downloads, pdf finds PDFs, go common places"},
+  "author": "LingCore",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "license": "MIT",
+  "commands": [
+    {
+      "id": "code", "keyword": "code", "title": {"zh": "用 VS Code 打开", "en": "Open in VS Code"}, "icon": "glyph:U+E943",
+      "hint": {"zh": "文件或文件夹的路径；留空打开 VS Code", "en": "a file or folder path; empty opens VS Code"},
+      "run": {"program": "%LOCALAPPDATA%\\Programs\\Microsoft VS Code\\Code.exe", "args": "%s"}
+    },
+    {
+      "id": "np", "keyword": "np", "title": {"zh": "记事本", "en": "Notepad"}, "icon": "glyph:U+E70B",
+      "hint": {"zh": "要打开的文件；留空新建", "en": "a file to open; empty for a new one"},
+      "run": {"program": "%SystemRoot%\\notepad.exe", "args": "%s"}
+    },
+    {"id": "dl", "keyword": "dl", "title": {"zh": "下载文件夹", "en": "Downloads"}, "icon": "glyph:U+E896", "run": {"folder": "%USERPROFILE%\\Downloads"}},
+    {"id": "desk", "keyword": "desk", "title": {"zh": "桌面", "en": "Desktop"}, "icon": "glyph:U+E8FC", "run": {"folder": "%USERPROFILE%\\Desktop"}},
+    {
+      "id": "pdf", "keyword": "pdf", "title": {"zh": "找 PDF", "en": "Find PDFs"}, "icon": "ext:pdf",
+      "hint": {"zh": "文件名里的词", "en": "words of the name"},
+      "run": {"search": {"query": "ext:pdf %s", "scope": "files"}}
+    },
+    {
+      "id": "img", "keyword": "img", "title": {"zh": "找图片", "en": "Find pictures"}, "icon": "ext:png",
+      "hint": {"zh": "文件名里的词", "en": "words of the name"},
+      "run": {"search": {"query": "ext:png,jpg,jpeg,gif,webp,bmp %s", "scope": "files"}}
+    },
+    {
+      "id": "go", "keyword": "go", "title": {"zh": "常用位置", "en": "Common places"}, "icon": "glyph:U+E8B7",
+      "hint": {"zh": "名字的一部分，或留空看全部", "en": "part of a name, or empty for all"},
+      "run": {"items": [
+        {"id": "desktop", "title": "桌面", "match": "桌面 desktop zm", "subtitle": "%USERPROFILE%\\Desktop", "icon": "glyph:U+E8FC", "open": {"path": "%USERPROFILE%\\Desktop"}},
+        {"id": "documents", "title": "文档", "match": "文档 documents wd", "subtitle": "%USERPROFILE%\\Documents", "icon": "glyph:U+E8A5", "open": {"path": "%USERPROFILE%\\Documents"}},
+        {"id": "downloads", "title": "下载", "match": "下载 downloads xz", "subtitle": "%USERPROFILE%\\Downloads", "icon": "glyph:U+E896", "open": {"path": "%USERPROFILE%\\Downloads"}},
+        {"id": "pictures", "title": "图片", "match": "图片 pictures tp", "subtitle": "%USERPROFILE%\\Pictures", "icon": "glyph:U+EB9F", "open": {"path": "%USERPROFILE%\\Pictures"}},
+        {"id": "appdata", "title": "AppData", "match": "appdata roaming", "subtitle": "%APPDATA%", "icon": "glyph:U+E8B7", "open": {"path": "%APPDATA%"}},
+        {"id": "temp", "title": "临时文件", "match": "临时文件 temp tmp", "subtitle": "%TEMP%", "icon": "glyph:U+E8B7", "open": {"path": "%TEMP%"}},
+        {"id": "startup", "title": "启动文件夹", "match": "启动文件夹 startup 自启动", "subtitle": "%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup", "icon": "glyph:U+E8B7", "open": {"path": "%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"}},
+        {"id": "hosts", "title": "hosts", "match": "hosts 域名", "subtitle": "%SystemRoot%\\System32\\drivers\\etc\\hosts", "icon": "glyph:U+E8A5", "open": {"path": "%SystemRoot%\\System32\\drivers\\etc\\hosts"}}
+      ]}
+    }
+  ]
+}

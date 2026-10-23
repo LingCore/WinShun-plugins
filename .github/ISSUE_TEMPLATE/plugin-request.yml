@@ -1,0 +1,37 @@
+name: 想要一个插件
+description: 说说你想在搜索框里多一个什么命令，有人想写的话会来认领
+title: "[想要] "
+labels: ["plugin-request"]
+body:
+  - type: input
+    id: keyword
+    attributes:
+      label: 想用什么关键字
+      description: 在搜索框里打什么触发它
+      placeholder: 例如 pw、fy、ip
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: 它要做什么
+      description: 用平常的话说就行
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: 举个例子
+      description: 我打什么，希望看到什么
+      placeholder: |
+        打：ip
+        看到：本机 IP 192.168.1.5，按 Enter 复制
+    validations:
+      required: true
+  - type: textarea
+    id: more
+    attributes:
+      label: 其他
+      description: 要联网吗？要读哪些文件？有现成的网页或工具可以参考吗？
+    validations:
+      required: false

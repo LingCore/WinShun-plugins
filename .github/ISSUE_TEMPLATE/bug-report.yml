@@ -1,0 +1,35 @@
+name: 插件有问题
+description: 这里收录的某个插件出错了、不好用
+title: "[问题] "
+labels: ["bug"]
+body:
+  - type: input
+    id: plugin
+    attributes:
+      label: 哪个插件
+      description: 插件 id 和版本，在 Win顺 设置 → 插件 的卡片上能看到
+      placeholder: winshun.kill 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: winshun
+    attributes:
+      label: Win顺 版本
+      placeholder: 0.12.0
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: 发生了什么
+      description: 你输入了什么、看到了什么、本来想看到什么
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: 日志
+      description: 设置 → 插件 → 高级 → 打开 plugins.log，把和这个插件有关的几行贴在这里（先看一眼有没有隐私内容）
+      render: text
+    validations:
+      required: false

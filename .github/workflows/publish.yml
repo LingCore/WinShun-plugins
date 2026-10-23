@@ -1,0 +1,87 @@
+name: publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "plugins/**"
+      - "tools/**"
+      - ".github/workflows/publish.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check
+        run: python tools/check.py
+
+      - name: Build packages, index and README table
+        run: python tools/build.py --readme
+
+      - name: Release the versions that have no release yet
+        run: |
+          set -euo pipefail
+          fail=0
+          mkdir -p old
+          while IFS=$'\t' read -r id version file sha name; do
+            tag="$id-v$version"
+            if gh release view "$tag" > /dev/null 2>&1; then
+              rm -f "old/$file"
+              if gh release download "$tag" -p "$file" -D old; then
+                old=$(sha256sum "old/$file" | cut -d' ' -f1)
+                if [ "$old" != "$sha" ]; then
+                  echo "::error::$tag was released with other contents. Bump the version in plugins/$id/plugin.json."
+                  fail=1
+                fi
+              else
+                echo "::error::$tag exists but has no $file."
+                fail=1
+              fi
+            else
+              gh release create "$tag" "dist/$file" \
+                --target "$GITHUB_SHA" --latest=false \
+                --title "$name $version" \
+                --notes "Win顺 设置 → 插件 → 从压缩包安装，选这个 .wsplugin 文件。"
+            fi
+          done < <(jq -r '.plugins[] | [.id, .version, .file, .sha256, (.name | if type == "object" then (.zh // .en) else . end)] | @tsv' dist/index.json)
+          if [ "$fail" -ne 0 ]; then exit 1; fi
+
+      - name: Upload index.json to the "index" release
+        run: |
+          set -euo pipefail
+          if ! gh release view index > /dev/null 2>&1; then
+            gh release create index --target "$GITHUB_SHA" --latest=false \
+              --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
+          fi
+          gh release upload index dist/index.json --clobber
+
+      - name: Commit the README table if it changed
+        run: |
+          if git diff --quiet README.md; then
+            echo "README table unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "README: update the plugin table [skip ci]"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
