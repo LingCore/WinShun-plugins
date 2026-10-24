@@ -1,0 +1,64 @@
+{
+  "manifest": 1,
+  "id": "day.rename",
+  "name": {
+    "zh": "批量重命名",
+    "en": "Batch Rename"
+  },
+  "version": "1.0.2",
+  "description": "查找替换、插入内容、自动编号、手动编辑与可选 AI 命名；先预览再执行，支持撤销。",
+  "author": "Day (askd126)",
+  "license": "MIT",
+  "runtime": {
+    "mode": "resident",
+    "program": "python",
+    "idleExitSec": 0,
+    "timeoutMs": 5000,
+    "memoryMB": 512,
+    "script": "bootstrap.py"
+  },
+  "permissions": [
+    "ui",
+    "clipboard:read",
+    "files:write",
+    "network",
+    {
+      "files:read": [
+        "用户添加的文件和文件夹的名称与元数据"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "rename",
+      "keyword": [
+        "pl",
+        "cmm"
+      ],
+      "mode": "instant",
+      "title": "批量重命名",
+      "icon": "glyph:U+E8AC"
+    }
+  ],
+  "settings": [
+    {
+      "key": "endpoint",
+      "type": "text",
+      "title": "AI 命名：OpenAI 兼容 API 地址",
+      "default": ""
+    },
+    {
+      "key": "model",
+      "type": "text",
+      "title": "AI 命名：模型名称",
+      "default": ""
+    },
+    {
+      "key": "apiKey",
+      "type": "password",
+      "title": "AI 命名：API Key",
+      "hint": "可留空；本地改名功能无需模型。密钥由 Windows 凭据管理器保存"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/LingCore/WinShun-plugins/main/schema/plugin.schema.json"
+}

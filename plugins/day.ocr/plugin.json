@@ -1,0 +1,63 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LingCore/WinShun-plugins/main/schema/plugin.schema.json",
+  "manifest": 1,
+  "id": "day.ocr",
+  "name": {
+    "zh": "OCR Studio",
+    "en": "OCR Studio"
+  },
+  "version": "1.0.4",
+  "description": "输入 ocr 打开截图与图片文字识别窗口，支持 OpenAI 兼容的视觉模型。",
+  "author": "Day (askd126)",
+  "license": "MIT",
+  "runtime": {
+    "mode": "resident",
+    "program": "python",
+    "idleExitSec": 0,
+    "timeoutMs": 5000,
+    "memoryMB": 512,
+    "script": "bootstrap.py"
+  },
+  "permissions": [
+    "ui",
+    "network",
+    "clipboard:read",
+    "clipboard:write",
+    {
+      "files:read": [
+        "用户主动选择的图片"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "ocr",
+      "keyword": "ocr",
+      "mode": "instant",
+      "title": "打开 OCR Studio",
+      "icon": "glyph:U+E8A7"
+    }
+  ],
+  "settings": [
+    {
+      "key": "apiKey",
+      "type": "password",
+      "title": "API Key",
+      "hint": "保存在 Windows 凭据管理器；窗口内也可输入临时密钥"
+    },
+    {
+      "key": "endpoint",
+      "type": "text",
+      "title": "OpenAI 兼容 API 地址",
+      "hint": "填写服务提供商给出的 Base URL 或完整 /chat/completions 地址",
+      "default": ""
+    },
+    {
+      "key": "model",
+      "type": "text",
+      "title": "视觉模型名称",
+      "hint": "填写服务商提供的模型 ID，需要支持图片输入",
+      "default": ""
+    }
+  ]
+}
