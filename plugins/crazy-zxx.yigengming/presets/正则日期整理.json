@@ -1,0 +1,6 @@
+{
+  "Version": 1,
+  "Rules": [
+    {"Type": "Regex", "Target": "Name", "Mode": "Replace", "Pattern": "^(?<year>\\d{4})[-_]?(?<month>[01]\\d)[-_]?(?<day>[0-3]\\d)(?<tail>.*)$", "Replacement": "${year}-${month}-${day}${tail}", "IgnoreCase": false}
+  ]
+}

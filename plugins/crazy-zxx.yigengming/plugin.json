@@ -1,0 +1,74 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LingCore/WinShun-plugins/main/schema/plugin.schema.json",
+  "manifest": 1,
+  "id": "crazy-zxx.yigengming",
+  "name": {
+    "zh": "易更名",
+    "en": "易更名"
+  },
+  "version": "1.3.0",
+  "description": "带窗口界面的批量文件/文件夹创建与重命名，支持组合规则、实时预览、冲突检查和撤销。",
+  "author": "Xiangxin (@crazy-zxx)",
+  "license": "MIT",
+  "icon": "icon.png",
+  "runtime": {
+    "mode": "resident",
+    "program": "powershell",
+    "script": "main.ps1",
+    "encoding": "utf-8",
+    "start": "lazy",
+    "idleExitSec": 0,
+    "timeoutMs": 10000,
+    "memoryMB": 512,
+    "sandbox": "normal"
+  },
+  "permissions": [
+    "ui",
+    "files:read",
+    "files:write",
+    "clipboard:read",
+    "clipboard:write",
+    "processes"
+  ],
+  "commands": [
+    {
+      "id": "rename",
+      "keyword": [
+        "br",
+        "rename",
+        "易更名",
+        "批量重命名"
+      ],
+      "title": "易更名 · 批量重命名",
+      "description": "打开批量重命名窗口，可附带一个文件或文件夹路径。",
+      "hint": "留空打开窗口，或输入一个文件/文件夹路径",
+      "icon": "icon.png",
+      "actions": [
+        {
+          "id": "open",
+          "title": "打开窗口",
+          "key": "Enter"
+        }
+      ]
+    },
+    {
+      "id": "create",
+      "keyword": [
+        "bc",
+        "批量创建"
+      ],
+      "title": "易更名 · 批量创建文件和文件夹",
+      "description": "按模板或名称清单批量创建空文件/文件夹，并应用组合规则。",
+      "hint": "留空打开窗口，或输入目标目录路径",
+      "icon": "icon.png",
+      "actions": [
+        {
+          "id": "open",
+          "title": "打开窗口",
+          "key": "Enter"
+        }
+      ]
+    }
+  ],
+  "homepage": "https://github.com/crazy-zxx/WinShun-plugins/tree/main/plugins/crazy-zxx.yigengming"
+}

@@ -1,0 +1,7 @@
+{
+  "Version": 1,
+  "Rules": [
+    {"Type": "Trim", "Target": "Name"},
+    {"Type": "Sequence", "Target": "Name", "Mode": "Prefix", "Start": 1, "Step": 1, "Digits": 2, "Text": "_"}
+  ]
+}
