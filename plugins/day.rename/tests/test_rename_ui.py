@@ -122,6 +122,7 @@ class RenameUiTests(unittest.TestCase):
 
     @unittest.skipUnless(os.environ.get("WINSHUN_VISIBLE_LAYOUT_TEST") == "1", "Visible DPI test is opt-in to avoid disturbing the desktop")
     def test_footer_fits_minimum_window_at_common_scaling(self):
+        self.add("layout-test.txt")
         self.root.deiconify()
         try:
             for scale in (1, 1.5, 2):
