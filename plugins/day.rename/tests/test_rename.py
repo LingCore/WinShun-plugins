@@ -159,6 +159,69 @@ class RenameTests(unittest.TestCase):
         self.assertEqual(a.read_text(), "another file")
         self.assertTrue((self.root / "new-a.txt").exists())
 
+    def test_journal_directory_and_ancestors_are_rejected_before_any_rename(self):
+        for ancestor, existing in ((False, False), (True, False), (False, True), (True, True)):
+            with self.subTest(ancestor=ancestor, existing=existing):
+                container = self.root / f"case-{ancestor}-{existing}"
+                data = container / "data"
+                data.mkdir(parents=True)
+                source = container if ancestor else data
+                sentinel = source / "keep.txt"
+                sentinel.write_text("keep", encoding="utf-8")
+                other = self.file(f"other-{ancestor}-{existing}.txt", "other")
+                journal = data / "last.json"
+                before = b'{"state": "complete", "entries": []}' if existing else None
+                if before is not None:
+                    journal.write_bytes(before)
+                plan = core.make_plan([other, source], "insert", {"text": "new-"})
+                self.assertFalse(any(item.error for item in plan))
+                with self.assertRaisesRegex(core.RenameError, "恢复记录"):
+                    core.execute(plan, journal)
+                self.assertEqual(sentinel.read_text(encoding="utf-8"), "keep")
+                self.assertEqual(other.read_text(encoding="utf-8"), "other")
+                self.assertTrue(all(not item.target.exists() for item in plan))
+                self.assertEqual(journal.read_bytes() if journal.exists() else None, before)
+
+    def test_journal_and_temporary_journal_cannot_be_renamed(self):
+        self.journal.parent.mkdir()
+        before = b'{"state": "complete", "entries": []}'
+        self.journal.write_bytes(before)
+        temporary = self.journal.with_suffix(".tmp")
+        temporary.write_bytes(b"previous temporary log")
+        for source in (self.journal, temporary):
+            with self.subTest(source=source.name):
+                plan = core.make_plan([source], "insert", {"text": "new-"})
+                with self.assertRaisesRegex(core.RenameError, "恢复记录"):
+                    core.execute(plan, self.journal)
+                self.assertEqual(self.journal.read_bytes(), before)
+                self.assertEqual(temporary.read_bytes(), b"previous temporary log")
+                self.assertFalse(plan[0].target.exists())
+
+    def test_restore_rejects_moving_its_own_journal_directory(self):
+        source = self.root / "current"
+        source.mkdir()
+        (source / "keep.txt").write_text("keep", encoding="utf-8")
+        original = self.root / "original"
+        journal = source / "data" / "last.json"
+        core.write_journal(journal, {"version": 1, "state": "complete", "entries": [{
+            "original": str(original), "target": str(source),
+            "identity": core.identity(source), "locations": [str(source)]}]})
+        before = journal.read_bytes()
+        with self.assertRaisesRegex(core.RenameError, "恢复记录"):
+            core.restore(journal)
+        self.assertEqual(journal.read_bytes(), before)
+        self.assertEqual((source / "keep.txt").read_text(encoding="utf-8"), "keep")
+        self.assertFalse(original.exists())
+
+    def test_sibling_of_journal_directory_can_be_renamed_and_restored(self):
+        source = self.root / "documents"
+        source.mkdir()
+        (source / "keep.txt").write_text("keep", encoding="utf-8")
+        plan = core.make_plan([source], "insert", {"text": "new-"})
+        self.assertEqual(core.execute(plan, self.journal), 1)
+        self.assertEqual(core.restore(self.journal), 1)
+        self.assertEqual((source / "keep.txt").read_text(encoding="utf-8"), "keep")
+
 
 class RenameAiTests(unittest.TestCase):
     def test_only_names_and_instruction_are_uploaded(self):
