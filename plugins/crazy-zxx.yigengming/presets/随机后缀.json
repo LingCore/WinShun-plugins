@@ -1,0 +1,6 @@
+{
+  "Version": 1,
+  "Rules": [
+    {"Type": "Random", "Target": "Name", "Mode": "Suffix", "Length": 8, "Text": "_", "Charset": "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "Version": 1,
+  "Rules": [
+    {"Type": "Replace", "Target": "Name", "Pattern": "IMG_", "Replacement": "旅行_"},
+    {"Type": "Case", "Target": "Extension", "Mode": "Lower"},
+    {"Type": "Sequence", "Target": "Name", "Mode": "Suffix", "Start": 1, "Step": 1, "Digits": 3, "Text": "_"}
+  ]
+}
