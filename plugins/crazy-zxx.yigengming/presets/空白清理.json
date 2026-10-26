@@ -1,0 +1,8 @@
+{
+  "Version": 1,
+  "Rules": [
+    {"Type": "Trim", "Target": "Name"},
+    {"Type": "Regex", "Target": "Name", "Mode": "Replace", "Pattern": "\\s+", "Replacement": "_"},
+    {"Type": "Case", "Target": "Extension", "Mode": "Lower"}
+  ]
+}
