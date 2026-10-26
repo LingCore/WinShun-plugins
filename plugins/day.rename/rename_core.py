@@ -224,6 +224,18 @@ def write_journal(path, record):
     os.replace(temporary, path)
 
 
+def guard_journal_location(plan, journal):
+    # Resolve aliases before comparing: moving the log or any of its ancestors
+    # would also move the only recovery record and its atomic-write temporary.
+    journal = Path(journal)
+    protected = set()
+    for path in (journal.resolve(), journal.with_suffix(".tmp").resolve()):
+        protected.update(key(parent) for parent in (path, *path.parents))
+    for item in plan:
+        if item.changed and any(key(path.resolve()) in protected for path in (item.source, item.target)):
+            raise RenameError("不能重命名恢复记录及其所在目录，请从列表中移除相关项目。")
+
+
 def move(source, target):
     # Windows os.rename atomically refuses an existing destination. Never use replace.
     if os.path.lexists(target):
@@ -253,6 +265,7 @@ def restore(journal):
             raise RenameError("无法定位原项目，请勿移动或替换批次文件：" + Path(entry["original"]).name)
         found.append(matches[0])
         inverse.append(Item(matches[0], Path(entry["original"])))
+    guard_journal_location(inverse, journal)
     if any(item.error for item in validate_plan(inverse)):
         raise RenameError("原名称被占用或文件已变化，无法撤销；未修改任何项目。")
     temps = [p.with_name(".wsrename-undo-" + uuid.uuid4().hex) for p in found]
@@ -277,6 +290,7 @@ def execute(plan, journal):
     if not changes:
         return 0
     journal = Path(journal)
+    guard_journal_location(changes, journal)
     if journal.exists():
         previous = json.loads(journal.read_text(encoding="utf-8"))
         if previous.get("state") != "complete":
