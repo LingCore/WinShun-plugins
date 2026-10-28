@@ -59,8 +59,8 @@ class AssetUrl:
 
 def asset_url(url) -> AssetUrl | None:
     """https://github.com/<作者>/<仓库>/releases/download/<标签>/<id>-<X.Y.Z>.wsplugin 拆开；不是这个样子就是 None。"""
-    if not isinstance(url, str):
-        return None
+    if not isinstance(url, str) or not url.isprintable() or any(c.isspace() for c in url):
+        return None  # urlsplit 会悄悄去掉 \r \n \t，不先挡住，带着它们的网址就会原样写进条目
     try:
         parts = urllib.parse.urlsplit(url)
     except ValueError:
