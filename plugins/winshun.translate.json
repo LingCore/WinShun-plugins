@@ -1,0 +1,35 @@
+{
+  "id": "winshun.translate",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "bundled": true,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v1.0.0/winshun.translate-1.0.0.wsplugin",
+  "sha256": "19ea2e470e20afbb66fd84f799bbc9642183b20ac90273fef3c17d929495f167",
+  "size": 23623,
+  "name": {
+    "zh": "翻译",
+    "en": "Translate"
+  },
+  "description": {
+    "zh": "tr 句子：中英互译，用你自己的 DeepL 或 OpenAI 兼容接口（在设置里填密钥；不填不联网）",
+    "en": "tr sentence: translates with your own DeepL or OpenAI-compatible API (key in the settings; nothing is sent without one)"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "tr",
+    "fy"
+  ],
+  "permissions": [
+    "network"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "python"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-23T09:12:43Z",
+  "dateAdded": "2026-10-23T09:12:43Z"
+}

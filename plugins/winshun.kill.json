@@ -1,0 +1,35 @@
+{
+  "id": "winshun.kill",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "bundled": true,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.kill-v1.0.0/winshun.kill-1.0.0.wsplugin",
+  "sha256": "734f9f05bd114f871f7a86d665f9b181731d247750c4e4f80ac6780c354a833f",
+  "size": 23410,
+  "name": {
+    "zh": "结束进程",
+    "en": "Kill process"
+  },
+  "description": {
+    "zh": "kill 进程名或 PID：列出进程，Enter 结束，Ctrl+Enter 连同子进程",
+    "en": "kill <name or PID>: lists processes; Enter ends one, Ctrl+Enter with its children"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "kill",
+    "jc"
+  ],
+  "permissions": [
+    "processes"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "powershell"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-23T09:12:40Z",
+  "dateAdded": "2026-10-23T09:12:40Z"
+}
