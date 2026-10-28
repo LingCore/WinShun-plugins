@@ -1,5 +1,5 @@
 name: 插件有问题
-description: 这里收录的某个插件出错了、不好用
+description: 插件库里的某个插件出错了、不好用（插件有自己的仓库的话，去那里提更快）
 title: "[问题] "
 labels: ["bug"]
 body:
