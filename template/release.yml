@@ -1,0 +1,21 @@
+# 插件作者：把这个文件复制到你的插件仓库，存成 .github/workflows/release.yml。
+#
+# 以后发新版本：把 plugin.json 的 version 升上去（比如 1.2.3），提交，再推一个同样版本号的标签：
+#   git tag v1.2.3
+#   git push origin v1.2.3
+# 它会检查、打包，把 <id>-1.2.3.wsplugin 附到 v1.2.3 的 Release 上；运行页面的摘要里有插件库要的条目。
+# 打包只收提交过的文件，以点开头的（.github、.gitignore……）不收。
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  package:
+    permissions:
+      contents: write
+    uses: LingCore/WinShun-plugins/.github/workflows/package.yml@main
+    # plugin.json 不在仓库根目录的话，写它所在的文件夹：
+    # with:
+    #   folder: my-plugin

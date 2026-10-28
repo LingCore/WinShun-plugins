@@ -1,10 +1,13 @@
 name: publish
 
+# 推到 main：检查条目和老插件；legacy/ 里升了版本的老插件打包、发 Release，条目指过去；
+# 用条目生成 index.json，传到 index 这个 Release（Win顺 的插件库读它，网址不变）；更新 README 的插件表。
 on:
   push:
     branches: [main]
     paths:
       - "plugins/**"
+      - "legacy/**"
       - "tools/**"
       - ".github/workflows/publish.yml"
   workflow_dispatch:
@@ -13,11 +16,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish
+  group: publish # the updater uses it too
   cancel-in-progress: false
 
 jobs:
   publish:
+    if: github.repository == 'LingCore/WinShun-plugins'
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -30,13 +34,31 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Check
-        run: python tools/check.py
+      - name: Check the entries and the legacy plugins
+        run: python -I tools/check.py
 
-      - name: Build packages, index and README table
-        run: python tools/build.py --readme
+      - name: Check the entries this push changed against their packages
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT" = "push" ] && git cat-file -e "$BEFORE^{commit}" 2> /dev/null; then
+            mapfile -t ids < <(git diff --name-only --no-renames --diff-filter=AM "$BEFORE" HEAD -- plugins \
+              | sed -nE 's#^plugins/([^/]+)\.json$#\1#p')
+            if [ "${#ids[@]}" -eq 0 ]; then
+              echo "no entry changed"
+              exit 0
+            fi
+            python -I tools/check.py --online "${ids[@]}"
+          else
+            python -I tools/check.py --online
+          fi
 
-      - name: Release the versions that have no release yet
+      - name: Pack the legacy plugins
+        run: python -I tools/build.py --legacy --out dist
+
+      - name: Release the legacy versions that have no release yet
         run: |
           set -euo pipefail
           fail=0
@@ -48,7 +70,7 @@ jobs:
               if gh release download "$tag" -p "$file" -D old; then
                 old=$(sha256sum "old/$file" | cut -d' ' -f1)
                 if [ "$old" != "$sha" ]; then
-                  echo "::error::$tag was released with other contents. Bump the version in plugins/$id/plugin.json."
+                  echo "::error::$tag was released with other contents. Bump the version in legacy/$id/plugin.json."
                   fail=1
                 fi
               else
@@ -61,8 +83,34 @@ jobs:
                 --title "$name $version" \
                 --notes "Win顺 设置 → 插件 → 从压缩包安装，选这个 .wsplugin 文件。"
             fi
-          done < <(jq -r '.plugins[] | [.id, .version, .file, .sha256, (.name | if type == "object" then (.zh // .en) else . end)] | @tsv' dist/index.json)
+          done < dist/legacy.tsv
           if [ "$fail" -ne 0 ]; then exit 1; fi
+
+      - name: Point the legacy entries at their releases
+        run: |
+          set -euo pipefail
+          while IFS=$'\t' read -r id version file _ _; do
+            if [ "$(jq -r .version "plugins/$id.json")" != "$version" ]; then
+              python -I tools/entry.py "https://github.com/$GITHUB_REPOSITORY/releases/download/$id-v$version/$file"
+            fi
+          done < dist/legacy.tsv
+
+      - name: Build index.json and the README table
+        run: python -I tools/index.py --out dist --readme
+
+      - name: Commit the entries and the README table if they changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- README.md plugins; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md plugins
+          git commit -m "Registry: entries for new legacy releases, plugin table [skip ci]"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Upload index.json to the "index" release
         run: |
@@ -72,16 +120,3 @@ jobs:
               --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
           fi
           gh release upload index dist/index.json --clobber
-
-      - name: Commit the README table if it changed
-        run: |
-          if git diff --quiet README.md; then
-            echo "README table unchanged"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "README: update the plugin table [skip ci]"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
