@@ -73,10 +73,10 @@ def main() -> int:
     ap.add_argument("--root", default=str(registry.ROOT), help="插件库仓库（--legacy 用），默认是工具所在的这个")
     ap.add_argument("--github-output", metavar="FILE",
                     help="把包的 id、version、file、sha256、name 追加到这个文件（GitHub Actions 的 $GITHUB_OUTPUT）")
-    args = ap.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
+    args = ap.parse_args()
     if bool(args.folder) == args.legacy:
         ap.error("要么给一个插件文件夹，要么用 --legacy")
 

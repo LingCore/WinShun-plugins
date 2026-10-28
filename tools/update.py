@@ -196,9 +196,9 @@ def main() -> int:
     ap.add_argument("--out", metavar="DIR", help="要人看的写到这里（给工作流开 PR、Issue 用）")
     ap.add_argument("--summary", metavar="FILE", help="另写一份 Markdown 摘要")
     ap.add_argument("--root", default=str(registry.ROOT), help="插件库仓库，默认是工具所在的这个")
-    args = ap.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
+    args = ap.parse_args()
     root = Path(args.root).resolve()
     only = set(args.ids)
 

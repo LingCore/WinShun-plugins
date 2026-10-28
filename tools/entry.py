@@ -54,10 +54,10 @@ def main() -> int:
     maintainer.add_argument("--hosted", action=argparse.BooleanOptionalAction, default=None,
                             help="在本仓库的 legacy/ 里打包发布")
     maintainer.add_argument("--date-added", metavar="TIME", help="第一次收录的时间，如 2026-10-23T09:12:34Z（迁移老条目用）")
-    args = ap.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
+    args = ap.parse_args()
 
     parts = registry.asset_url(args.url)
     if parts is None:

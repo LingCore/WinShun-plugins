@@ -1280,10 +1280,10 @@ def main() -> int:
     ap.add_argument("--pr", metavar="BASE", help="检查一个 PR：和 BASE 比")
     ap.add_argument("--root", default=str(ROOT), help="要检查的仓库，默认是工具所在的这个")
     ap.add_argument("--summary", metavar="FILE", help="另写一份给审核者看的 Markdown")
-    args = ap.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
+    args = ap.parse_args()
 
     if args.folder:
         folder = Path(args.folder)
