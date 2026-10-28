@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/LingCore/WinShun-plugins/main/schema/entry.schema.json",
+  "title": "Win顺 插件库条目 plugins/<id>.json",
+  "description": "插件库里一个插件的条目。规则以 tools/check.py 为准；这份只用来在编辑器里提示。id、repo、autoUpdate 由作者定，bundled、hosted 只有维护者能改，其余字段由 tools/entry.py（或自动更新）从包里生成，不要手改。",
+  "type": "object",
+  "required": ["id", "repo", "version", "url", "sha256", "size", "name", "description", "author", "license", "homepage",
+               "keywords", "permissions", "runtime", "minWinShun", "releaseDate", "dateAdded"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"description": "作者.名字，和文件名、包里 plugin.json 的 id 一样", "type": "string", "pattern": "^[a-z0-9_-][a-z0-9._-]*\\.[a-z0-9._-]*[a-z0-9_-]$", "maxLength": 64},
+    "repo": {"description": "插件所在的 GitHub 公开仓库：作者/仓库", "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,38}/[A-Za-z0-9._-]{1,100}$"},
+    "autoUpdate": {"description": "作者以后发的新版本自动跟上（多要权限、运行方式变了的要维护者看过）", "type": "boolean", "default": false},
+    "bundled": {"description": "维护者：随 Win顺 自带", "type": "boolean", "default": false},
+    "hosted": {"description": "维护者：在本仓库的 legacy/<id>/ 里打包发布", "type": "boolean", "default": false},
+    "version": {"description": "生成：包的版本，三段数字", "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "url": {"description": "生成：repo 的 Release 上的包，文件名是 <id>-<version>.wsplugin", "type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+/releases/download/.+/[^/]+-\\d+\\.\\d+\\.\\d+\\.wsplugin$"},
+    "sha256": {"description": "生成：包的 SHA-256", "type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "size": {"description": "生成：包的字节数", "type": "integer", "minimum": 1, "maximum": 67108864},
+    "name": {"description": "生成：plugin.json 的 name", "$ref": "#/$defs/text"},
+    "description": {"description": "生成：plugin.json 的 description", "$ref": "#/$defs/text"},
+    "author": {"description": "生成：plugin.json 的 author", "type": "string", "minLength": 1},
+    "license": {"description": "生成：plugin.json 的 license", "type": "string", "minLength": 1},
+    "homepage": {"description": "生成：plugin.json 的 homepage（可以是空的）", "type": "string"},
+    "keywords": {"description": "生成：各个命令的关键字", "type": "array", "items": {"type": "string", "minLength": 1}},
+    "permissions": {"description": "生成：权限名，按 Win顺 的固定顺序", "type": "array", "uniqueItems": true, "items": {"$ref": "plugin.schema.json#/$defs/permission"}},
+    "runtime": {
+      "description": "生成：运行方式；零代码插件是 {\"mode\": \"zero-code\", \"program\": null}",
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["mode", "program"],
+         "properties": {"mode": {"enum": ["once", "resident"]}, "program": {"enum": ["python", "pwsh", "powershell", "node"]}}},
+        {"type": "object", "additionalProperties": false, "required": ["mode", "program"],
+         "properties": {"mode": {"const": "zero-code"}, "program": {"type": "null"}}}
+      ]
+    },
+    "minWinShun": {"description": "生成：要的最低 Win顺 版本（空的是不限）", "type": "string", "pattern": "^(\\d+(\\.\\d+)*([-+][0-9A-Za-z.-]+)?)?$"},
+    "releaseDate": {"description": "生成：这个版本的 Release 发布的时间（UTC）", "$ref": "#/$defs/time"},
+    "dateAdded": {"description": "生成：第一次收录的时间（UTC），以后不变", "$ref": "#/$defs/time"}
+  },
+  "$defs": {
+    "text": {
+      "description": "字符串，或 {\"zh\": …, \"en\": …}",
+      "oneOf": [
+        {"type": "string"},
+        {"type": "object", "properties": {"zh": {"type": "string"}, "en": {"type": "string"}}, "anyOf": [{"required": ["zh"]}, {"required": ["en"]}]}
+      ]
+    },
+    "time": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"}
+  }
+}
