@@ -2,7 +2,7 @@ name: updater
 
 # 每 6 小时：开了 autoUpdate 的插件有没有新版本（tools/update.py）。
 #   权限和运行方式没变的直接收录：改条目、推到 main、重建并上传 index.json
-#   （GITHUB_TOKEN 推的提交不会触发 publish，所以在这里一起做）；
+#   （GITHUB_TOKEN 推的提交不会触发 publish，所以在这里一起做；没有新版本时，index.json 和 main 对不上也重传）；
 #   多要权限或运行方式变了的开 PR；检查没过的开 Issue。同一个版本只开一次。
 # 每天一次：每个条目的包还在不在、有没有被换过，有问题开 Issue。
 on:
@@ -53,16 +53,16 @@ jobs:
         run: if [ -f "$RUNNER_TEMP/updates.md" ]; then cat "$RUNNER_TEMP/updates.md" >> "$GITHUB_STEP_SUMMARY"; fi
 
       - name: Commit the safe updates, rebuild and upload index.json
+        # Also when nothing was updated: a publish run that was waiting gets cancelled when this job
+        # queues in the same group, so the table and index.json it would have written go out here.
         run: |
           set -euo pipefail
-          if git diff --quiet -- plugins; then
-            echo "no safe update"
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add plugins
-          git commit -m "Registry: automatic updates [skip ci]" -m "$(cat "$RUNNER_TEMP/updates/updated.txt")"
+          if ! git diff --quiet -- plugins; then
+            git add plugins
+            git commit -m "Registry: automatic updates [skip ci]" -m "$(cat "$RUNNER_TEMP/updates/updated.txt")"
+          fi
           git pull --rebase origin main
           python -I tools/check.py
           python -I tools/index.py --out dist --readme
@@ -71,6 +71,15 @@ jobs:
             git commit -m "README: update the plugin table [skip ci]"
           fi
           git push origin HEAD:main
+          live="$RUNNER_TEMP/live"
+          mkdir -p "$live"
+          if gh release download index -p index.json -D "$live" 2> /dev/null &&
+            old=$(jq -S 'del(.generated)' "$live/index.json") &&
+            new=$(jq -S 'del(.generated)' dist/index.json) &&
+            [ "$old" = "$new" ]; then
+            echo "index.json is up to date"
+            exit 0
+          fi
           if ! gh release view index > /dev/null 2>&1; then
             gh release create index --target "$(git rev-parse HEAD)" --latest=false \
               --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
