@@ -1,0 +1,41 @@
+{
+  "id": "crazy-zxx.yigengming",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": true,
+  "hosted": true,
+  "version": "1.3.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/crazy-zxx.yigengming-v1.3.0/crazy-zxx.yigengming-1.3.0.wsplugin",
+  "sha256": "c59fcd6c9e1c9ea2488c284f9c1787532fde3a11b1c0164ffcafff956af0dab5",
+  "size": 661931,
+  "name": {
+    "zh": "易更名",
+    "en": "易更名"
+  },
+  "description": "带窗口界面的批量文件/文件夹创建与重命名，支持组合规则、实时预览、冲突检查和撤销。",
+  "author": "Xiangxin (@crazy-zxx)",
+  "license": "MIT",
+  "homepage": "https://github.com/crazy-zxx/WinShun-plugins/tree/main/plugins/crazy-zxx.yigengming",
+  "keywords": [
+    "br",
+    "rename",
+    "易更名",
+    "批量重命名",
+    "bc",
+    "批量创建"
+  ],
+  "permissions": [
+    "files:write",
+    "processes",
+    "clipboard:read",
+    "clipboard:write",
+    "ui",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "powershell"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-26T12:23:39Z",
+  "dateAdded": "2026-10-26T12:23:39Z"
+}

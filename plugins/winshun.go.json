@@ -1,0 +1,38 @@
+{
+  "id": "winshun.go",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "bundled": true,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.go-v1.0.0/winshun.go-1.0.0.wsplugin",
+  "sha256": "581d1ce6b030172050b7d3c7d0107c9ca5626c7ca6e6f706859dcf3825a08175",
+  "size": 5037,
+  "name": {
+    "zh": "快捷跳转",
+    "en": "Go to"
+  },
+  "description": {
+    "zh": "零代码示例：code 用 VS Code 打开、dl 下载文件夹、pdf 找 PDF、go 常用位置",
+    "en": "Zero-code sample: code opens in VS Code, dl Downloads, pdf finds PDFs, go common places"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "code",
+    "np",
+    "dl",
+    "desk",
+    "pdf",
+    "img",
+    "go"
+  ],
+  "permissions": [],
+  "runtime": {
+    "mode": "zero-code",
+    "program": null
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-23T09:12:38Z",
+  "dateAdded": "2026-10-23T09:12:38Z"
+}

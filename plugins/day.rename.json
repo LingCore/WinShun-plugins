@@ -1,0 +1,36 @@
+{
+  "id": "day.rename",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": true,
+  "hosted": true,
+  "version": "1.0.2",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/day.rename-v1.0.2/day.rename-1.0.2.wsplugin",
+  "sha256": "c179904781f885164d9f9d94280761558c9351e955605d093781fa9fcb956cc2",
+  "size": 111397,
+  "name": {
+    "zh": "批量重命名",
+    "en": "Batch Rename"
+  },
+  "description": "查找替换、插入内容、自动编号、手动编辑与可选 AI 命名；先预览再执行，支持撤销。",
+  "author": "Day (askd126)",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "pl",
+    "cmm"
+  ],
+  "permissions": [
+    "files:write",
+    "clipboard:read",
+    "ui",
+    "network",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "python"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-26T12:19:19Z",
+  "dateAdded": "2026-10-26T12:19:19Z"
+}

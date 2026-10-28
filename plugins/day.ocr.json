@@ -1,0 +1,35 @@
+{
+  "id": "day.ocr",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": true,
+  "hosted": true,
+  "version": "1.0.4",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/day.ocr-v1.0.4/day.ocr-1.0.4.wsplugin",
+  "sha256": "9ae9d3166a1f087890c816d565ab97a23b22d44ed2c01267c7fe36e9754a096a",
+  "size": 62991,
+  "name": {
+    "zh": "OCR Studio",
+    "en": "OCR Studio"
+  },
+  "description": "输入 ocr 打开截图与图片文字识别窗口，支持 OpenAI 兼容的视觉模型。",
+  "author": "Day (askd126)",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "ocr"
+  ],
+  "permissions": [
+    "clipboard:read",
+    "clipboard:write",
+    "ui",
+    "network",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "python"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-26T12:19:16Z",
+  "dateAdded": "2026-10-26T12:19:16Z"
+}

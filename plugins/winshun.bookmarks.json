@@ -1,0 +1,35 @@
+{
+  "id": "winshun.bookmarks",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "bundled": true,
+  "version": "1.1.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v1.1.0/winshun.bookmarks-1.1.0.wsplugin",
+  "sha256": "0ef75fdcd98035390e9a83279c0969c8834bf17819e70ab7c70bac0a2cc99467",
+  "size": 20824,
+  "name": {
+    "zh": "浏览器书签",
+    "en": "Browser bookmarks"
+  },
+  "description": {
+    "zh": "bm 词：搜 Chrome 和 Edge 的书签，Enter 打开",
+    "en": "bm words: searches Chrome and Edge bookmarks; Enter opens"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "bm",
+    "sq"
+  ],
+  "permissions": [
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "once",
+    "program": "python"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-23T09:12:34Z",
+  "dateAdded": "2026-10-23T09:12:34Z"
+}
