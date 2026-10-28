@@ -2,10 +2,10 @@
   "id": "harafuhub.outlook",
   "repo": "harafuhub/winshun-outlook",
   "autoUpdate": true,
-  "version": "1.4.1",
-  "url": "https://github.com/harafuhub/winshun-outlook/releases/download/v1.4.1/harafuhub.outlook-1.4.1.wsplugin",
-  "sha256": "603d4a3a9242797c7a1fee910bdcc433244cee305d5d5246785c210421397b04",
-  "size": 61766,
+  "version": "1.4.2",
+  "url": "https://github.com/harafuhub/winshun-outlook/releases/download/v1.4.2/harafuhub.outlook-1.4.2.wsplugin",
+  "sha256": "a9d88933219796ac16637efca75f7d6c438ef9e16ad7e6800799fc5f3a401da2",
+  "size": 62128,
   "name": {
     "zh": "Outlook 邮件",
     "en": "Outlook mail"
@@ -21,12 +21,14 @@
     "ol",
     "mail"
   ],
-  "permissions": [],
+  "permissions": [
+    "processes"
+  ],
   "runtime": {
     "mode": "resident",
     "program": "powershell"
   },
   "minWinShun": "",
-  "releaseDate": "2026-10-28T03:47:15Z",
+  "releaseDate": "2026-10-28T05:10:01Z",
   "dateAdded": "2026-10-28T03:21:23Z"
 }
