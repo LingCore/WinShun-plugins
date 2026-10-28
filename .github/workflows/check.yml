@@ -1,9 +1,10 @@
 name: check
 
+# 投稿的 PR 只能改 plugins/<id>.json（和 legacy/ 里已有的老插件）。
+# 检查用的是基础分支上的工具（PR 改不到它），条目指向的包会下载下来重新算一遍；
+# 只读的令牌，不运行插件的代码。审核要看的权限表写在运行摘要里。
 on:
   pull_request:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -13,41 +14,35 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: The pull request, merged onto its base
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          path: pr
+          fetch-depth: 2 # HEAD^1 is the base it was merged onto
+          persist-credentials: false
+
+      - name: The checker, from the base branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          path: base
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Which plugins changed
+      - name: Check
         env:
+          GH_TOKEN: ${{ github.token }}
           EVENT: ${{ github.event_name }}
-          BASE_REF: ${{ github.base_ref }}
         run: |
-          : > changed.txt
           if [ "$EVENT" = "pull_request" ]; then
-            git diff --name-only "origin/$BASE_REF...HEAD" -- plugins > changed.txt
-          fi
-          echo "BASE_REF_FULL=origin/$BASE_REF" >> "$GITHUB_ENV"
-          cat changed.txt
-
-      - name: Check every plugin
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            python tools/check.py --base "$BASE_REF_FULL"
+            python -I base/tools/check.py --root pr --pr HEAD^1 --summary summary.md
           else
-            python tools/check.py
+            python -I base/tools/check.py --root pr --online --summary summary.md
           fi
 
-      - name: Permissions summary for the reviewer
+      - name: Summary for the reviewer
         if: always()
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            mapfile -t files < changed.txt
-            python tools/check.py --changed "${files[@]}" --summary summary.md || true
-          else
-            python tools/check.py --summary summary.md || true
-          fi
-          cat summary.md >> "$GITHUB_STEP_SUMMARY"
+        run: if [ -f summary.md ]; then cat summary.md >> "$GITHUB_STEP_SUMMARY"; fi

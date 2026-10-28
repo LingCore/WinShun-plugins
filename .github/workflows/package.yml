@@ -1,0 +1,109 @@
+name: package
+
+# 给插件作者在自己的仓库里调用（复制 template/release.yml）：推一个 v1.2.3 这样的标签 →
+# 用本仓库的工具检查、打包（同样的文件打出同样的包），把 <id>-1.2.3.wsplugin 附到这个标签的 Release 上，
+# 运行摘要里给出插件库要的条目 plugins/<id>.json。不运行插件的代码。
+on:
+  workflow_call:
+    inputs:
+      folder:
+        description: plugin.json 所在的文件夹（相对仓库根目录），默认是根目录
+        type: string
+        default: "."
+      tools-ref:
+        description: 用 LingCore/WinShun-plugins 哪个版本的检查和打包工具
+        type: string
+        default: main
+    outputs:
+      url:
+        description: 附到 Release 上的包的网址
+        value: ${{ jobs.package.outputs.url }}
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      url: ${{ steps.release.outputs.url }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: The plugin
+        uses: actions/checkout@v4
+        with:
+          path: plugin
+          persist-credentials: false
+
+      - name: The checker and packer from WinShun-plugins
+        uses: actions/checkout@v4
+        with:
+          repository: LingCore/WinShun-plugins
+          ref: ${{ inputs.tools-ref }}
+          path: registry
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check and pack
+        id: pack
+        env:
+          FOLDER: plugin/${{ inputs.folder }}
+        run: python -I registry/tools/build.py "$FOLDER" --out out --github-output "$GITHUB_OUTPUT"
+
+      - name: The tag must be v and the version in plugin.json
+        env:
+          VERSION: ${{ steps.pack.outputs.version }}
+        run: |
+          if [ "$GITHUB_REF_TYPE" != "tag" ] || [ "$GITHUB_REF_NAME" != "v$VERSION" ]; then
+            echo "::error::plugin.json 的 version 是 $VERSION，要从标签 v$VERSION 运行（现在是 $GITHUB_REF_TYPE $GITHUB_REF_NAME）"
+            exit 1
+          fi
+
+      - name: Attach the package to the release
+        id: release
+        env:
+          FILE: ${{ steps.pack.outputs.file }}
+          SHA: ${{ steps.pack.outputs.sha256 }}
+          NAME: ${{ steps.pack.outputs.name }}
+          VERSION: ${{ steps.pack.outputs.version }}
+        run: |
+          set -euo pipefail
+          tag="$GITHUB_REF_NAME"
+          if ! gh release view "$tag" > /dev/null 2>&1; then
+            gh release create "$tag" --verify-tag --title "$NAME $VERSION" \
+              --notes "Win顺 设置 → 插件 → 从压缩包安装，选 $FILE。"
+          fi
+          if gh release download "$tag" -p "$FILE" -D existing 2> /dev/null; then
+            if [ "$(sha256sum "existing/$FILE" | cut -d' ' -f1)" != "$SHA" ]; then
+              echo "::error::$tag 上已经有一个内容不同的 $FILE。发出去的包不能换：请升 version，再打一个新标签"
+              exit 1
+            fi
+            echo "$FILE is already on $tag, same contents"
+          else
+            gh release upload "$tag" "out/$FILE"
+          fi
+          echo "url=https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$FILE" >> "$GITHUB_OUTPUT"
+
+      - name: The entry for the plugin library
+        env:
+          URL: ${{ steps.release.outputs.url }}
+          ID: ${{ steps.pack.outputs.id }}
+        run: |
+          set -euo pipefail
+          python -I registry/tools/entry.py "$URL" --print > entry.json
+          {
+            echo "## 插件库的条目"
+            echo
+            echo "第一次收录（或者没开 autoUpdate 时的更新）：把下面这段存成 \`plugins/$ID.json\`，到 https://github.com/LingCore/WinShun-plugins 提一个 PR。开了 autoUpdate 的插件不用管，插件库会自己跟上。"
+            echo
+            echo '```json'
+            cat entry.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

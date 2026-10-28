@@ -1,0 +1,5 @@
+# 工具、工作流、给作者的模板和 schema：改动都要维护者审核
+/tools/    @LingCore
+/.github/  @LingCore
+/template/ @LingCore
+/schema/   @LingCore

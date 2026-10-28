@@ -1,0 +1,154 @@
+name: updater
+
+# 每 6 小时：开了 autoUpdate 的插件有没有新版本（tools/update.py）。
+#   权限和运行方式没变的直接收录：改条目、推到 main、重建并上传 index.json
+#   （GITHUB_TOKEN 推的提交不会触发 publish，所以在这里一起做）；
+#   多要权限或运行方式变了的开 PR；检查没过的开 Issue。同一个版本只开一次。
+# 每天一次：每个条目的包还在不在、有没有被换过，有问题开 Issue。
+on:
+  schedule:
+    - cron: "23 */6 * * *" # update
+    - cron: "41 2 * * *"   # verify
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "update：找新版本；verify：核对每个条目的包"
+        type: choice
+        options: [update, verify]
+        default: update
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    if: >-
+      github.repository == 'LingCore/WinShun-plugins' &&
+      ((github.event_name == 'schedule' && github.event.schedule == '23 */6 * * *') ||
+       (github.event_name == 'workflow_dispatch' && inputs.task == 'update'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    concurrency:
+      group: publish # never at the same time as publish.yml
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Look for new versions
+        run: python -I tools/update.py --write --out "$RUNNER_TEMP/updates" --summary "$RUNNER_TEMP/updates.md"
+
+      - name: Summary
+        if: always()
+        run: if [ -f "$RUNNER_TEMP/updates.md" ]; then cat "$RUNNER_TEMP/updates.md" >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Commit the safe updates, rebuild and upload index.json
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- plugins; then
+            echo "no safe update"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins
+          git commit -m "Registry: automatic updates [skip ci]" -m "$(cat "$RUNNER_TEMP/updates/updated.txt")"
+          git pull --rebase origin main
+          python -I tools/check.py
+          python -I tools/index.py --out dist --readme
+          if ! git diff --quiet README.md; then
+            git add README.md
+            git commit -m "README: update the plugin table [skip ci]"
+          fi
+          git push origin HEAD:main
+          if ! gh release view index > /dev/null 2>&1; then
+            gh release create index --target "$(git rev-parse HEAD)" --latest=false \
+              --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
+          fi
+          gh release upload index dist/index.json --clobber
+
+      - name: Open pull requests and issues for the updates that need a look
+        env:
+          # A token of a person or an app (secret UPDATER_TOKEN, optional): pull requests opened with
+          # GITHUB_TOKEN do not start check.yml.
+          GH_TOKEN: ${{ secrets.UPDATER_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/updates"
+          if [ ! -s "$out/review.tsv" ]; then
+            echo "nothing needs a look"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          while IFS=$'\t' read -r kind id version title; do
+            if [ "$kind" = "pr" ]; then
+              branch="update/$id-$version"
+              if [ -n "$(gh pr list --head "$branch" --state all --json number --jq '.[].number')" ]; then
+                echo "$branch already has a pull request"
+                continue
+              fi
+              git switch -C "$branch" origin/main
+              cp "$out/$id.json" "plugins/$id.json"
+              git add "plugins/$id.json"
+              git commit -m "Registry: $id $version (needs a look)"
+              git push --force origin "$branch"
+              gh pr create --base main --head "$branch" --title "$title" --body-file "$out/$id.md"
+            elif gh issue list --state all --search "in:title \"$title\"" --json title --jq '.[].title' | grep -Fxq -- "$title"; then
+              echo "$title: already has an issue"
+            else
+              gh issue create --title "$title" --body-file "$out/$id.md"
+            fi
+          done < "$out/review.tsv"
+
+  verify:
+    if: >-
+      github.repository == 'LingCore/WinShun-plugins' &&
+      ((github.event_name == 'schedule' && github.event.schedule == '41 2 * * *') ||
+       (github.event_name == 'workflow_dispatch' && inputs.task == 'verify'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check every listed package
+        run: python -I tools/update.py --verify --out "$RUNNER_TEMP/verify" --summary "$RUNNER_TEMP/verify.md"
+
+      - name: Summary
+        if: always()
+        run: if [ -f "$RUNNER_TEMP/verify.md" ]; then cat "$RUNNER_TEMP/verify.md" >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Open issues for missing or replaced packages
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/verify"
+          if [ ! -s "$out/review.tsv" ]; then
+            echo "every package is there and unchanged"
+            exit 0
+          fi
+          while IFS=$'\t' read -r _ id _ title; do
+            if gh issue list --state all --search "in:title \"$title\"" --json title --jq '.[].title' | grep -Fxq -- "$title"; then
+              echo "$title: already has an issue"
+            else
+              gh issue create --title "$title" --body-file "$out/$id.md"
+            fi
+          done < "$out/review.tsv"
