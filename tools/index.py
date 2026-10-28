@@ -169,9 +169,9 @@ def main() -> int:
     ap.add_argument("--readme", action="store_true", help="同时改写 README.md 里的插件表")
     ap.add_argument("--compare", metavar="OLD", help="和这份已发布的 index.json 比，不一样就退出码 1")
     ap.add_argument("--root", default=str(registry.ROOT), help="插件库仓库，默认是工具所在的这个")
-    args = ap.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
+    args = ap.parse_args()
 
     root = Path(args.root).resolve()
     index = build_index(root)
