@@ -1,26 +1,35 @@
 #!/usr/bin/env python3
-"""插件检查：照着 Win顺 的 src/plugin/Manifest.cpp 校验 plugin.json，再加本仓库自己的规矩。
+"""插件检查：照着 Win顺 的 src/plugin/Manifest.cpp 校验 plugin.json，再加本仓库自己的规矩；
+也检查插件库的条目 plugins/<id>.json（联网时下载它指向的包，重新算一遍生成的字段）。
 
 用法：
-  python tools/check.py                      检查 plugins/ 下全部插件
-  python tools/check.py --changed a b ...    只检查这些插件（插件 id、文件夹或其中的文件路径都行）
-  python tools/check.py --base origin/main   改过内容的插件必须升 version（要在 git 仓库里跑）
-  python tools/check.py --summary out.md     另写一份给审核者看的 Markdown（权限一栏，高风险加粗）
+  python tools/check.py                         检查全部：plugins/<id>.json 条目和 legacy/ 里的老插件（不联网）
+  python tools/check.py <文件夹> [--id ID]       只检查一个插件文件夹，比如你自己仓库的根目录（--id：它应该是的 id）
+  python tools/check.py --online [ID ...]       再下载这些条目（不写就是全部）的包，生成的字段必须和包里的一致
+  python tools/check.py --pr BASE               检查一个 PR（和 BASE 比）：只许改 plugins/<id>.json 和 legacy/ 里已有的
+                                                老插件；改到的条目联网核对，改到的老插件必须升 version
+  python tools/check.py --root DIR ...          检查 DIR 这个仓库，不是工具所在的这个（CI 用基础分支的工具查 PR）
+  python tools/check.py --summary out.md        另写一份给审核者看的 Markdown（权限一栏，高风险加粗）
 
-有错误退出码是 1，只有警告是 0。只用标准库，Python 3.10+。
+有错误退出码是 1，只有警告是 0。联网的部分设了 GH_TOKEN 就用它调 GitHub 接口。只用标准库，Python 3.10+。
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
 import sys
+import tempfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 
-ROOT = Path(__file__).resolve().parent.parent
-PLUGINS = ROOT / "plugins"
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I 不会自己加脚本所在的文件夹
+import registry  # noqa: E402
+
+ROOT = registry.ROOT
 
 MANIFEST_VERSION = 1
 
@@ -493,19 +502,22 @@ def load_json(path: Path):
 
 
 class Result:
-    def __init__(self, folder: Path) -> None:
+    """一个插件文件夹的检查结果。label 是消息里怎么称呼它（legacy/<id>、包的文件名、作者给的路径）。"""
+
+    def __init__(self, folder: Path, label: str | None = None) -> None:
         self.folder = folder
         self.name = folder.name
+        self.label = label or folder.as_posix()
         self.errors: list[str] = []
         self.warnings: list[str] = []
         self.manifest: dict | None = None
         self.info: dict = {}
 
     def error(self, where: str, text: str) -> None:
-        self.errors.append(f"plugins/{self.name}/{where}：{text}" if where else f"plugins/{self.name}：{text}")
+        self.errors.append(f"{self.label}/{where}：{text}" if where else f"{self.label}：{text}")
 
     def warn(self, where: str, text: str) -> None:
-        self.warnings.append(f"plugins/{self.name}/{where}：{text}" if where else f"plugins/{self.name}：{text}")
+        self.warnings.append(f"{self.label}/{where}：{text}" if where else f"{self.label}：{text}")
 
 
 def is_relative_icon(icon: str) -> bool:
@@ -522,8 +534,33 @@ def check_icon_file(r: Result, folder: Path, icon: str, where: str) -> None:
         r.error("plugin.json", f"{where} 的图标文件 {icon} 不在插件文件夹里")
 
 
-def check_files(r: Result, folder: Path) -> list[Path]:
-    files = sorted(p for p in folder.rglob("*") if p.is_file() or p.is_symlink())
+def source_files(folder: Path) -> list[Path]:
+    """作者的插件文件夹里会打进包的文件（build.py 打包、这里检查，用的都是这一份）。
+
+    在 git 仓库里只算提交过的（没提交的杂物、__pycache__ 不算；plugin.json 还没提交就按文件夹里有的算）；
+    以点开头的文件和文件夹（.git、.github、.gitignore……）都不算。
+    """
+    listed = None
+    try:
+        done = subprocess.run(["git", "-C", str(folder), "ls-files", "-z"], capture_output=True)
+        if done.returncode == 0:
+            names = [n for n in done.stdout.decode("utf-8", "surrogateescape").split("\0") if n]
+            if "plugin.json" in names:
+                listed = [folder / n for n in names]
+    except OSError:
+        pass
+    if listed is None:
+        listed = list(folder.rglob("*"))
+    files = [p for p in listed if (p.is_file() or p.is_symlink())
+             and not any(part.startswith(".") for part in p.relative_to(folder).parts)]
+    return sorted(files, key=lambda p: p.relative_to(folder).as_posix())
+
+
+def check_files(r: Result, folder: Path, packed: bool) -> list[Path]:
+    if packed:  # 解开的包：里面的每个文件都算
+        files = sorted(p for p in folder.rglob("*") if p.is_file() or p.is_symlink())
+    else:
+        files = source_files(folder)
     total = 0
     for p in files:
         rel = p.relative_to(folder).as_posix()
@@ -560,8 +597,10 @@ def check_imports(r: Result, folder: Path, files: list[Path]) -> None:
                 r.error(rel, "引用了 WinShun.psm1，但文件夹里没有它（从 Win顺 的 src/plugins-sdk 复制一份进来）")
 
 
-def check_plugin(folder: Path) -> Result:
-    r = Result(folder)
+def check_plugin(folder: Path, expected_id: str | None = None, label: str | None = None, packed: bool = False) -> Result:
+    """检查一个插件文件夹。expected_id：它应该是的 id（老插件是文件夹名，包是条目的 id；不给就不比）。
+    packed：这是解开的包（每个文件都算），不是作者的源码文件夹（只算会打进包的）。"""
+    r = Result(folder, label)
     manifest_path = folder / "plugin.json"
     if not manifest_path.is_file():
         r.error("", "没有 plugin.json")
@@ -585,8 +624,8 @@ def check_plugin(folder: Path) -> Result:
 
     pid = obj.get("id") if isinstance(obj.get("id"), str) else ""
     if pid:
-        if pid != folder.name:
-            r.error("plugin.json", f"id 是 {pid}，和文件夹名 {folder.name} 不一致")
+        if expected_id and pid != expected_id:
+            r.error("plugin.json", f"id 是 {pid}，应该是 {expected_id}")
         if "." not in pid.strip("."):
             r.error("plugin.json", f"id {pid} 要写成 作者.名字（带一个点）")
     for key, label in (("author", "作者"), ("license", "许可证")):
@@ -614,7 +653,7 @@ def check_plugin(folder: Path) -> Result:
     elif not readme.read_text(encoding="utf-8-sig", errors="replace").strip():
         r.error("README.md", "是空的")
 
-    files = check_files(r, folder)
+    files = check_files(r, folder, packed)
 
     runtime = info.get("runtime")
     if runtime and runtime["script"] and inside_folder(runtime["script"]):
@@ -628,7 +667,7 @@ def check_plugin(folder: Path) -> Result:
     return r
 
 
-# ---------------------------------------------------------------- 整个仓库
+# ---------------------------------------------------------------- 权限和关键字
 
 def permissions_of(manifest: dict) -> tuple[list[str], list[str]]:
     """(权限名, files:read 的路径)"""
@@ -652,71 +691,390 @@ def keywords_of(manifest: dict) -> list[str]:
     return out
 
 
-def plugin_folders() -> list[Path]:
-    return sorted(p for p in PLUGINS.iterdir() if p.is_dir()) if PLUGINS.is_dir() else []
+def permission_scopes(manifest: dict) -> dict[str, str]:
+    """权限名 → 它的范围（{"files:read": [路径]} 里的路径；没写范围是 ""）。比两个版本时用。"""
+    out: dict[str, str] = {}
+    for item in manifest.get("permissions") or []:
+        if isinstance(item, str):
+            out.setdefault(item, "")
+        elif isinstance(item, dict):
+            for key, val in item.items():
+                out[key] = json.dumps(val, ensure_ascii=False, sort_keys=True)
+    return out
 
 
-def check_all(only: set[str] | None = None) -> tuple[list[Result], None]:
-    """检查 plugins/ 里的全部插件；only 不为空时只返回这些的结果（冲突仍按全部算）。"""
-    results = [check_plugin(f) for f in plugin_folders()]
-    ids: dict[str, str] = {}
-    keywords: dict[str, list[str]] = {}
-    for r in results:
-        if r.manifest is None:
+# ---------------------------------------------------------------- 包（.wsplugin）
+
+def fields_of(m: dict, data: bytes) -> dict:
+    """包里的 plugin.json 和包本身 → 条目里生成的字段（url、releaseDate、dateAdded 另算）。
+
+    和以前 build.py 写进 index.json 的一模一样。别"顺手改进"（比如空的 homepage 填上仓库地址）：
+    已发布的 index.json 和旧版 Win顺 都靠这些字段不变。
+    """
+    runtime = m.get("runtime")
+    names, _ = permissions_of(m)
+    return {
+        "version": m["version"],
+        "sha256": hashlib.sha256(data).hexdigest(),
+        "size": len(data),
+        "name": m["name"],
+        "description": m.get("description", ""),
+        "author": m.get("author", ""),
+        "license": m.get("license", ""),
+        "homepage": m.get("homepage", ""),
+        "keywords": keywords_of(m),
+        "permissions": names,
+        "runtime": {"mode": runtime["mode"], "program": runtime["program"]} if isinstance(runtime, dict)
+                   else {"mode": "zero-code", "program": None},
+        "minWinShun": m.get("minWinShun", ""),
+    }
+
+
+class Package:
+    """一个 .wsplugin 解开检查的结果。"""
+
+    def __init__(self, label: str) -> None:
+        self.label = label
+        self.errors: list[str] = []
+        self.warnings: list[str] = []
+        self.manifest: dict | None = None
+        self.fields: dict = {}                       # fields_of 的结果；检查没过是空的
+        self.files: dict[str, tuple[str, int]] = {}  # 相对路径 → (sha256, 字节数)
+
+
+def check_package(data: bytes, expected_id: str, version: str, label: str) -> Package:
+    """解到系统的临时文件夹（不在仓库里）检查，查完就删。不运行包里的任何东西。"""
+    p = Package(label)
+    if len(data) > registry.MAX_PACKAGE:
+        p.errors.append(f"{label}：超过 {registry.MAX_PACKAGE >> 20} MB")
+        return p
+    with tempfile.TemporaryDirectory(prefix="winshun-package-") as tmp:
+        folder = Path(tmp)
+        problems = registry.unpack(data, folder)
+        if problems:
+            p.errors += [f"{label}：{t}" for t in problems]
+            return p
+        r = check_plugin(folder, expected_id=expected_id, label=label, packed=True)
+        p.errors += r.errors
+        p.warnings += r.warnings
+        p.manifest = r.manifest
+        for f in sorted(x for x in folder.rglob("*") if x.is_file() and not x.is_symlink()):
+            content = f.read_bytes()
+            p.files[f.relative_to(folder).as_posix()] = (hashlib.sha256(content).hexdigest(), len(content))
+    m = p.manifest
+    if m is not None and m.get("version") != version:
+        p.errors.append(f"{label}：plugin.json 的 version 是 {m.get('version')}，文件名上是 {version}")
+    if m is not None and not p.errors:
+        p.fields = fields_of(m, data)
+    return p
+
+
+class Asset:
+    """条目指向的一个包：下载、和 GitHub 上的 Release 对上、解开检查，算出条目里生成的字段。"""
+
+    def __init__(self, url: str) -> None:
+        self.url = url
+        self.parts = registry.asset_url(url)
+        self.errors: list[str] = []
+        self.warnings: list[str] = []
+        self.release: dict | None = None
+        self.package: Package | None = None
+        self.fields: dict = {}  # 生成的字段（dateAdded 除外）；检查没过是空的
+
+
+def check_asset(url: str, expected_id: str | None = None, release: dict | None = None) -> Asset:
+    """release：已经拿到的那个 Release（update.py 列 Release 时就有），不给就去问 GitHub。"""
+    a = Asset(url)
+    parts = a.parts
+    if parts is None:
+        a.errors.append(f"{url}：不是 GitHub Release 上的包（要像 https://github.com/作者/仓库/releases/download/标签/<id>-1.2.3.wsplugin）")
+        return a
+    if expected_id and parts.id != expected_id:
+        a.errors.append(f"{parts.file}：文件名上的 id 是 {parts.id}，应该是 {expected_id}")
+        return a
+    try:
+        data = registry.fetch(url)
+        a.release = release or registry.release_by_tag(parts.repo, parts.tag)
+    except registry.FetchError as ex:
+        a.errors.append(f"{url}：{ex}")
+        return a
+    asset = registry.asset_of(a.release, parts.file) if a.release else None
+    if a.release is None:
+        a.errors.append(f"{parts.repo} 里找不到标签 {parts.tag} 的 Release")
+    elif a.release.get("draft") or a.release.get("prerelease"):
+        a.errors.append(f"{parts.repo} 的 {parts.tag} 是草稿或预发布：要正式发布的 Release")
+    elif asset is None:
+        a.errors.append(f"{parts.repo} 的 {parts.tag} 里没有 {parts.file}")
+    elif registry.digest_of(asset) and registry.digest_of(asset) != hashlib.sha256(data).hexdigest():
+        a.errors.append(f"{parts.file}：下载到的 sha256 和 GitHub 记的不一样")
+    a.package = check_package(data, parts.id, parts.version, parts.file)
+    a.errors += a.package.errors
+    a.warnings += a.package.warnings
+    if not a.errors:
+        a.fields = dict(a.package.fields, url=url, releaseDate=a.release["published_at"])
+    return a
+
+
+RUNTIME_TUNING = {"timeoutMs", "debounceMs", "idleExitSec", "memoryMB", "start", "encoding"}  # 只调快慢，变了不算
+
+
+class Diff:
+    """同一个插件的两个包比一比。risky：多要了权限、权限的范围变了，或者运行方式变了
+    （程序、参数、脚本、沙盒、环境变量……）：这样的新版本要人看过才收录。"""
+
+    def __init__(self, old: Package, new: Package) -> None:
+        om, nm = old.manifest or {}, new.manifest or {}
+        before, after = permission_scopes(om), permission_scopes(nm)
+        self.added = [p for p in PERMISSIONS if p in after and p not in before]
+        self.removed = [p for p in PERMISSIONS if p in before and p not in after]
+        self.rescoped = [p for p in PERMISSIONS if p in after and p in before and after[p] != before[p]]
+        ort = om.get("runtime") if isinstance(om.get("runtime"), dict) else {}
+        nrt = nm.get("runtime") if isinstance(nm.get("runtime"), dict) else {}
+        self.runtime = [(k, ort.get(k), nrt.get(k)) for k in sorted(set(ort) | set(nrt))
+                        if k not in RUNTIME_TUNING and not registry.same(ort.get(k), nrt.get(k))]
+        self.files_added = sorted(set(new.files) - set(old.files))
+        self.files_removed = sorted(set(old.files) - set(new.files))
+        self.files_changed = sorted(f for f in set(old.files) & set(new.files) if old.files[f] != new.files[f])
+        self.sizes = {f: size for f, (_, size) in new.files.items()}
+
+    @property
+    def risky(self) -> bool:
+        return bool(self.added or self.rescoped or self.runtime)
+
+    def markdown(self) -> list[str]:
+        lines = []
+        if self.added:
+            lines.append("- 多要的权限：" + "、".join(f"**{p}**" for p in self.added))
+        if self.rescoped:
+            lines.append("- 范围变了的权限：" + "、".join(f"**{p}**" for p in self.rescoped))
+        if self.removed:
+            lines.append("- 不再要的权限：" + "、".join(self.removed))
+        for key, a, b in self.runtime:
+            lines.append(f"- 运行方式 runtime.{key}：`{json.dumps(a, ensure_ascii=False)}` → `{json.dumps(b, ensure_ascii=False)}`")
+        for label, names, sized in (("新增的文件", self.files_added, True), ("改了的文件", self.files_changed, True),
+                                    ("删掉的文件", self.files_removed, False)):
+            if names:
+                shown = [f"`{n}`" + (f"（{self.sizes[n]} 字节）" if sized else "") for n in names[:50]]
+                lines.append(f"- {label}：" + "、".join(shown) + (f" 等 {len(names)} 个" if len(names) > 50 else ""))
+        if not (self.files_added or self.files_changed or self.files_removed):
+            lines.append("- 包里的文件没有变化")
+        return lines
+
+
+# ---------------------------------------------------------------- 条目 plugins/<id>.json
+
+class Report:
+    """一个条目的检查结果，和给审核者看的东西。"""
+
+    def __init__(self, pid: str) -> None:
+        self.id = pid
+        self.label = f"plugins/{pid}.json"
+        self.entry: dict | None = None
+        self.old: dict | None = None  # PR：基础分支上的这个条目
+        self.change = ""              # PR：新增、更新、修改、删除
+        self.errors: list[str] = []
+        self.warnings: list[str] = []
+        self.notes: list[str] = []    # 给审核者的链接和说明（Markdown 的列表项）
+
+    def error(self, text: str) -> None:
+        self.errors.append(f"{self.label}：{text}")
+
+    def warn(self, text: str) -> None:
+        self.warnings.append(f"{self.label}：{text}")
+
+
+def check_entry_fields(r: Report, obj, root: Path) -> None:
+    """不联网能查的：字段齐不齐、样子对不对、和 legacy/ 对不对得上。"""
+    if not isinstance(obj, dict):
+        r.error("要是一个 JSON 对象")
+        return
+    r.entry = obj
+    for key in obj:
+        if key not in registry.ENTRY_KEYS:
+            r.error(f"不认识的字段 {key}（拼错了？）")
+    missing = [k for k in ("id", "repo") + registry.GENERATED_KEYS if k not in obj]
+    if missing:
+        r.error("缺少 " + "、".join(missing) + "：用 python tools/entry.py <包的网址> 生成这个文件")
+    pid, repo, version = obj.get("id"), obj.get("repo"), obj.get("version")
+    if not isinstance(pid, str) or not valid_plugin_id(pid) or "." not in pid.strip("."):
+        r.error("id 要写成 作者.名字，只用小写字母、数字、点、连字符和下划线")
+    elif pid != r.id:
+        r.error(f"id 是 {pid}，文件名应该是 plugins/{pid}.json")
+    if "repo" in obj and not (isinstance(repo, str) and registry.REPO_RE.fullmatch(repo)):
+        r.error("repo 要写成 作者/仓库（GitHub 上的公开仓库）")
+    for key in ("autoUpdate",) + registry.MAINTAINER_KEYS:
+        if key in obj and not isinstance(obj[key], bool):
+            r.error(f"{key} 要是 true 或 false")
+    if "version" in obj and not (isinstance(version, str) and registry.PLAIN_VERSION_RE.fullmatch(version)):
+        r.error("version 要写成 1.2.3 这样的三段数字")
+    if "url" in obj:
+        parts = registry.asset_url(obj["url"])
+        if parts is None:
+            r.error("url 要是 GitHub Release 上的包：https://github.com/作者/仓库/releases/download/标签/<id>-<版本>.wsplugin")
+        else:
+            if isinstance(repo, str) and parts.repo.lower() != repo.lower():
+                r.error(f"url 不在 {repo} 的 Release 里")
+            if parts.id != r.id:
+                r.error(f"url 里的文件是 {parts.file}，应该是 {r.id}-<版本>.wsplugin")
+            if isinstance(version, str) and parts.version != version:
+                r.error(f"url 里的文件是 {parts.version} 版，version 却是 {version}")
+    sha = obj.get("sha256")
+    if "sha256" in obj and not (isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{64}", sha)):
+        r.error("sha256 要是 64 位小写十六进制")
+    size = obj.get("size")
+    if "size" in obj and not (isinstance(size, int) and not isinstance(size, bool) and 0 < size <= registry.MAX_PACKAGE):
+        r.error(f"size 要是 1 到 {registry.MAX_PACKAGE} 之间的整数（字节）")
+    texts = Errors()
+    if "name" in obj and (not read_text(obj["name"], "name", texts) or obj["name"] == ""):
+        texts.fail("name 不能是空的")
+    if "description" in obj:
+        read_text(obj["description"], "description", texts)
+    for text in texts.items:
+        r.error(text)
+    for key in ("author", "license"):
+        if key in obj and not (isinstance(obj[key], str) and obj[key].strip()):
+            r.error(f"{key} 不能是空的")
+    if "homepage" in obj and not isinstance(obj["homepage"], str):
+        r.error("homepage 要是字符串")
+    keywords = obj.get("keywords")
+    if "keywords" in obj and not (isinstance(keywords, list) and all(isinstance(k, str) and k for k in keywords)):
+        r.error("keywords 要是字符串数组")
+    perms = obj.get("permissions")
+    if "permissions" in obj and not (isinstance(perms, list) and all(isinstance(p, str) and p in PERMISSIONS for p in perms)
+                                     and perms == sorted(set(perms), key=PERMISSIONS.index)):
+        r.error("permissions 要是 Win顺 认识的权限名，不重复，按固定的顺序排（entry.py 会排好）")
+    runtime = obj.get("runtime")
+    if "runtime" in obj and not (isinstance(runtime, dict) and set(runtime) == {"mode", "program"} and (
+            (runtime["mode"] in ("once", "resident") and runtime["program"] in ALLOWED_PROGRAMS)
+            or (runtime["mode"] == "zero-code" and runtime["program"] is None))):
+        r.error('runtime 要是 {"mode": once 或 resident, "program": python、pwsh、powershell 或 node}，'
+                '零代码插件是 {"mode": "zero-code", "program": null}')
+    min_win = obj.get("minWinShun")
+    if "minWinShun" in obj and not (isinstance(min_win, str) and (not min_win or VERSION_RE.fullmatch(min_win))):
+        r.error("minWinShun 要是空的，或者像 0.15.0 这样")
+    for key in ("releaseDate", "dateAdded"):
+        if key in obj and registry.parse_time(obj[key]) is None:
+            r.error(f"{key} 要像 2026-10-28T12:00:00Z 这样（UTC）")
+    legacy = root / "legacy" / r.id
+    if obj.get("hosted"):
+        if not (legacy / "plugin.json").is_file():
+            r.error(f"hosted 是 true，可是没有 legacy/{r.id}/")
+        if isinstance(repo, str) and repo.lower() != registry.REPO.lower():
+            r.error(f"hosted 的插件在本仓库打包发布，repo 要是 {registry.REPO}")
+    elif legacy.is_dir():
+        r.error(f"legacy/{r.id}/ 在本仓库打包发布，条目要写 hosted: true")
+
+
+def brief(value) -> str:
+    text = json.dumps(value, ensure_ascii=False)
+    return text if len(text) <= 80 else text[:77] + "…"
+
+
+def check_entry_online(r: Report) -> Asset | None:
+    """下载条目指向的包，重新算一遍生成的字段，必须和条目里写的一样。"""
+    obj = r.entry or {}
+    url = obj.get("url")
+    if registry.asset_url(url) is None:
+        return None  # 不联网的检查已经报过了
+    a = check_asset(url, expected_id=r.id)
+    r.errors += [f"{r.label}：{t}" for t in a.errors]
+    r.warnings += [f"{r.label}：{t}" for t in a.warnings]
+    if a.fields:
+        wrong = [k for k in a.fields if not registry.same(obj.get(k), a.fields[k])]
+        for k in wrong:
+            r.error(f"{k} 和包里的不一样（条目里是 {brief(obj.get(k))}，包里是 {brief(a.fields[k])}）")
+        if wrong:
+            r.error(f"用 python tools/entry.py {url} 重新生成这个文件，生成的字段不要手改")
+    return a
+
+
+def keyword_clashes(reports: list[Report]) -> None:
+    owners: dict[str, list[str]] = {}
+    for r in reports:
+        for k in (r.entry or {}).get("keywords") or []:
+            if isinstance(k, str):
+                ids = owners.setdefault(k.lower(), [])
+                if r.id not in ids:
+                    ids.append(r.id)
+    for r in reports:
+        clash: dict[str, list[str]] = {}
+        for k, ids in owners.items():
+            if r.id in ids:
+                for other in ids:
+                    if other != r.id:
+                        clash.setdefault(other, []).append(k)
+        for other, ks in sorted(clash.items()):
+            r.warn(f"关键字 {'、'.join(ks)} 和 {other} 撞了（用户可以在设置里改，但最好换一个）")
+
+
+# ---------------------------------------------------------------- 整个仓库
+
+def load_entries(root: Path) -> tuple[list[Report], list[str]]:
+    """plugins/ 下的全部条目（做过不联网的检查），和 plugins/ 里不该有的东西。"""
+    reports: list[Report] = []
+    stray: list[str] = []
+    folder = root / "plugins"
+    for p in sorted(folder.iterdir()) if folder.is_dir() else []:
+        if p.suffix != ".json" or not p.is_file() or p.is_symlink():
+            what = "符号链接" if p.is_symlink() else ("文件夹" if p.is_dir() else "文件")
+            stray.append(f"plugins/{p.name}：plugins/ 里只放条目 <id>.json，不放{what}。插件的代码放在作者自己的仓库里"
+                         f"（以前收录的老插件在 legacy/），见 {registry.CONTRIBUTING}")
             continue
-        pid = r.manifest.get("id")
-        if isinstance(pid, str):
-            if pid in ids:
-                r.error("plugin.json", f"id {pid} 和 plugins/{ids[pid]} 重复")
-            ids.setdefault(pid, r.name)
-        for k in keywords_of(r.manifest):
-            keywords.setdefault(k.lower(), [])
-            if r.name not in keywords[k.lower()]:
-                keywords[k.lower()].append(r.name)
-    pairs: dict[tuple[str, str], list[str]] = {}
-    for k, owners in keywords.items():
-        for x in owners:
-            for y in owners:
-                if x != y:
-                    pairs.setdefault((x, y), []).append(k)
-    for r in results:
-        for (x, y), ks in sorted(pairs.items()):
-            if x == r.name:
-                r.warn("plugin.json", f"关键字 {'、'.join(ks)} 和 {y} 撞了（用户可以在设置里改，但最好换一个）")
-    if only is not None:
-        results = [r for r in results if r.name in only]
-    return results, None
+        r = Report(p.stem)
+        try:
+            obj = load_json(p)
+        except UnicodeDecodeError:
+            r.error("不是 UTF-8 编码")
+        except json.JSONDecodeError as ex:
+            r.error(f"不是有效的 JSON：{ex.msg}（第 {ex.pos} 个字符）")
+        else:
+            check_entry_fields(r, obj, root)
+        reports.append(r)
+    return reports, stray
 
 
-def changed_names(tokens: list[str]) -> set[str]:
-    names: set[str] = set()
-    for t in tokens:
-        t = t.strip().replace("\\", "/")
-        if not t:
+def legacy_folders(root: Path) -> list[Path]:
+    legacy = root / "legacy"
+    return sorted(p for p in legacy.iterdir() if p.is_dir()) if legacy.is_dir() else []
+
+
+def check_legacy(root: Path, reports: list[Report]) -> list[Result]:
+    """legacy/ 里的老插件：照旧检查；条目要有，而且文件夹里的版本不能比已发布的低。"""
+    results = [check_plugin(f, expected_id=f.name, label=f"legacy/{f.name}") for f in legacy_folders(root)]
+    entries = {r.id: r.entry or {} for r in reports}
+    for res in results:
+        entry = entries.get(res.name)
+        if entry is None:
+            res.error("", f"没有条目 plugins/{res.name}.json")
             continue
-        parts = t.split("/")
-        if parts[0] == "plugins" and len(parts) >= 2:
-            names.add(parts[1])
-        elif "/" not in t:
-            names.add(t)
-    return names
+        old, new = entry.get("version"), (res.manifest or {}).get("version")
+        try:
+            if isinstance(old, str) and isinstance(new, str) and semver_tuple(new) < semver_tuple(old):
+                res.error("plugin.json", f"version {new} 比已经发布的 {old} 还低")
+        except ValueError:
+            pass
+    return results
 
 
-def check_bumped(results: list[Result], base: str) -> None:
-    """改过内容的插件必须升 version。"""
+def git_in(root: Path):
     def git(*args: str) -> subprocess.CompletedProcess:
-        return subprocess.run(["git", *args], cwd=ROOT, capture_output=True)
+        return subprocess.run(["git", "-C", str(root), *args], capture_output=True)
+    return git
 
+
+def check_bumped(results: list[Result], base: str, root: Path) -> None:
+    """改过文件的老插件必须升 version（results 的 label 是 legacy/<id>）。"""
+    git = git_in(root)
     if git("rev-parse", "--verify", "--quiet", base).returncode != 0:
         print(f"提示：找不到 {base}，跳过版本号检查", file=sys.stderr)
         return
     for r in results:
         if r.manifest is None:
             continue
-        old = git("show", f"{base}:plugins/{r.name}/plugin.json")
+        old = git("show", f"{base}:{r.label}/plugin.json")
         if old.returncode != 0:
-            continue  # 新插件
-        if git("diff", "--quiet", base, "--", f"plugins/{r.name}").returncode == 0:
+            continue  # 新的
+        if git("diff", "--quiet", base, "--", r.label).returncode == 0:
             continue  # 没改
         try:
             old_version = json.loads(old.stdout.decode("utf-8-sig")).get("version")
@@ -732,56 +1090,243 @@ def check_bumped(results: list[Result], base: str) -> None:
             pass
 
 
-def summary_markdown(results: list[Result]) -> str:
-    lines = ["## 插件检查", ""]
-    if not results:
-        return "\n".join(lines + ["这次没有改到插件。", ""])
-    lines += ["| 插件 | 版本 | 运行方式 | 权限（粗体 = 审核时多看一眼） | 结果 |", "|---|---|---|---|---|"]
+# ---------------------------------------------------------------- PR
+
+def pr_changes(root: Path, base: str) -> list[tuple[str, str]]:
+    """(状态, 路径)：A 新增、M 修改、D 删除、T 类型变了（比如变成了符号链接）。"""
+    done = git_in(root)("diff", "--name-status", "--no-renames", "-z", base, "HEAD")
+    if done.returncode != 0:
+        raise SystemExit("git diff 失败：" + done.stderr.decode("utf-8", "replace").strip())
+    tokens = done.stdout.decode("utf-8", "surrogateescape").split("\0")
+    return [(tokens[i][:1], tokens[i + 1]) for i in range(0, len(tokens) - 1, 2)]
+
+
+def check_pr_entry(r: Report) -> None:
+    """PR 改到的一个条目：谁能改什么，再联网核对；给审核者留下源码和对比的链接。"""
+    e, old = r.entry or {}, r.old
+    r.change = "新增" if old is None else ("更新" if e.get("version") != old.get("version") else "修改")
+    for key in registry.MAINTAINER_KEYS:
+        if bool(e.get(key)) != bool((old or {}).get(key)):
+            r.error(f"{key} 只有维护者能改")
+    if old is None:
+        if r.id.startswith("winshun."):
+            r.error("winshun. 开头的 id 留给 Win顺 自带的插件")
+        added = registry.parse_time(e.get("dateAdded"))
+        if added and added > datetime.now(timezone.utc) + timedelta(days=1):
+            r.error("dateAdded 不能在将来")
+    else:
+        if not registry.same(e.get("dateAdded"), old.get("dateAdded")):
+            r.error("dateAdded 是第一次收录的时间，不能改")
+        if isinstance(e.get("repo"), str) and isinstance(old.get("repo"), str) and e["repo"].lower() != old["repo"].lower():
+            r.warn(f"**repo 从 {old['repo']} 换成了 {e['repo']}**：维护者要确认是作者本人搬了家，不是别人接手")
+        try:
+            if registry.version_key(e["version"]) < registry.version_key(old["version"]):
+                r.error(f"version {e['version']} 比原来的 {old['version']} 低")
+        except (KeyError, TypeError, ValueError, AttributeError):
+            pass
+    asset = check_entry_online(r)
+    parts = registry.asset_url(e.get("url"))
+    if parts is None or asset is None or asset.package is None:
+        return
+    if r.change == "新增":
+        r.notes.append(f"- 第一次收录：请先读一遍这个版本的代码：{registry.tree_url(parts.repo, parts.tag)}")
+    elif r.change == "更新":
+        r.notes.append(f"- 这个版本的代码：{registry.tree_url(parts.repo, parts.tag)}")
+        old_parts = registry.asset_url(old.get("url"))
+        if old_parts and old_parts.repo.lower() == parts.repo.lower():
+            r.notes.append(f"- 和上一版对比：{registry.compare_url(parts.repo, old_parts.tag, parts.tag)}")
+        before = check_asset(old["url"], expected_id=r.id) if old_parts else None
+        if before and before.package and before.package.manifest and asset.package.manifest:
+            r.notes += Diff(before.package, asset.package).markdown()
+        else:
+            r.notes.append("- 上一版的包下载或检查不了，没法比较权限和文件")
+
+
+def check_pr(root: Path, base: str) -> tuple[list[Report], list[Result], list[str]]:
+    """投稿的 PR 只能改 plugins/<id>.json，和 legacy/ 里已有的老插件；别的地方一改就不过。
+    返回 (改到的条目, 改到的老插件, 改了不该改的地方)。"""
+    git = git_in(root)
+    if git("rev-parse", "--verify", "--quiet", base + "^{commit}").returncode != 0:
+        raise SystemExit(f"找不到 {base}")
+    scope: list[str] = []
+    entries: dict[str, str] = {}
+    legacy: set[str] = set()
+    folders: set[str] = set()
+    for status, path in pr_changes(root, base):
+        parts = path.split("/")
+        if parts[0] == "plugins" and len(parts) == 2 and parts[1].endswith(".json"):
+            entries[parts[1][: -len(".json")]] = status
+        elif parts[0] == "plugins" and len(parts) > 2:
+            if parts[1] not in folders:
+                folders.add(parts[1])
+                scope.append(f"加了 plugins/{parts[1]}/ 文件夹：插件的代码不再放进这个仓库。请在你自己的 GitHub 仓库里发布插件，"
+                             f"再来这里加一个 plugins/<id>.json。怎么做见 CONTRIBUTING.md：{registry.CONTRIBUTING}")
+        elif parts[0] == "legacy" and len(parts) > 2 \
+                and git("cat-file", "-e", f"{base}:legacy/{parts[1]}/plugin.json").returncode == 0:
+            legacy.add(parts[1])
+        elif parts[0] == "legacy":
+            scope.append(f"{path}：legacy/ 只放以前收录的老插件，不再加新的。新插件请放在你自己的仓库里，见 {registry.CONTRIBUTING}")
+        else:
+            scope.append(f"{path}：投稿的 PR 只能改 plugins/<id>.json（以前收录的老插件还能改 legacy/<id>/ 里的文件）。"
+                         "工具、工作流和文档的改动请先开 Issue 和维护者商量")
+
+    reports, _ = load_entries(root)
+    keyword_clashes(reports)  # 和全部条目比
+    by_id = {r.id: r for r in reports}
+    picked: list[Report] = []
+    for pid, status in sorted(entries.items()):
+        shown = git("show", f"{base}:plugins/{pid}.json")
+        old = None
+        if shown.returncode == 0:
+            try:
+                old = json.loads(shown.stdout.decode("utf-8-sig"))
+            except (ValueError, UnicodeDecodeError):
+                old = None
+        r = by_id.get(pid) or Report(pid)
+        r.old = old if isinstance(old, dict) else None
+        path = registry.entry_path(root, pid)
+        if status == "D" or not (path.exists() or path.is_symlink()):
+            r.change = "删除"
+            r.warn("这个 PR 删掉了这个条目：维护者要确认是作者本人要下架")
+        elif pid not in by_id:
+            r.error("要是一个普通文件（不能是符号链接）")
+        else:
+            check_pr_entry(r)
+        picked.append(r)
+
+    results: list[Result] = []
+    for lid in sorted(legacy):
+        folder = root / "legacy" / lid
+        if not (folder / "plugin.json").is_file():
+            res = Result(folder, f"legacy/{lid}")
+            res.error("", "这个 PR 删掉了 plugin.json：要下架老插件请开 Issue 找维护者")
+            results.append(res)
+        else:
+            results.append(check_plugin(folder, expected_id=lid, label=f"legacy/{lid}"))
+    check_bumped(results, base, root)
+    return picked, results, scope
+
+
+# ---------------------------------------------------------------- 给审核者的摘要
+
+def folders_markdown(results: list[Result]) -> list[str]:
+    lines = ["| 插件 | 版本 | 运行方式 | 权限（粗体 = 审核时多看一眼） | 结果 |", "|---|---|---|---|---|"]
     for r in results:
         m = r.manifest or {}
-        names, paths = permissions_of(m) if m else ([], [])
+        names, _ = permissions_of(m) if m else ([], [])
         shown = [f"**{n}**" if n in RISKY else n for n in names]
         runtime = m.get("runtime")
         how = "零代码" if not isinstance(runtime, dict) else f"{runtime.get('mode', '?')} · {runtime.get('program', '?')}"
         state = "有错误" if r.errors else ("有警告" if r.warnings else "通过")
-        lines.append(f"| `{r.name}` | {m.get('version', '?')} | {how} | {'、'.join(shown) or '无'} | {state} |")
+        lines.append(f"| `{r.label}` | {m.get('version', '?')} | {how} | {'、'.join(shown) or '无'} | {state} |")
     for r in results:
         m = r.manifest or {}
         _, paths = permissions_of(m) if m else ([], [])
         if paths or r.errors or r.warnings:
-            lines += ["", f"### `{r.name}`"]
+            lines += ["", f"#### `{r.label}`"]
             if paths:
                 lines.append("读这些文件：" + "、".join(f"`{p}`" for p in paths))
             lines += [f"- 错误：{t}" for t in r.errors]
             lines += [f"- 警告：{t}" for t in r.warnings]
-    lines += ["", "审核者：权限里的粗体项，对照 README 里的说明和代码，看是不是真的需要。", ""]
+    return lines
+
+
+def entries_markdown(reports: list[Report], pr: bool) -> list[str]:
+    lines = ["| 条目 | " + ("改动 | " if pr else "") + "版本 | 运行方式 | 权限（粗体 = 审核时多看一眼） | 结果 |",
+             "|---|" + ("---|" if pr else "") + "---|---|---|---|"]
+    for r in reports:
+        e = r.entry or r.old or {}
+        version = str(e.get("version", "?"))
+        if r.old and r.entry and r.old.get("version") != r.entry.get("version"):
+            version = f"{r.old.get('version')} → {version}"
+        runtime = e.get("runtime") if isinstance(e.get("runtime"), dict) else {}
+        how = "零代码" if runtime.get("mode") == "zero-code" else f"{runtime.get('mode', '?')} · {runtime.get('program', '?')}"
+        before = set(r.old.get("permissions") or []) if r.old and r.entry else None
+        perms = []
+        for p in e.get("permissions") or []:
+            text = f"**{p}**" if p in RISKY else str(p)
+            perms.append(text + ("（新增）" if before is not None and p not in before else ""))
+        state = "有错误" if r.errors else ("有警告" if r.warnings else "通过")
+        change = f"{r.change} | " if pr else ""
+        lines.append(f"| `{r.id}` | {change}{version} | {how} | {'、'.join(perms) or '无'} | {state} |")
+    for r in reports:
+        if r.notes or r.errors or r.warnings:
+            lines += ["", f"#### `{r.id}`"] + r.notes
+            lines += [f"- 错误：{t}" for t in r.errors]
+            lines += [f"- 警告：{t}" for t in r.warnings]
+    return lines
+
+
+def summary_markdown(reports: list[Report], legacy: list[Result], scope: list[str], pr: bool) -> str:
+    lines = ["## 插件库检查", ""]
+    if scope:
+        lines += ["### 改了不该改的地方", ""] + [f"- {t}" for t in scope] + [""]
+    if reports:
+        lines += ["### 条目", ""] + entries_markdown(reports, pr) + [""]
+    if legacy:
+        lines += ["### legacy/ 里的老插件", ""] + folders_markdown(legacy) + [""]
+    if not (scope or reports or legacy):
+        lines += ["这次没有改到条目和老插件。", ""]
+    lines += ["审核者：新收录的插件，顺着源码链接把那个版本的代码读一遍；更新看多要的权限和改了的文件。"
+              "权限里的粗体项，对照插件的 README 和代码，看是不是真的需要。", ""]
     return "\n".join(lines)
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="检查 plugins/ 下的插件")
-    ap.add_argument("--changed", nargs="*", metavar="PATH", help="只检查这些插件（id、文件夹或其中的文件路径）")
-    ap.add_argument("--base", metavar="REF", help="和这个 git 版本比，改过内容的插件必须升 version")
+    ap = argparse.ArgumentParser(description="检查插件库的条目和老插件，或者一个插件文件夹")
+    ap.add_argument("folder", nargs="?", help="只检查这个插件文件夹（比如你自己仓库的根目录）")
+    ap.add_argument("--id", help="和插件文件夹一起用：它应该是的 id")
+    ap.add_argument("--online", nargs="*", metavar="ID", help="再下载这些条目（不写就是全部）的包核对")
+    ap.add_argument("--pr", metavar="BASE", help="检查一个 PR：和 BASE 比")
+    ap.add_argument("--root", default=str(ROOT), help="要检查的仓库，默认是工具所在的这个")
     ap.add_argument("--summary", metavar="FILE", help="另写一份给审核者看的 Markdown")
     args = ap.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
 
-    only = changed_names(args.changed) if args.changed is not None else None
-    results, _ = check_all(only)
-    if args.base:
-        check_bumped(results, args.base)
-    for r in results:
+    if args.folder:
+        folder = Path(args.folder)
+        if not folder.is_dir():
+            print(f"错误：{args.folder} 不是文件夹")
+            return 1
+        r = check_plugin(folder, expected_id=args.id, label=folder.as_posix())
         for text in r.warnings:
             print("警告：" + text)
-    for r in results:
         for text in r.errors:
             print("错误：" + text)
+        if args.summary:
+            lines = ["## 插件检查", ""] + folders_markdown([r]) + ["", "审核者：权限里的粗体项，对照 README 和代码，看是不是真的需要。", ""]
+            Path(args.summary).write_text("\n".join(lines), encoding="utf-8")
+        print(f"检查了 {folder.as_posix()}：{len(r.errors)} 个错误，{len(r.warnings)} 条警告")
+        return 1 if r.errors else 0
+
+    root = Path(args.root).resolve()
+    if args.pr:
+        reports, legacy, scope = check_pr(root, args.pr)
+    else:
+        reports, scope = load_entries(root)
+        legacy = check_legacy(root, reports)
+        keyword_clashes(reports)
+        if args.online is not None:
+            wanted = set(args.online) or {r.id for r in reports}
+            scope += [f"没有条目 plugins/{pid}.json" for pid in sorted(wanted - {r.id for r in reports})]
+            for r in reports:
+                if r.id in wanted:
+                    check_entry_online(r)
+    for item in [*reports, *legacy]:
+        for text in item.warnings:
+            print("警告：" + text)
+    for text in scope:
+        print("错误：" + text)
+    for item in [*reports, *legacy]:
+        for text in item.errors:
+            print("错误：" + text)
     if args.summary:
-        Path(args.summary).write_text(summary_markdown(results), encoding="utf-8")
-    bad = sum(1 for r in results if r.errors)
-    print(f"检查了 {len(results)} 个插件：{bad} 个有错误，{sum(len(r.warnings) for r in results)} 条警告")
+        Path(args.summary).write_text(summary_markdown(reports, legacy, scope, bool(args.pr)), encoding="utf-8")
+    bad = len(scope) + sum(1 for item in [*reports, *legacy] if item.errors)
+    warnings = sum(len(item.warnings) for item in [*reports, *legacy])
+    print(f"检查了 {len(reports)} 个条目、{len(legacy)} 个老插件：{bad} 处有错误，{warnings} 条警告")
     return 1 if bad else 0
 
 
