@@ -1,0 +1,34 @@
+{
+  "id": "harafuhub.outlook",
+  "repo": "harafuhub/winshun-outlook",
+  "autoUpdate": true,
+  "version": "1.4.2",
+  "url": "https://github.com/harafuhub/winshun-outlook/releases/download/v1.4.2/harafuhub.outlook-1.4.2.wsplugin",
+  "sha256": "a9d88933219796ac16637efca75f7d6c438ef9e16ad7e6800799fc5f3a401da2",
+  "size": 62128,
+  "name": {
+    "zh": "Outlook 邮件",
+    "en": "Outlook mail"
+  },
+  "description": {
+    "zh": "ol 关键词：通过 Windows 搜索索引查找经典 Outlook 的邮件和附件（PDF、Word、Excel 的内容），Enter 打开",
+    "en": "ol <words>: finds classic Outlook mail and its PDF, Word and Excel attachments by content through the Windows Search index; Enter opens"
+  },
+  "author": "harafuhub",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "ol",
+    "mail"
+  ],
+  "permissions": [
+    "processes"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "powershell"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-10-28T05:10:01Z",
+  "dateAdded": "2026-10-28T03:21:23Z"
+}
