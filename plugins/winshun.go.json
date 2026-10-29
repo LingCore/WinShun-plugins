@@ -3,10 +3,10 @@
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
   "bundled": true,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.go-v1.0.0/winshun.go-1.0.0.wsplugin",
-  "sha256": "581d1ce6b030172050b7d3c7d0107c9ca5626c7ca6e6f706859dcf3825a08175",
-  "size": 5037,
+  "version": "1.1.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.go-v1.1.0/winshun.go-1.1.0.wsplugin",
+  "sha256": "bcfb209b4a7404d84efd9861531e5892eb545cb17c847bd07383a73039599936",
+  "size": 5069,
   "name": {
     "zh": "快捷跳转",
     "en": "Go to"
@@ -27,12 +27,14 @@
     "img",
     "go"
   ],
-  "permissions": [],
+  "permissions": [
+    "processes"
+  ],
   "runtime": {
     "mode": "zero-code",
     "program": null
   },
   "minWinShun": "",
-  "releaseDate": "2026-10-23T09:12:38Z",
+  "releaseDate": "2026-10-29T05:01:20Z",
   "dateAdded": "2026-10-23T09:12:38Z"
 }
