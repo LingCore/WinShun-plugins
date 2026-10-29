@@ -21,10 +21,21 @@ jobs:
           fetch-depth: 2 # HEAD^1 is the base it was merged onto
           persist-credentials: false
 
+      # pull_request.base.sha can be the base from when the PR was opened, with older
+      # tools; the merge's first parent is the base it is checked against now.
+      - name: Which base
+        id: base
+        env:
+          EVENT: ${{ github.event_name }}
+          SHA: ${{ github.sha }}
+        run: |
+          if [ "$EVENT" = "pull_request" ]; then SHA=$(git -C pr rev-parse HEAD^1); fi
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+
       - name: The checker, from the base branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          ref: ${{ steps.base.outputs.sha }}
           path: base
           persist-credentials: false
 
