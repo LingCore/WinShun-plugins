@@ -2,11 +2,10 @@
   "id": "winshun.bookmarks",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "bundled": true,
-  "version": "1.1.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v1.1.0/winshun.bookmarks-1.1.0.wsplugin",
-  "sha256": "0ef75fdcd98035390e9a83279c0969c8834bf17819e70ab7c70bac0a2cc99467",
-  "size": 20824,
+  "version": "2.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.0.0/winshun.bookmarks-2.0.0.wsplugin",
+  "sha256": "5af96ea3d45a1fd7f819a626ab7edbe2f034529cb1fd92dfeacf7d990c74507c",
+  "size": 166316,
   "name": {
     "zh": "浏览器书签",
     "en": "Browser bookmarks"
@@ -27,9 +26,9 @@
   ],
   "runtime": {
     "mode": "once",
-    "program": "python"
+    "program": "WinShunBookmarks.exe"
   },
-  "minWinShun": "",
-  "releaseDate": "2026-10-23T09:12:34Z",
+  "minWinShun": "0.17.0",
+  "releaseDate": "2026-11-01T09:09:49Z",
   "dateAdded": "2026-10-23T09:12:34Z"
 }

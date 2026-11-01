@@ -2,11 +2,10 @@
   "id": "winshun.translate",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "bundled": true,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v1.0.0/winshun.translate-1.0.0.wsplugin",
-  "sha256": "19ea2e470e20afbb66fd84f799bbc9642183b20ac90273fef3c17d929495f167",
-  "size": 23623,
+  "version": "2.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.0.0/winshun.translate-2.0.0.wsplugin",
+  "sha256": "5434f70373228e616ef16392931e8343e932712b4b2d91685a38469e6f1d16f8",
+  "size": 177124,
   "name": {
     "zh": "翻译",
     "en": "Translate"
@@ -27,9 +26,9 @@
   ],
   "runtime": {
     "mode": "resident",
-    "program": "python"
+    "program": "WinShunTranslate.exe"
   },
-  "minWinShun": "",
-  "releaseDate": "2026-10-23T09:12:43Z",
+  "minWinShun": "0.17.0",
+  "releaseDate": "2026-11-01T09:10:24Z",
   "dateAdded": "2026-10-23T09:12:43Z"
 }

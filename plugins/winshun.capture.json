@@ -1,0 +1,38 @@
+{
+  "id": "winshun.capture",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.0.0/winshun.capture-1.0.0.wsplugin",
+  "sha256": "1c4fad9b1213e304768b8cb9410712f0270eb87e031b857c6605740c6322d8f2",
+  "size": 2177651,
+  "name": {
+    "zh": "截图与录屏",
+    "en": "Screenshot and recording"
+  },
+  "description": {
+    "zh": "截图、标注、贴图、长截图、识别文字和录屏",
+    "en": "Screenshots, annotations, pins, long screenshots, text recognition and screen recording"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "cap"
+  ],
+  "permissions": [
+    "files:write",
+    "clipboard:read",
+    "clipboard:write",
+    "ui",
+    "winshun:open",
+    "notifications"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "WinShunCapture.exe"
+  },
+  "minWinShun": "0.17.0",
+  "releaseDate": "2026-11-01T09:10:02Z",
+  "dateAdded": "2026-11-01T08:10:30Z"
+}

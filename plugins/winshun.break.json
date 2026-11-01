@@ -1,0 +1,34 @@
+{
+  "id": "winshun.break",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.break-v1.0.0/winshun.break-1.0.0.wsplugin",
+  "sha256": "4c17bd98dff14bb5e93851985f8020d3f11dc11d174a8e356f8260e6e501d5d2",
+  "size": 237848,
+  "name": {
+    "zh": "休息提醒",
+    "en": "Break reminder"
+  },
+  "description": {
+    "zh": "定时提醒休息：小休看看远处，大休起来走走，可以设成必须休完",
+    "en": "Reminds you to take breaks: look away for a short one, get up for a long one; can be made strict"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "休息",
+    "break"
+  ],
+  "permissions": [
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "WinShunBreak.exe"
+  },
+  "minWinShun": "0.17.0",
+  "releaseDate": "2026-11-01T09:09:56Z",
+  "dateAdded": "2026-11-01T08:10:28Z"
+}
