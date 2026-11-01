@@ -29,6 +29,20 @@ MAX_UNPACKED = 256 * 1024 * 1024  # Install.h kMaxArchiveBytes：解开后最多
 MAX_ENTRIES = 10000               # 压缩包里最多这么多项
 MAX_API = 16 * 1024 * 1024        # 一次 GitHub 接口的回答
 
+# Native binaries are accepted only from these official release assets.
+# A manifest, entry flag or an author's choice of id cannot grant this exception.
+OFFICIAL_NATIVE = {
+    "winshun.bookmarks": ("WinShunBookmarks.exe", (), "bookmarks-plugin"),
+    "winshun.break": ("WinShunBreak.exe", (), "break-plugin"),
+    "winshun.capture": ("WinShunCapture.exe", ("WinShunCaptureApp.dll",), "capture-plugin"),
+    "winshun.localsend": ("WinShunLocalSend.exe", (), "localsend-plugin"),
+    "winshun.semantic": ("WinShunSemantic.exe", (), "semantic-plugin"),
+    "winshun.translate": ("WinShunTranslate.exe", (), "translate-plugin"),
+}
+
+def official_native(repo: str, plugin_id: str) -> bool:
+    return isinstance(repo, str) and isinstance(plugin_id, str) and repo.lower() == REPO.lower() and plugin_id in OFFICIAL_NATIVE
+
 # 条目 plugins/<id>.json 的字段，也是写文件时的顺序
 AUTHOR_KEYS = ("id", "repo", "autoUpdate")  # 作者定（entry.py 帮着填）
 MAINTAINER_KEYS = ("bundled", "hosted")     # 只有维护者能改

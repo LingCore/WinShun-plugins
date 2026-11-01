@@ -37,18 +37,20 @@ MANIFEST_VERSION = 1
 PERMISSIONS = [
     "files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network",
     "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read",
+    "notifications", "network:listen", "system:settings",
 ]
 # 审核者要多看一眼的
-RISKY = {"network", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
+RISKY = {"network", "network:listen", "system:settings", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
 
-ALLOWED_PROGRAMS = {"python", "pwsh", "powershell", "node"}  # Manifest.cpp 另外认插件文件夹里的 exe，本仓库不收
+ALLOWED_PROGRAMS = {"python", "pwsh", "powershell", "node"}  # 社区条目；官方原生包另按仓库、id 和文件名逐一检查
 FORBIDDEN_EXT = {".exe", ".dll", ".sys", ".com", ".scr", ".msi", ".bat", ".cmd", ".vbs", ".jar", ".pyc"}
 MAX_FILE = 1024 * 1024
 MAX_TOTAL = 5 * 1024 * 1024
 ICON_EXT = {".png", ".jpg", ".jpeg", ".ico"}
 ICON_SCHEMES = ("ext:", "file:", "app:", "glyph:", "color:", "data:", "site:")
 KNOWN_TOP = {"$schema", "manifest", "id", "name", "version", "description", "author", "homepage", "license",
-             "icon", "minWinShun", "runtime", "permissions", "commands", "settings", "ai"}
+             "icon", "minWinShun", "runtime", "permissions", "commands", "settings", "ai",
+             "trayMenu", "pictures", "settingsWindow", "systemSwitches"}
 
 VERSION_RE = re.compile(r"\d+(\.\d+)*([-+][0-9A-Za-z.-]+)?")  # Manifest.cpp kVersion
 SEMVER_RE = re.compile(r"\d+\.\d+\.\d+([-+][0-9A-Za-z.-]+)?")  # 本仓库：至少 x.y.z
@@ -142,7 +144,7 @@ def relative_inside(path: str, where: str, e: Errors) -> bool:
     return True
 
 
-def read_runtime(v, e: Errors) -> dict | None:
+def read_runtime(v, e: Errors, native_program: str | None = None) -> dict | None:
     if v is None:
         return None
     if not isinstance(v, dict):
@@ -157,7 +159,7 @@ def read_runtime(v, e: Errors) -> dict | None:
         e.fail("runtime.mode 要是 once 或 resident")
     program = string_field(v, "program", where, e)
     info["program"] = program
-    if program in ALLOWED_PROGRAMS:
+    if program in ALLOWED_PROGRAMS or (native_program is not None and program == native_program):
         pass
     elif not program:
         e.fail("runtime.program 不能为空")
@@ -423,7 +425,7 @@ def read_setting(v, index: int, e: Errors) -> None:
         e.fail(f"{where}.options 要是数组")
 
 
-def validate_manifest(o, e: Errors) -> dict:
+def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
     """照 Manifest::parse。返回后面要用的几样东西。"""
     info = {"runtime": None, "permissions": [], "commands": [], "icon": ""}
     if not isinstance(o, dict):
@@ -465,7 +467,7 @@ def validate_manifest(o, e: Errors) -> dict:
     min_win = string_field(o, "minWinShun", "顶层", e)
     if min_win and not VERSION_RE.fullmatch(min_win):
         e.fail("minWinShun 要像 0.7.0 这样")
-    info["runtime"] = read_runtime(o.get("runtime"), e)
+    info["runtime"] = read_runtime(o.get("runtime"), e, native_program)
     info["permissions"] = read_permissions(o.get("permissions"), e)
 
     commands = o.get("commands")
@@ -556,7 +558,9 @@ def source_files(folder: Path) -> list[Path]:
     return sorted(files, key=lambda p: p.relative_to(folder).as_posix())
 
 
-def check_files(r: Result, folder: Path, packed: bool) -> list[Path]:
+def check_files(r: Result, folder: Path, packed: bool, native_binaries: tuple[str, ...] = ()) -> list[Path]:
+    max_file = registry.MAX_PACKAGE if native_binaries else MAX_FILE
+    max_total = registry.MAX_UNPACKED if native_binaries else MAX_TOTAL
     if packed:  # 解开的包：里面的每个文件都算
         files = sorted(p for p in folder.rglob("*") if p.is_file() or p.is_symlink())
     else:
@@ -569,14 +573,14 @@ def check_files(r: Result, folder: Path, packed: bool) -> list[Path]:
             continue
         size = p.stat().st_size
         total += size
-        if p.suffix.lower() in FORBIDDEN_EXT:
+        if p.suffix.lower() in FORBIDDEN_EXT and not (native_binaries and rel in native_binaries):
             r.error(rel, f"本仓库不收 {p.suffix.lower()} 文件（不放二进制和批处理）")
-        if size > MAX_FILE:
-            r.error(rel, f"{size / 1024 / 1024:.1f} MB，单个文件不能超过 1 MB")
+        if size > max_file:
+            r.error(rel, f"{size / 1024 / 1024:.1f} MB，单个文件不能超过 {max_file >> 20} MB")
         if p.suffix.lower() in (".ps1", ".psm1", ".psd1") and not p.read_bytes().startswith(b"\xef\xbb\xbf"):
             r.error(rel, "PowerShell 文件必须存成带 BOM 的 UTF-8（否则 Windows PowerShell 5.1 里的中文会乱码）")
-    if total > MAX_TOTAL:
-        r.error("", f"整个文件夹 {total / 1024 / 1024:.1f} MB，不能超过 5 MB")
+    if total > max_total:
+        r.error("", f"整个文件夹 {total / 1024 / 1024:.1f} MB，不能超过 {max_total >> 20} MB")
     return files
 
 
@@ -597,7 +601,8 @@ def check_imports(r: Result, folder: Path, files: list[Path]) -> None:
                 r.error(rel, "引用了 WinShun.psm1，但文件夹里没有它（从 Win顺 的 src/plugins-sdk 复制一份进来）")
 
 
-def check_plugin(folder: Path, expected_id: str | None = None, label: str | None = None, packed: bool = False) -> Result:
+def check_plugin(folder: Path, expected_id: str | None = None, label: str | None = None, packed: bool = False,
+                 official_native: bool = False) -> Result:
     """检查一个插件文件夹。expected_id：它应该是的 id（老插件是文件夹名，包是条目的 id；不给就不比）。
     packed：这是解开的包（每个文件都算），不是作者的源码文件夹（只算会打进包的）。"""
     r = Result(folder, label)
@@ -614,7 +619,8 @@ def check_plugin(folder: Path, expected_id: str | None = None, label: str | None
         r.error("plugin.json", f"不是有效的 JSON：{ex.msg}（第 {ex.pos} 个字符）")
         return r
     errors = Errors()
-    info = validate_manifest(obj, errors)
+    native = registry.OFFICIAL_NATIVE.get(expected_id) if official_native else None
+    info = validate_manifest(obj, errors, native[0] if native else None)
     for text in errors.items:
         r.error("plugin.json", text)
     if not isinstance(obj, dict):
@@ -653,7 +659,9 @@ def check_plugin(folder: Path, expected_id: str | None = None, label: str | None
     elif not readme.read_text(encoding="utf-8-sig", errors="replace").strip():
         r.error("README.md", "是空的")
 
-    files = check_files(r, folder, packed)
+    files = check_files(r, folder, packed, (native[0], *native[1]) if native else ())
+    if native and not (folder / native[0]).is_file():
+        r.error("plugin.json", f"官方原生入口 {native[0]} 不在插件文件夹里")
 
     runtime = info.get("runtime")
     if runtime and runtime["script"] and inside_folder(runtime["script"]):
@@ -742,7 +750,7 @@ class Package:
         self.files: dict[str, tuple[str, int]] = {}  # 相对路径 → (sha256, 字节数)
 
 
-def check_package(data: bytes, expected_id: str, version: str, label: str) -> Package:
+def check_package(data: bytes, expected_id: str, version: str, label: str, *, official_native: bool = False) -> Package:
     """解到系统的临时文件夹（不在仓库里）检查，查完就删。不运行包里的任何东西。"""
     p = Package(label)
     if len(data) > registry.MAX_PACKAGE:
@@ -754,7 +762,7 @@ def check_package(data: bytes, expected_id: str, version: str, label: str) -> Pa
         if problems:
             p.errors += [f"{label}：{t}" for t in problems]
             return p
-        r = check_plugin(folder, expected_id=expected_id, label=label, packed=True)
+        r = check_plugin(folder, expected_id=expected_id, label=label, packed=True, official_native=official_native)
         p.errors += r.errors
         p.warnings += r.warnings
         p.manifest = r.manifest
@@ -807,7 +815,8 @@ def check_asset(url: str, expected_id: str | None = None, release: dict | None =
         a.errors.append(f"{parts.repo} 的 {parts.tag} 里没有 {parts.file}")
     elif registry.digest_of(asset) and registry.digest_of(asset) != hashlib.sha256(data).hexdigest():
         a.errors.append(f"{parts.file}：下载到的 sha256 和 GitHub 记的不一样")
-    a.package = check_package(data, parts.id, parts.version, parts.file)
+    a.package = check_package(data, parts.id, parts.version, parts.file,
+                              official_native=registry.official_native(parts.repo, parts.id))
     a.errors += a.package.errors
     a.warnings += a.package.warnings
     if not a.errors:
@@ -945,7 +954,9 @@ def check_entry_fields(r: Report, obj, root: Path) -> None:
         r.error("permissions 要是 Win顺 认识的权限名，不重复，按固定的顺序排（entry.py 会排好）")
     runtime = obj.get("runtime")
     if "runtime" in obj and not (isinstance(runtime, dict) and set(runtime) == {"mode", "program"} and (
-            (runtime["mode"] in ("once", "resident") and runtime["program"] in ALLOWED_PROGRAMS)
+            (runtime["mode"] in ("once", "resident") and (runtime["program"] in ALLOWED_PROGRAMS
+                or (registry.official_native(obj.get("repo", ""), obj.get("id", ""))
+                    and runtime["program"] == registry.OFFICIAL_NATIVE[obj["id"]][0])))
             or (runtime["mode"] == "zero-code" and runtime["program"] is None))):
         r.error('runtime 要是 {"mode": once 或 resident, "program": python、pwsh、powershell 或 node}，'
                 '零代码插件是 {"mode": "zero-code", "program": null}')

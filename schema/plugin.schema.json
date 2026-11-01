@@ -34,6 +34,10 @@
     },
     "commands": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/command"}},
     "settings": {"type": "array", "items": {"$ref": "#/$defs/setting"}},
+    "trayMenu": {"$ref": "#/$defs/text"},
+    "pictures": {"type": "array", "items": {"enum": ["pin", "edit"]}, "uniqueItems": true},
+    "settingsWindow": {"type": "boolean"},
+    "systemSwitches": {"type": "boolean"},
     "ai": {
       "description": "允许命令成为 AI 的工具（用户还要在设置里打开）",
       "type": "object",
@@ -49,7 +53,7 @@
       ]
     },
     "permission": {
-      "enum": ["files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network", "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read"]
+      "enum": ["files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network", "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read", "notifications", "network:listen", "system:settings"]
     },
     "relativePath": {
       "description": "插件文件夹里的相对路径，不能出界",
@@ -61,7 +65,7 @@
       "required": ["mode", "program"],
       "properties": {
         "mode": {"enum": ["once", "resident"]},
-        "program": {"description": "本仓库只收 python、pwsh、powershell、node", "enum": ["python", "pwsh", "powershell", "node"]},
+        "program": {"description": "社区插件仅支持解释器；原生入口仅限官方白名单", "enum": ["python", "pwsh", "powershell", "node", "WinShunBookmarks.exe", "WinShunBreak.exe", "WinShunCapture.exe", "WinShunLocalSend.exe", "WinShunSemantic.exe", "WinShunTranslate.exe"]},
         "script": {"description": "入口脚本，默认 main.py / main.ps1 / main.js", "$ref": "#/$defs/relativePath"},
         "args": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]},
         "cwd": {"$ref": "#/$defs/relativePath"},
@@ -100,7 +104,11 @@
         },
         "run": {"$ref": "#/$defs/run"},
         "cache": {"oneOf": [{"type": "object", "properties": {"seconds": {"type": "number", "minimum": 0, "maximum": 86400}}}, {"type": "number"}]},
-        "ai": {
+        "trayMenu": {"$ref": "#/$defs/text"},
+    "pictures": {"type": "array", "items": {"enum": ["pin", "edit"]}, "uniqueItems": true},
+    "settingsWindow": {"type": "boolean"},
+    "systemSwitches": {"type": "boolean"},
+    "ai": {
           "type": "object",
           "properties": {"description": {"type": "string"}, "parameters": {"type": "object"}}
         }
@@ -139,5 +147,6 @@
         "options": {"type": "array"}
       }
     }
-  }
+  },
+  "allOf": [{"if": {"required": ["runtime"], "properties": {"runtime": {"required": ["program"], "properties": {"program": {"enum": ["WinShunBookmarks.exe", "WinShunBreak.exe", "WinShunCapture.exe", "WinShunLocalSend.exe", "WinShunSemantic.exe", "WinShunTranslate.exe"]}}}}}, "then": {"properties": {"id": {"enum": ["winshun.bookmarks", "winshun.break", "winshun.capture", "winshun.localsend", "winshun.semantic", "winshun.translate"]}}}}]
 }

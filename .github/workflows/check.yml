@@ -43,6 +43,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Test the trusted checker's native package boundary
+        run: python -I -m unittest discover -s base/tools -p test_native.py
+
       - name: Check
         env:
           GH_TOKEN: ${{ github.token }}
