@@ -37,6 +37,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Test the official native package boundary
+        run: python -I -m unittest discover -s tools -p test_native.py
+
       - name: Check the entries and the legacy plugins
         run: python -I tools/check.py
 

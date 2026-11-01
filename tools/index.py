@@ -29,6 +29,8 @@ MAIN_REPO = "LingCore/WinShun"
 
 def source_of(e: dict) -> str:
     """插件的源码在哪：自带的在 Win顺 主仓库，老插件在本仓库的 legacy/，别的在作者自己的仓库。"""
+    if registry.official_native(e["repo"], e["id"]):
+        return f"https://github.com/{MAIN_REPO}/tree/main/src/{registry.OFFICIAL_NATIVE[e['id']][2]}"
     if e.get("bundled"):
         return f"https://github.com/{MAIN_REPO}/tree/main/plugins/{e['id']}"
     if e.get("hosted"):

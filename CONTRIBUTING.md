@@ -73,8 +73,8 @@
 
 - 每个插件写明 `author` 和 `license`。你发布的代码要能按这个许可证放出来。
 - `id` 写成 `作者.名字`，比如 `zhangsan.ip`。`winshun.` 开头的留给 Win顺 自带的插件。
-- 包里只放文本和图片：不收 `.exe` `.dll` `.bat` `.cmd` `.vbs` `.jar` 这类能直接运行的文件，也不收 `.pyc`。单个文件不超过 1 MB，整个包解开不超过 5 MB。
-- 运行方式只用 `python`、`pwsh`、`powershell`、`node`。要带自己的 exe 的插件，插件库不收；用户可以自己从压缩包安装。
+- 社区包只放文本和图片：不收 `.exe` `.dll` `.bat` `.cmd` `.vbs` `.jar` 这类能直接运行的文件，也不收 `.pyc`。单个文件不超过 1 MB，整个包解开不超过 5 MB。
+- 社区插件的运行方式只用 `python`、`pwsh`、`powershell`、`node`。自己带 exe 的社区插件可从压缩包安装，不由此库分发。下方六个官方原生包有按来源及文件名限定的独立规则。
 - 图标用 PNG、JPG 或 ICO，不用 SVG。
 - PowerShell 脚本（`.ps1`、`.psm1`）存成带 BOM 的 UTF-8，否则 Windows PowerShell 5.1 里的中文会乱码。
 - 权限只要用得到的。`network`、`processes`、`files:write`、`ui`、`winshun:content`、剪贴板，这几项审核时会逐条对照代码看；README 里要写清为什么要。
@@ -106,6 +106,9 @@ wsbench --plugin 你的插件文件夹 --query "ip" --runs 5
 
 ## 维护者
 
-- 自带的插件（`winshun.*`）源码在 Win顺 主仓库的 `plugins/` 里，这里只有条目（`bundled: true`）。发新版本：把主仓库的 `plugins/<id>/` 和它用的 SDK 文件（和 Win顺 构建时复制的一样）放进一个不在 git 仓库里的文件夹，`python tools/build.py 那个文件夹`，把包传到本仓库一个新的 Release，再 `python tools/entry.py <包的网址>`，推到 main。
+- 自带的脚本插件源码在 Win顺 主仓库的 `plugins/` 里，这里只有条目（`bundled: true`）。发新版本：把主仓库的 `plugins/<id>/` 和它用的 SDK 文件（和 Win顺 构建时复制的一样）放进一个不在 git 仓库里的文件夹，`python tools/build.py 那个文件夹`，把包传到本仓库一个新的 Release，再 `python tools/entry.py <包的网址>`，推到 main。
+- Win顺 0.17.0 起，六个官方原生插件从插件库按需安装（`bundled: false`、`minWinShun: 0.17.0`）：`winshun.bookmarks`、`winshun.break`、`winshun.capture`、`winshun.localsend`、`winshun.semantic`、`winshun.translate`。源码在主仓库 `src/<名字>-plugin/`，由主仓库的 `scripts/release.ps1` 生成 `.wsplugin`，发布到 **LingCore/WinShun-plugins** 的新版本 Release。
+- 原生例外只接受上述仓库的真实 Release 下载地址，按 `tools/registry.py` 中的 id 对照表核对唯一入口 exe；只有 capture 可额外包含 `WinShunCaptureApp.dll`。其他 exe、DLL、脚本启动器和驱动仍拒绝。压缩包最多 64 MiB，解压最多 256 MiB，单文件最多 64 MiB；路径穿越、链接及重复条目检查仍适用。声明 `winshun.*` 或在 JSON 中填这个仓库名都不能获得例外。
+- 先离线检查实际包并跑 `python -I -m unittest discover -s tools -p test_native.py`；发布后用 `python tools/entry.py <包的网址> --no-bundled --no-auto-update` 联网重新核对附件、哈希、最低宿主版本和权限，再推送条目。不替换已发布同版本包；内容变动时必须升插件版本。Release 说明应记录主仓库源码提交及最低宿主版本。
 - `bundled`、`hosted` 这类只有维护者能改的字段，直接推到 main（`entry.py --bundled`、`--hosted`）。
 - 改了工具，想确认 index.json 没变：先下载已发布的（`gh release download index -p index.json`），再 `python tools/index.py --compare index.json`。没升版本的插件，每个字段都应该一模一样。
