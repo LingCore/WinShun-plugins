@@ -9,6 +9,7 @@ on:
       - "plugins/**"
       - "legacy/**"
       - "tools/**"
+      - "keys/**"
       - ".github/workflows/publish.yml"
   workflow_dispatch:
 
@@ -23,6 +24,7 @@ jobs:
   publish:
     if: github.repository == 'LingCore/WinShun-plugins'
     runs-on: ubuntu-latest
+    environment: index-signing # holds INDEX_SIGNING_KEYS; only main may use it
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -39,6 +41,12 @@ jobs:
 
       - name: Test the official native package boundary
         run: python -I -m unittest discover -s tools -p test_native.py
+
+      - name: Install the signing library (pinned)
+        run: python -m pip install --disable-pip-version-check "cryptography==49.0.0"
+
+      - name: Test the index signing tool
+        run: python -I -m unittest discover -s tools -p test_sign.py
 
       - name: Check the entries and the legacy plugins
         run: python -I tools/check.py
@@ -105,6 +113,12 @@ jobs:
       - name: Build index.json and the README table
         run: python -I tools/index.py --out dist --readme
 
+      # The only step that sees the private key(s). Writes dist/index.json.sig and verifies it against keys/*.pub.
+      - name: Sign index.json
+        env:
+          INDEX_SIGNING_KEYS: ${{ secrets.INDEX_SIGNING_KEYS }}
+        run: python -I tools/sign_index.py sign dist/index.json
+
       - name: Commit the entries and the README table if they changed
         run: |
           set -euo pipefail
@@ -126,4 +140,4 @@ jobs:
             gh release create index --target "$(git rev-parse HEAD)" --latest=false \
               --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
           fi
-          gh release upload index dist/index.json --clobber
+          gh release upload index dist/index.json dist/index.json.sig --clobber
