@@ -27,6 +27,7 @@ jobs:
       ((github.event_name == 'schedule' && github.event.schedule == '23 */6 * * *') ||
        (github.event_name == 'workflow_dispatch' && inputs.task == 'update'))
     runs-on: ubuntu-latest
+    environment: index-signing # holds INDEX_SIGNING_KEYS; only main may use it
     permissions:
       contents: write
       pull-requests: write
@@ -45,6 +46,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install the signing library (pinned)
+        run: python -m pip install --disable-pip-version-check "cryptography==49.0.0"
+
       - name: Look for new versions
         run: python -I tools/update.py --write --out "$RUNNER_TEMP/updates" --summary "$RUNNER_TEMP/updates.md"
 
@@ -52,9 +56,10 @@ jobs:
         if: always()
         run: if [ -f "$RUNNER_TEMP/updates.md" ]; then cat "$RUNNER_TEMP/updates.md" >> "$GITHUB_STEP_SUMMARY"; fi
 
-      - name: Commit the safe updates, rebuild and upload index.json
+      - name: Commit the safe updates, rebuild index.json
         # Also when nothing was updated: a publish run that was waiting gets cancelled when this job
-        # queues in the same group, so the table and index.json it would have written go out here.
+        # queues in the same group, so the table and index.json it would have written go out here
+        # (signed and uploaded by the two steps after this one).
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -71,20 +76,33 @@ jobs:
             git commit -m "README: update the plugin table [skip ci]"
           fi
           git push origin HEAD:main
+
+      # The only step that sees the private key(s). Writes dist/index.json.sig and verifies it against keys/*.pub.
+      - name: Sign index.json
+        env:
+          INDEX_SIGNING_KEYS: ${{ secrets.INDEX_SIGNING_KEYS }}
+        run: python -I tools/sign_index.py sign dist/index.json
+
+      - name: Upload index.json and index.json.sig if they changed
+        run: |
+          set -euo pipefail
           live="$RUNNER_TEMP/live"
           mkdir -p "$live"
-          if gh release download index -p index.json -D "$live" 2> /dev/null &&
+          # Up to date = same content (ignoring "generated") AND the live signature verifies the live index.json.
+          # A missing or invalid .sig (first run, or an upload that only half happened) is repaired here.
+          if gh release download index -p index.json -p index.json.sig -D "$live" 2> /dev/null &&
             old=$(jq -S 'del(.generated)' "$live/index.json") &&
             new=$(jq -S 'del(.generated)' dist/index.json) &&
-            [ "$old" = "$new" ]; then
-            echo "index.json is up to date"
+            [ "$old" = "$new" ] &&
+            python -I tools/sign_index.py verify "$live/index.json" "$live/index.json.sig"; then
+            echo "index.json and its signature are up to date"
             exit 0
           fi
           if ! gh release view index > /dev/null 2>&1; then
             gh release create index --target "$(git rev-parse HEAD)" --latest=false \
               --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
           fi
-          gh release upload index dist/index.json --clobber
+          gh release upload index dist/index.json dist/index.json.sig --clobber
 
       - name: Open pull requests and issues for the updates that need a look
         env:

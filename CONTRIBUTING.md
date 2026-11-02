@@ -111,4 +111,5 @@ wsbench --plugin 你的插件文件夹 --query "ip" --runs 5
 - 原生例外只接受上述仓库的真实 Release 下载地址，按 `tools/registry.py` 中的 id 对照表核对唯一入口 exe；只有 capture 可额外包含 `WinShunCaptureApp.dll`。其他 exe、DLL、脚本启动器和驱动仍拒绝。压缩包最多 64 MiB，解压最多 256 MiB，单文件最多 64 MiB；路径穿越、链接及重复条目检查仍适用。声明 `winshun.*` 或在 JSON 中填这个仓库名都不能获得例外。
 - 先离线检查实际包并跑 `python -I -m unittest discover -s tools -p test_native.py`；发布后用 `python tools/entry.py <包的网址> --no-bundled --no-auto-update` 联网重新核对附件、哈希、最低宿主版本和权限，再推送条目。不替换已发布同版本包；内容变动时必须升插件版本。Release 说明应记录主仓库源码提交及最低宿主版本。
 - `bundled`、`hosted` 这类只有维护者能改的字段，直接推到 main（`entry.py --bundled`、`--hosted`）。
+- 每次生成 index.json 后，CI 会用 GitHub Environment `index-signing` 里的私钥（secret `INDEX_SIGNING_KEYS`）签名，把 `index.json.sig` 和 `index.json` 一起传到 `index` Release。私钥只在签名那一步能看到，仓库里只有公钥（`keys/*.pub`）。改 `tools/sign_index.py` 后跑 `python -I -m unittest discover -s tools -p test_sign.py`（要先 `pip install cryptography`）；换钥匙、丢钥匙、泄露怎么办，看 [keys/README.md](keys/README.md)。
 - 改了工具，想确认 index.json 没变：先下载已发布的（`gh release download index -p index.json`），再 `python tools/index.py --compare index.json`。没升版本的插件，每个字段都应该一模一样。
