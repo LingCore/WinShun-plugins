@@ -10,6 +10,7 @@ import zipfile
 
 import check
 import registry
+import index
 
 
 def package(extra=None, program="WinShunCapture.exe"):
@@ -68,6 +69,59 @@ class NativePolicy(unittest.TestCase):
     def test_invalid_identity_never_grants_native_access(self):
         for repo, plugin_id in [(None, "winshun.capture"), (registry.REPO, []), (registry.REPO, "other.native")]:
             self.assertFalse(registry.official_native(repo, plugin_id))
+
+    def test_ocr_search_allows_only_its_official_binaries(self):
+        manifest = {
+            "manifest": 1, "id": "winshun.ocr-search", "name": "Image text search", "version": "1.0.0",
+            "author": "LingCore", "license": "MIT", "description": "Search images",
+            "runtime": {"mode": "resident", "program": "WinShunOcrSearch.exe"},
+            "commands": [{"id": "find", "keyword": "ocr", "contentSearch": True}],
+        }
+        files = {"plugin.json": json.dumps(manifest).encode(), "README.md": b"Offline image text search.",
+                 "WinShunOcrSearch.exe": b"MZfixture", "WinShunOcrSearchApp.dll": b"MZfixture"}
+        def archive():
+            output = io.BytesIO()
+            with zipfile.ZipFile(output, "w") as z:
+                for name, data in files.items():
+                    z.writestr(name, data)
+            return output.getvalue()
+        self.assertEqual(check.check_package(archive(), manifest["id"], "1.0.0", "fixture", official_native=True).errors, [])
+        self.assertTrue(check.check_package(archive(), manifest["id"], "1.0.0", "fixture").errors)
+        files["extra.exe"] = b"MZfixture"
+        self.assertTrue(check.check_package(archive(), manifest["id"], "1.0.0", "fixture", official_native=True).errors)
+
+
+class ManifestPolicy(unittest.TestCase):
+    def manifest(self):
+        return {"manifest": 1, "id": "winshun.web", "name": "Web search", "version": "2.0.0",
+                "webSearch": True, "commands": []}
+
+    def errors(self, manifest):
+        errors = check.Errors()
+        check.validate_manifest(manifest, errors)
+        return errors.items
+
+    def test_web_search_has_no_static_commands_or_process(self):
+        self.assertEqual(self.errors(self.manifest()), [])
+        for changes in [{"id": "other.web"}, {"webSearch": "true"}, {"webSearch": False},
+                        {"runtime": {"mode": "resident", "program": "python"}},
+                        {"commands": [{"id": "url", "run": {"url": "https://example.com"}}]}]:
+            with self.subTest(changes=changes):
+                self.assertTrue(self.errors(self.manifest() | changes))
+
+    def test_content_search_requires_a_process_and_boolean(self):
+        manifest = self.manifest() | {"id": "author.search", "webSearch": False,
+                                     "runtime": {"mode": "resident", "program": "python"},
+                                     "commands": [{"id": "find", "contentSearch": True}]}
+        self.assertEqual(self.errors(manifest), [])
+        self.assertTrue(self.errors(manifest | {"runtime": None}))
+        manifest["commands"][0]["contentSearch"] = "true"
+        self.assertTrue(self.errors(manifest))
+
+    def test_web_source_preserves_the_bundled_sample_link(self):
+        entry = {"repo": registry.REPO, "id": "winshun.web"}
+        self.assertTrue(index.source_of(entry).endswith("src/web-plugin"))
+        self.assertTrue(index.source_of(entry | {"bundled": True}).endswith("plugins/winshun.web"))
 
 
 if __name__ == "__main__":

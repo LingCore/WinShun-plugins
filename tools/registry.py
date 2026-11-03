@@ -36,6 +36,7 @@ OFFICIAL_NATIVE = {
     "winshun.break": ("WinShunBreak.exe", (), "break-plugin"),
     "winshun.capture": ("WinShunCapture.exe", ("WinShunCaptureApp.dll",), "capture-plugin"),
     "winshun.localsend": ("WinShunLocalSend.exe", (), "localsend-plugin"),
+    "winshun.ocr-search": ("WinShunOcrSearch.exe", ("WinShunOcrSearchApp.dll",), "ocr-search-plugin"),
     "winshun.semantic": ("WinShunSemantic.exe", (), "semantic-plugin"),
     "winshun.translate": ("WinShunTranslate.exe", (), "translate-plugin"),
 }
