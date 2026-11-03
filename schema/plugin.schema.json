@@ -32,7 +32,8 @@
         ]
       }
     },
-    "commands": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/command"}},
+    "commands": {"type": "array", "items": {"$ref": "#/$defs/command"}},
+    "webSearch": {"description": "官方网页搜索插件的宿主能力，网站在插件设置中管理", "type": "boolean"},
     "settings": {"type": "array", "items": {"$ref": "#/$defs/setting"}},
     "trayMenu": {"$ref": "#/$defs/text"},
     "pictures": {"type": "array", "items": {"enum": ["pin", "edit"]}, "uniqueItems": true},
@@ -44,6 +45,17 @@
       "properties": {"expose": {"type": "boolean"}}
     }
   },
+  "allOf": [
+    {
+      "if": {"required": ["webSearch"], "properties": {"webSearch": {"const": true}}},
+      "then": {"properties": {"id": {"const": "winshun.web"}, "commands": {"maxItems": 0}}, "not": {"required": ["runtime"]}},
+      "else": {"properties": {"commands": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"commands": {"contains": {"required": ["contentSearch"], "properties": {"contentSearch": {"const": true}}}}}},
+      "then": {"required": ["runtime"]}
+    }
+  ],
   "$defs": {
     "text": {
       "description": "字符串，或 {\"zh\": …, \"en\": …} 按界面语言取",
@@ -65,7 +77,7 @@
       "required": ["mode", "program"],
       "properties": {
         "mode": {"enum": ["once", "resident"]},
-        "program": {"description": "社区插件仅支持解释器；原生入口仅限官方白名单", "enum": ["python", "pwsh", "powershell", "node", "WinShunBookmarks.exe", "WinShunBreak.exe", "WinShunCapture.exe", "WinShunLocalSend.exe", "WinShunSemantic.exe", "WinShunTranslate.exe"]},
+        "program": {"description": "社区插件仅支持解释器；原生入口仅限官方白名单", "enum": ["python", "pwsh", "powershell", "node", "WinShunBookmarks.exe", "WinShunBreak.exe", "WinShunCapture.exe", "WinShunLocalSend.exe", "WinShunOcrSearch.exe", "WinShunSemantic.exe", "WinShunTranslate.exe"]},
         "script": {"description": "入口脚本，默认 main.py / main.ps1 / main.js", "$ref": "#/$defs/relativePath"},
         "args": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]},
         "cwd": {"$ref": "#/$defs/relativePath"},
@@ -94,6 +106,7 @@
         },
         "triggers": {"type": "array", "items": {"$ref": "#/$defs/trigger"}},
         "mode": {"enum": ["list", "instant"]},
+        "contentSearch": {"description": "由插件进程提供内容搜索结果", "type": "boolean"},
         "actions": {
           "type": "array",
           "items": {

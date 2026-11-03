@@ -50,7 +50,7 @@ ICON_EXT = {".png", ".jpg", ".jpeg", ".ico"}
 ICON_SCHEMES = ("ext:", "file:", "app:", "glyph:", "color:", "data:", "site:")
 KNOWN_TOP = {"$schema", "manifest", "id", "name", "version", "description", "author", "homepage", "license",
              "icon", "minWinShun", "runtime", "permissions", "commands", "settings", "ai",
-             "trayMenu", "pictures", "settingsWindow", "systemSwitches"}
+             "trayMenu", "pictures", "settingsWindow", "systemSwitches", "webSearch"}
 
 VERSION_RE = re.compile(r"\d+(\.\d+)*([-+][0-9A-Za-z.-]+)?")  # Manifest.cpp kVersion
 SEMVER_RE = re.compile(r"\d+\.\d+\.\d+([-+][0-9A-Za-z.-]+)?")  # 本仓库：至少 x.y.z
@@ -360,6 +360,10 @@ def read_command(v, index: int, has_runtime: bool, e: Errors) -> dict:
         e.fail(f"{where}.id 只能用小写字母、数字、点、连字符和下划线")
     for key in ("title", "description", "hint"):
         read_text(v.get(key), f"{where}.{key}", e)
+    if "contentSearch" in v and not isinstance(v["contentSearch"], bool):
+        e.fail(f"{where}.contentSearch 要是布尔值")
+    if v.get("contentSearch") is True and not has_runtime:
+        e.fail(f"{where}.contentSearch 需要插件进程")
     icon = string_field(v, "icon", where, e)
     info["icon"] = icon
     if icon.lower().endswith(".svg"):
@@ -470,8 +474,15 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
     info["runtime"] = read_runtime(o.get("runtime"), e, native_program)
     info["permissions"] = read_permissions(o.get("permissions"), e)
 
+    if "webSearch" in o and not isinstance(o["webSearch"], bool):
+        e.fail("webSearch 要是布尔值")
+    web_search = o.get("webSearch") is True
+    if web_search and pid != "winshun.web":
+        e.fail("webSearch 是官方网页搜索插件的宿主能力")
+    if web_search and info["runtime"] is not None:
+        e.fail("webSearch 是零代码网址功能，不能声明 runtime")
     commands = o.get("commands")
-    if not isinstance(commands, list) or not commands:
+    if not isinstance(commands, list) or (not commands and not web_search):
         e.fail("commands 要至少有一个命令")
     else:
         has_runtime = info["runtime"] is not None
@@ -481,6 +492,8 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
             if c["id"] and c["id"] in seen:
                 e.fail(f"commands 里有两个 id 都是 {c['id']} 的命令")
             seen.add(c["id"])
+    if web_search and commands:
+        e.fail("webSearch 的网站由插件设置管理，commands 应为空")
     if "settings" in o:
         settings = o["settings"]
         if not isinstance(settings, list):

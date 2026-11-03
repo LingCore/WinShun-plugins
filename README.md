@@ -33,7 +33,7 @@
 
 ## 随 Win顺 自带
 
-表里标了“随 Win顺 自带”的 `winshun.go`、`winshun.kill`、`winshun.web`，Win顺 安装时就带着，源码在主仓库的 [plugins/](https://github.com/LingCore/WinShun/tree/main/plugins) 里。另外两个是 C++ 写的程序，也和 Win顺 一起装好，不在表里：
+表里标了“随 Win顺 自带”的 `winshun.go`、`winshun.kill`，Win顺 安装时就带着，源码在主仓库的 [plugins/](https://github.com/LingCore/WinShun/tree/main/plugins) 里。另外两个是 C++ 写的程序，也和 Win顺 一起装好，不在表里：
 
 - [winshun.tools](https://github.com/LingCore/WinShun/tree/main/plugins/winshun.tools)：计算器、单位换算、颜色、时间戳、UUID、Base64、哈希。
 - [winshun.switches](https://github.com/LingCore/WinShun/tree/main/src/switches-plugin)：系统开关，可在插件设置中启用或停用。
@@ -71,4 +71,10 @@ Since WinShun 0.17.0, screenshots and recording (`winshun.capture`), LAN transfe
 
 Plugins run with your own normal (non-admin) rights. "Listed" means a maintainer read the code of the first listed version. Later versions are checked automatically (the package is unchanged, the manifest is valid), and a version that asks for more permissions or changes how it runs is reviewed again before it is listed. It is not a guarantee, so read the permissions first.
 
-To submit a plugin, see [CONTRIBUTING.md](CONTRIBUTING.md) (in Chinese): put the plugin in your own repository, copy [template/release.yml](template/release.yml), push a `v<version>` tag, then open a PR that adds `plugins/<id>.json` (made by `python tools/entry.py <package URL>`, or copied from the release run's summary). The plugin format is in the [plugin docs](https://github.com/LingCore/WinShun/blob/main/docs/plugins.md). Plugins submitted earlier as folders live in `legacy/` and are still packed and released here. `winshun.go`, `winshun.kill` and `winshun.web` ship with WinShun, as do the C++ utility plugin `winshun.tools` and system-switch plugin `winshun.switches`.
+To submit a plugin, see [CONTRIBUTING.md](CONTRIBUTING.md) (in Chinese): put the plugin in your own repository, copy [template/release.yml](template/release.yml), push a `v<version>` tag, then open a PR that adds `plugins/<id>.json` (made by `python tools/entry.py <package URL>`, or copied from the release run's summary). The plugin format is in the [plugin docs](https://github.com/LingCore/WinShun/blob/main/docs/plugins.md). Plugins submitted earlier as folders live in `legacy/` and are still packed and released here. `winshun.go` and `winshun.kill` ship with WinShun, as do the C++ utility plugin `winshun.tools` and system-switch plugin `winshun.switches`.
+
+## WinShun 0.18.0
+
+网页搜索 2.0.0 和图片文字搜索 1.0.0 从插件库安装，最低要求 WinShun 0.18.0。网页搜索 2.x 由宿主提供网站管理，保留旧网站配置。截图插件 1.0.2 也需要 WinShun 0.18.0。休息提醒 1.0.1 增加一直暂停到手动恢复，翻译 2.1.0 增加 AI 词典、微软 Translator 和更多模型服务预设，并取消过期查询。
+
+Web search 2.0.0 and image text search 1.0.0 are optional downloads requiring WinShun 0.18.0. Web search keeps existing sites and uses the host's site manager. Capture 1.0.2 also requires WinShun 0.18.0. Break reminder 1.0.1 supports pausing until resumed. Translation 2.1.0 adds an AI dictionary, Microsoft Translator and model-service presets, and cancels superseded queries.
