@@ -2,36 +2,28 @@
   "id": "winshun.web",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "bundled": true,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.web-v1.0.0/winshun.web-1.0.0.wsplugin",
-  "sha256": "822bdda5a2655981342127aa6ebea1b2ba23fce2d284a7ec4429e40ccd55a454",
-  "size": 3483,
+  "version": "2.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.web-v2.0.0/winshun.web-2.0.0.wsplugin",
+  "sha256": "e4235bdf0f8d00c61ba7e02acfca9dfbc18e98b3edccccbd7afc6b1fecb916a9",
+  "size": 1608,
   "name": {
-    "zh": "网页快捷搜索",
-    "en": "Web shortcuts"
+    "en": "Web search",
+    "zh": "网页搜索"
   },
   "description": {
-    "zh": "零代码示例：bd 百度、gh GitHub、yt YouTube、wiki 维基百科、bing 必应、bili 哔哩哔哩",
-    "en": "Zero-code sample: bd Baidu, gh GitHub, yt YouTube, wiki Wikipedia, bing, bili"
+    "en": "Open or search sites by keyword, with custom sites, icons and suggestions; no extra process",
+    "zh": "用关键词打开网站或搜索网页，可自定义网站、图标和搜索建议；不运行额外进程"
   },
   "author": "LingCore",
   "license": "MIT",
   "homepage": "https://github.com/LingCore/WinShun",
-  "keywords": [
-    "bd",
-    "gh",
-    "yt",
-    "wiki",
-    "bing",
-    "bili"
-  ],
+  "keywords": [],
   "permissions": [],
   "runtime": {
     "mode": "zero-code",
     "program": null
   },
-  "minWinShun": "",
-  "releaseDate": "2026-10-23T09:12:46Z",
+  "minWinShun": "0.18.0",
+  "releaseDate": "2026-11-03T03:08:50Z",
   "dateAdded": "2026-10-23T09:12:46Z"
 }
