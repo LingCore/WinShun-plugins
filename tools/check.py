@@ -37,10 +37,10 @@ MANIFEST_VERSION = 1
 PERMISSIONS = [
     "files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network",
     "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read",
-    "notifications", "network:listen", "system:settings",
+    "notifications", "network:listen", "system:settings", "elevated",
 ]
 # 审核者要多看一眼的
-RISKY = {"network", "network:listen", "system:settings", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
+RISKY = {"elevated", "network", "network:listen", "system:settings", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
 
 ALLOWED_PROGRAMS = {"python", "pwsh", "powershell", "node"}  # 社区条目；官方原生包另按仓库、id 和文件名逐一检查
 FORBIDDEN_EXT = {".exe", ".dll", ".sys", ".com", ".scr", ".msi", ".bat", ".cmd", ".vbs", ".jar", ".pyc"}
@@ -473,6 +473,13 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
         e.fail("minWinShun 要像 0.7.0 这样")
     info["runtime"] = read_runtime(o.get("runtime"), e, native_program)
     info["permissions"] = read_permissions(o.get("permissions"), e)
+    if "elevated" in info["permissions"]:
+        # Manifest.cpp：只给自带 exe 的插件，不能和 runtime.sandbox strict 一起用
+        runtime = o.get("runtime") if isinstance(o.get("runtime"), dict) else {}
+        if not str(runtime.get("program", "")).lower().endswith(".exe"):
+            e.fail("elevated 权限只给自带程序的插件（runtime.program 为 exe）")
+        if runtime.get("sandbox") == "strict":
+            e.fail("elevated 权限不能和 runtime.sandbox strict 一起用")
 
     if "webSearch" in o and not isinstance(o["webSearch"], bool):
         e.fail("webSearch 要是布尔值")

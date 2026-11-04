@@ -65,7 +65,7 @@
       ]
     },
     "permission": {
-      "enum": ["files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network", "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read", "notifications", "network:listen", "system:settings"]
+      "enum": ["files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network", "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read", "notifications", "network:listen", "system:settings", "elevated"]
     },
     "relativePath": {
       "description": "插件文件夹里的相对路径，不能出界",
