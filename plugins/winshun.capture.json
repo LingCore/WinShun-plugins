@@ -11,8 +11,8 @@
     "en": "Screenshot and recording"
   },
   "description": {
-    "zh": "截图、标注、贴图、长截图、识别文字和录屏",
-    "en": "Screenshots, annotations, pins, long screenshots, text recognition and screen recording"
+    "zh": "截图、标注、贴图、长截图、识别文字、录屏以及白板演示",
+    "en": "Screenshots, annotations, pins, long screenshots, text recognition, screen recording, and whiteboard demostration"
   },
   "author": "LingCore",
   "license": "MIT",
