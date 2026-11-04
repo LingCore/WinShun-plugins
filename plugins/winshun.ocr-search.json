@@ -2,17 +2,17 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.0/winshun.ocr-search-1.0.0.wsplugin",
-  "sha256": "ccce97dcfddbd1e6715f8ff7b5fd6ad70d56e35c832e9cebad5be1612c6e61cd",
-  "size": 916569,
+  "version": "1.0.2",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.2/winshun.ocr-search-1.0.2.wsplugin",
+  "sha256": "7334ce6190645d31f1d8da66832bf5a24bcf74e644ea02d922d33eb1ddaee328",
+  "size": 979565,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
   },
   "description": {
-    "en": "Offline search in images, scanned and mixed PDFs, and images embedded in Word, PowerPoint and Excel. Incremental indexing with highlighted previews.",
-    "zh": "离线搜索图片、扫描与混排 PDF、Word / PPT / Excel 内嵌图片中的文字。选择目录，后台增量识别，预览高亮命中位置。"
+    "en": "Offline search in images, scanned and mixed PDFs, and images embedded in Word, PowerPoint and Excel. Incremental indexing with highlighted previews. Once indexed, type the picture's words straight into the search box.",
+    "zh": "离线搜索图片、扫描与混排 PDF、Word / PPT / Excel 内嵌图片中的文字。选择目录，后台增量识别，预览高亮命中位置。建好索引后直接在搜索框输入图片里的文字即可搜到。"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -31,6 +31,6 @@
     "program": "WinShunOcrSearch.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-03T03:08:29Z",
+  "releaseDate": "2026-11-04T00:44:31Z",
   "dateAdded": "2026-11-03T03:09:38Z"
 }
