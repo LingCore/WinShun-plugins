@@ -31,7 +31,7 @@
 | [网页搜索](https://github.com/LingCore/WinShun/tree/main/src/web-plugin) | — | 用关键词打开网站或搜索网页，可自定义网站、图标和搜索建议；不运行额外进程 | LingCore | 无 | [2.0.0](https://github.com/LingCore/WinShun-plugins/releases/download/winshun.web-v2.0.0/winshun.web-2.0.0.wsplugin) |
 <!-- plugins:end -->
 
-点名称看插件的源码。权限加粗的几项（联网、起子进程、写文件、开窗口、读文档文字、剪贴板）值得多看一眼插件 README 里的说明。
+点名称看插件的源码。权限加粗的几项（联网、起子进程、写文件、开窗口、读文档文字、剪贴板、以管理员身份运行）值得多看一眼插件 README 里的说明。
 
 ## 随 Win顺 自带
 
@@ -48,7 +48,7 @@ Win顺 0.17.0 起，截图与录屏（`winshun.capture`）、局域网传输（`
 
 ## 安全
 
-- 插件永远以你自己的普通权限运行，不是管理员。Win顺 能强制的权限（起子进程、剪贴板等）会强制；`network` 和 `files:read` 它拦不住，只能告诉你。
+- 插件平时以你自己的普通权限运行，不是管理员。例外只有一种：插件声明了 `elevated`、你也确认过，而 Win顺 本身正以管理员身份运行，这时插件跟着以管理员身份运行；Win顺 不是管理员时它照样是普通权限，不会为插件弹 UAC。`elevated` 只给自带 exe 的官方插件（目前是资源管理器标签页），社区插件用不了。Win顺 能强制的权限（起子进程、剪贴板等）会强制；`network` 和 `files:read` 它拦不住，只能告诉你。
 - "收录"的意思是：插件第一次收录时，维护者读过那个版本的代码；之后的新版本由机器检查（包没被换掉、`plugin.json` 合规、权限有没有变多），多要权限或者运行方式变了的新版本，维护者再看一遍才收录。它不是担保。只装你信得过的，装之前看一眼权限。
 - 发现有问题的插件，请开 Issue。
 - `index` 这个 Release 里除了 `index.json`，还有 `index.json.sig`，是维护者给列表盖的数字签名（公钥在 [keys/](keys/)）。Win顺 靠它确认列表没被中途换掉，通过的才会在后台自动更新已装的插件；没有签名或对不上，只提示有新版本，不会自动装。你不用管它。
@@ -71,7 +71,7 @@ This is the index of official and community plugins for [Win顺 / WinShun](https
 
 Since WinShun 0.17.0, screenshots and recording (`winshun.capture`), LAN transfer (`winshun.localsend`), semantic search (`winshun.semantic`), break reminders (`winshun.break`), translation (`winshun.translate`) and browser bookmarks (`winshun.bookmarks`) are optional downloads requiring **WinShun 0.17.0 or later**. They are separate from the standard, portable and offline packages. Previously enabled features are recovered from the library during upgrade while keeping their settings. If downloading fails, retry recovery in Settings → Plugins → Installed, or install a local `.wsplugin` and enable it. Package changes are published as new versions; existing assets are retained.
 
-Plugins run with your own normal (non-admin) rights. "Listed" means a maintainer read the code of the first listed version. Later versions are checked automatically (the package is unchanged, the manifest is valid), and a version that asks for more permissions or changes how it runs is reviewed again before it is listed. It is not a guarantee, so read the permissions first.
+Plugins run with your own normal (non-admin) rights. The one exception: a plugin that declares `elevated`, once you have confirmed it, runs as administrator while WinShun itself runs as administrator; otherwise it runs with normal rights and never asks for UAC. Only official plugins that bring their own exe can use `elevated` (currently Explorer tabs), never community plugins. "Listed" means a maintainer read the code of the first listed version. Later versions are checked automatically (the package is unchanged, the manifest is valid), and a version that asks for more permissions or changes how it runs is reviewed again before it is listed. It is not a guarantee, so read the permissions first.
 
 To submit a plugin, see [CONTRIBUTING.md](CONTRIBUTING.md) (in Chinese): put the plugin in your own repository, copy [template/release.yml](template/release.yml), push a `v<version>` tag, then open a PR that adds `plugins/<id>.json` (made by `python tools/entry.py <package URL>`, or copied from the release run's summary). The plugin format is in the [plugin docs](https://github.com/LingCore/WinShun/blob/main/docs/plugins.md). Plugins submitted earlier as folders live in `legacy/` and are still packed and released here. `winshun.go` and `winshun.kill` ship with WinShun, as do the C++ utility plugin `winshun.tools` and system-switch plugin `winshun.switches`.
 
@@ -84,3 +84,9 @@ Web search 2.0.0 and image text search 1.0.0 are optional downloads requiring Wi
 图片文字搜索和社区 OCR Studio 默认都使用 `ocr`。同时安装时，在 Win顺 插件卡片更改其中一个关键字，例如 `imgocr`，卡片会显示占用提示。
 
 Image text search and the community OCR Studio both default to `ocr`. When installing both, change one keyword in its WinShun plugin card, for example to `imgocr`. The card shows keyword conflicts.
+
+## WinShun 0.19.0
+
+截图 1.1.0 增加演示和白板（直接在桌面上画、激光笔、W 白板、K 黑板），贴图、保存和贴图窗口的按键可以在截图设置的“按键”页自己改；最低要求仍是 WinShun 0.18.0，用 `cap 白板` 这类搜索找到演示需要 0.19.0。图片文字搜索 1.0.3 只改了图标，最低要求 WinShun 0.19.0；还在用 0.18.0 的话，已经装好的 1.0.2 照常能用。新插件资源管理器标签页 1.0.0 把新开的文件夹窗口并成已开着的资源管理器里的标签页，最低要求 WinShun 0.19.0；它要 `ui` 和 `elevated` 两项权限，安装时确认，`elevated` 还要在插件卡片上点一次“确认”。
+
+Capture 1.1.0 adds a presenter and whiteboard (draw on the live desktop, laser pointer, W / K white and black boards), and the pin, save and pin-window keys can be changed on the capture settings' Keys page; it still requires WinShun 0.18.0, and finding the presenter with searches such as `cap whiteboard` needs 0.19.0. Image text search 1.0.3 only changes icons and requires WinShun 0.19.0; on 0.18.0 an installed 1.0.2 keeps working. The new Explorer tabs 1.0.0 turns new folder windows into tabs of the File Explorer window already open and requires WinShun 0.19.0; it asks for `ui` and `elevated`, both confirmed when installing, and `elevated` needs one Confirm on the plugin card.
