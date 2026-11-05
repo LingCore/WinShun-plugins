@@ -1,0 +1,43 @@
+{
+  "id": "iuuuuuuuu.screenshot-translate",
+  "repo": "iuuuuuuuu/winshun-screenshot-translate",
+  "autoUpdate": true,
+  "version": "0.2.0",
+  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.2.0/iuuuuuuuu.screenshot-translate-0.2.0.wsplugin",
+  "sha256": "4348281105eba19047e69356a6f05e94541c6bf1b1d00a9b8209ca4810b92b4c",
+  "size": 117169,
+  "name": {
+    "zh": "截图翻译",
+    "en": "Screenshot Translate"
+  },
+  "description": {
+    "zh": "Windows OCR 截图翻译，译文按原位置显示，支持对照、剪贴板翻译及独立渠道配置。",
+    "en": "Translate screen regions with Windows OCR, preserve text positions, compare the source, and configure each service independently."
+  },
+  "author": "iuuuuuuuu",
+  "license": "MIT",
+  "homepage": "https://github.com/iuuuuuuuu/winshun-screenshot-translate",
+  "keywords": [
+    "jst",
+    "截图翻译",
+    "jsel",
+    "划词翻译",
+    "jft",
+    "剪贴板翻译"
+  ],
+  "permissions": [
+    "files:write",
+    "processes",
+    "clipboard:read",
+    "clipboard:write",
+    "ui",
+    "network"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "python"
+  },
+  "minWinShun": "0.19.0",
+  "releaseDate": "2026-11-05T23:45:57Z",
+  "dateAdded": "2026-11-05T23:48:00Z"
+}
