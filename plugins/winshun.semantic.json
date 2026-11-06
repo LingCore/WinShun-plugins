@@ -2,10 +2,10 @@
   "id": "winshun.semantic",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.0.2/winshun.semantic-1.0.2.wsplugin",
-  "sha256": "b71f9859a7cb1a572a64ac621e26e0da4dbfc965a5534388891371f98b55ddc7",
-  "size": 294162,
+  "version": "1.0.3",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.0.3/winshun.semantic-1.0.3.wsplugin",
+  "sha256": "63100ed54835d93c0cdc0484fca52a9bbdd99de0761de0608e9e843ed8b9e65f",
+  "size": 294737,
   "name": {
     "zh": "按意思找",
     "en": "Search by meaning"
@@ -30,6 +30,6 @@
     "program": "WinShunSemantic.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-03T03:08:36Z",
+  "releaseDate": "2026-11-06T09:18:48Z",
   "dateAdded": "2026-11-01T08:10:33Z"
 }

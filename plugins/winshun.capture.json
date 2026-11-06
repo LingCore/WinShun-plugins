@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.2/winshun.capture-1.1.2.wsplugin",
-  "sha256": "cab455e7ac4981d12d2272cd5da38d3ce65fc82fb6b9164150cf618537e1cd99",
-  "size": 2456595,
+  "version": "1.1.3",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.3/winshun.capture-1.1.3.wsplugin",
+  "sha256": "1ec6cf6ab1038124cefe66b0c2d49cd1c044756f597344fac843a5c21820b693",
+  "size": 2738978,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,6 +34,6 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-04T06:04:52Z",
+  "releaseDate": "2026-11-06T09:18:35Z",
   "dateAdded": "2026-11-01T08:10:30Z"
 }
