@@ -57,7 +57,8 @@ def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[st
     """检查一个新版本。返回 (摘要里的结果, 要人看的一项, 能直接收录的新条目)。"""
     pid, repo = entry["id"], entry["repo"]
     url = asset_info.get("browser_download_url") or ""
-    new = check.check_asset(url, expected_id=pid, release=release)
+    unreviewed = entry.get("review") == "unreviewed-native"
+    new = check.check_asset(url, expected_id=pid, release=release, unreviewed_native=unreviewed)
     parts = registry.asset_url(url)
     old_parts = registry.asset_url(entry["url"])
     links = [f"- 插件仓库：https://github.com/{repo}"]
@@ -72,8 +73,10 @@ def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[st
         return "检查没过，开 Issue", Finding("issue", pid, version, f"自动更新没通过检查：{pid} {version}", body), None
 
     updated = registry.ordered({**entry, **new.fields})  # id、repo、autoUpdate、bundled、hosted、dateAdded 照旧
-    old = check.check_asset(entry["url"], expected_id=pid)  # 现在收录的包，拿来比权限和文件
+    old = check.check_asset(entry["url"], expected_id=pid, unreviewed_native=unreviewed)  # 现在收录的包，拿来比权限和文件
     reasons: list[str] = []
+    if unreviewed:
+        reasons.append("未审核原生插件的新版本需维护者核对来源，继续保留未审核标记")
     diff_lines: list[str] = []
     if old.package is None or old.package.manifest is None:
         reasons.append("现在收录的包下载或检查不了，没法比较")

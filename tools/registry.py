@@ -46,7 +46,7 @@ def official_native(repo: str, plugin_id: str) -> bool:
     return isinstance(repo, str) and isinstance(plugin_id, str) and repo.lower() == REPO.lower() and plugin_id in OFFICIAL_NATIVE
 
 # 条目 plugins/<id>.json 的字段，也是写文件时的顺序
-AUTHOR_KEYS = ("id", "repo", "autoUpdate")  # 作者定（entry.py 帮着填）
+AUTHOR_KEYS = ("id", "repo", "autoUpdate", "review")  # review 只能显式选择 unreviewed-native
 MAINTAINER_KEYS = ("bundled", "hosted")     # 只有维护者能改
 GENERATED_KEYS = ("version", "url", "sha256", "size", "name", "description", "author", "license", "homepage",
                   "keywords", "permissions", "runtime", "minWinShun", "releaseDate", "dateAdded")  # 工具生成，不手写

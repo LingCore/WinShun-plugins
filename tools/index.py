@@ -64,6 +64,7 @@ def item_of(e: dict) -> dict:
         "source": source_of(e),
         "releaseDate": e["releaseDate"],
         "dateAdded": e["dateAdded"],
+        "review": e.get("review", "official" if e["repo"].lower() == registry.REPO.lower() and e["id"].startswith("winshun.") else "reviewed"),
     }
 
 

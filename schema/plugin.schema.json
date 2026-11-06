@@ -75,9 +75,12 @@
     "runtime": {
       "type": "object",
       "required": ["mode", "program"],
+      "dependentRequired": {"qt": ["qtVersion"], "qtVersion": ["qt"]},
       "properties": {
         "mode": {"enum": ["once", "resident"]},
-        "program": {"description": "社区插件仅支持解释器；原生入口仅限官方白名单", "enum": ["python", "pwsh", "powershell", "node", "WinShunBookmarks.exe", "WinShunBreak.exe", "WinShunCapture.exe", "WinShunLocalSend.exe", "WinShunOcrSearch.exe", "WinShunSemantic.exe", "WinShunTranslate.exe"]},
+        "program": {"description": "解释器或包内 exe 相对路径；社区原生包在插件库中标记为未审核", "anyOf": [{"enum": ["python", "pwsh", "powershell", "node"]}, {"type": "string", "pattern": "^(?![\\\\/])(?!.*(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$))(?!.*:).+\\.[eE][xX][eE]$"}]},
+        "qt": {"const": "host", "description": "显式共享宿主 Qt；仅普通权限 MSVC x64 原生插件"},
+        "qtVersion": {"type": "string", "pattern": "^[1-9][0-9]*\\.[0-9]+(?:\\.[0-9]+)?$", "description": "Qt 主次版本必须匹配，第三段为最低补丁版本"},
         "script": {"description": "入口脚本，默认 main.py / main.ps1 / main.js", "$ref": "#/$defs/relativePath"},
         "args": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]},
         "cwd": {"$ref": "#/$defs/relativePath"},

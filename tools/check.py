@@ -159,6 +159,11 @@ def read_runtime(v, e: Errors, native_program: str | None = None) -> dict | None
         e.fail("runtime.mode 要是 once 或 resident")
     program = string_field(v, "program", where, e)
     info["program"] = program
+    if "qt" in v or "qtVersion" in v:
+        if v.get("qt") != "host" or not isinstance(program, str) or not program.lower().endswith(".exe"):
+            e.fail("runtime.qt: host 只支持原生 exe 插件")
+        if not isinstance(v.get("qtVersion"), str) or not re.fullmatch(r"[1-9][0-9]*\.[0-9]+(?:\.[0-9]+)?", v.get("qtVersion", "")):
+            e.fail("runtime.qtVersion 要是主次版本或完整版本，例如 6.12 或 6.12.0")
     if program in ALLOWED_PROGRAMS or (native_program is not None and program == native_program):
         pass
     elif not program:
@@ -166,7 +171,7 @@ def read_runtime(v, e: Errors, native_program: str | None = None) -> dict | None
     else:
         # Manifest.cpp 把它当插件文件夹里的 exe；本仓库不收二进制
         if relative_inside(program, "runtime.program", e):
-            e.fail("runtime.program 只能是 python、pwsh、powershell 或 node（本仓库不收 exe）")
+            e.fail("普通脚本包的 runtime.program 只能是 python、pwsh、powershell 或 node；exe/dll 包请用 --unreviewed-native 投稿")
     if "args" in v:
         string_list(v["args"], "runtime.args", e)
     script = string_field(v, "script", where, e)
@@ -476,6 +481,8 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
     if "elevated" in info["permissions"]:
         # Manifest.cpp：只给自带 exe 的插件，不能和 runtime.sandbox strict 一起用
         runtime = o.get("runtime") if isinstance(o.get("runtime"), dict) else {}
+        if runtime.get("qt") == "host":
+            e.fail("共享宿主 Qt 只支持普通权限插件")
         if not str(runtime.get("program", "")).lower().endswith(".exe"):
             e.fail("elevated 权限只给自带程序的插件（runtime.program 为 exe）")
         if runtime.get("sandbox") == "strict":
@@ -578,9 +585,9 @@ def source_files(folder: Path) -> list[Path]:
     return sorted(files, key=lambda p: p.relative_to(folder).as_posix())
 
 
-def check_files(r: Result, folder: Path, packed: bool, native_binaries: tuple[str, ...] = ()) -> list[Path]:
-    max_file = registry.MAX_PACKAGE if native_binaries else MAX_FILE
-    max_total = registry.MAX_UNPACKED if native_binaries else MAX_TOTAL
+def check_files(r: Result, folder: Path, packed: bool, native_binaries: tuple[str, ...] = (), unreviewed_native: bool = False) -> list[Path]:
+    max_file = registry.MAX_PACKAGE if native_binaries or unreviewed_native else MAX_FILE
+    max_total = registry.MAX_UNPACKED if native_binaries or unreviewed_native else MAX_TOTAL
     if packed:  # 解开的包：里面的每个文件都算
         files = sorted(p for p in folder.rglob("*") if p.is_file() or p.is_symlink())
     else:
@@ -593,7 +600,7 @@ def check_files(r: Result, folder: Path, packed: bool, native_binaries: tuple[st
             continue
         size = p.stat().st_size
         total += size
-        if p.suffix.lower() in FORBIDDEN_EXT and not (native_binaries and rel in native_binaries):
+        if p.suffix.lower() in FORBIDDEN_EXT and not (native_binaries and rel in native_binaries) and not (unreviewed_native and p.suffix.lower() in (".exe", ".dll")):
             r.error(rel, f"本仓库不收 {p.suffix.lower()} 文件（不放二进制和批处理）")
         if size > max_file:
             r.error(rel, f"{size / 1024 / 1024:.1f} MB，单个文件不能超过 {max_file >> 20} MB")
@@ -622,7 +629,7 @@ def check_imports(r: Result, folder: Path, files: list[Path]) -> None:
 
 
 def check_plugin(folder: Path, expected_id: str | None = None, label: str | None = None, packed: bool = False,
-                 official_native: bool = False) -> Result:
+                 official_native: bool = False, unreviewed_native: bool = False) -> Result:
     """检查一个插件文件夹。expected_id：它应该是的 id（老插件是文件夹名，包是条目的 id；不给就不比）。
     packed：这是解开的包（每个文件都算），不是作者的源码文件夹（只算会打进包的）。"""
     r = Result(folder, label)
@@ -640,7 +647,9 @@ def check_plugin(folder: Path, expected_id: str | None = None, label: str | None
         return r
     errors = Errors()
     native = registry.OFFICIAL_NATIVE.get(expected_id) if official_native else None
-    info = validate_manifest(obj, errors, native[0] if native else None)
+    program = obj.get("runtime", {}).get("program") if isinstance(obj, dict) and isinstance(obj.get("runtime"), dict) else None
+    community_exe = program if unreviewed_native and isinstance(program, str) and program.lower().endswith(".exe") and inside_folder(program) else None
+    info = validate_manifest(obj, errors, native[0] if native else community_exe)
     for text in errors.items:
         r.error("plugin.json", text)
     if not isinstance(obj, dict):
@@ -679,7 +688,14 @@ def check_plugin(folder: Path, expected_id: str | None = None, label: str | None
     elif not readme.read_text(encoding="utf-8-sig", errors="replace").strip():
         r.error("README.md", "是空的")
 
-    files = check_files(r, folder, packed, (native[0], *native[1]) if native else ())
+    files = check_files(r, folder, packed, (native[0], *native[1]) if native else (), unreviewed_native)
+    if unreviewed_native:
+        minimum = obj.get("minWinShun", "")
+        if not isinstance(minimum, str) or not registry.PLAIN_VERSION_RE.fullmatch(minimum) or registry.version_key(minimum) < registry.version_key("0.22.0"):
+            r.error("plugin.json", "未审核原生插件需要 minWinShun >= 0.22.0，旧版不能显示安装风险确认")
+        if community_exe and not (folder / community_exe.replace("\\", "/")).is_file():
+            r.error("plugin.json", f"原生入口 {community_exe} 不在插件文件夹里")
+        r.warn("", "未审核的原生插件：文件检查与哈希不代表代码审核或构建来源证明")
     if native and not (folder / native[0]).is_file():
         r.error("plugin.json", f"官方原生入口 {native[0]} 不在插件文件夹里")
 
@@ -770,7 +786,7 @@ class Package:
         self.files: dict[str, tuple[str, int]] = {}  # 相对路径 → (sha256, 字节数)
 
 
-def check_package(data: bytes, expected_id: str, version: str, label: str, *, official_native: bool = False) -> Package:
+def check_package(data: bytes, expected_id: str, version: str, label: str, *, official_native: bool = False, unreviewed_native: bool = False) -> Package:
     """解到系统的临时文件夹（不在仓库里）检查，查完就删。不运行包里的任何东西。"""
     p = Package(label)
     if len(data) > registry.MAX_PACKAGE:
@@ -782,7 +798,7 @@ def check_package(data: bytes, expected_id: str, version: str, label: str, *, of
         if problems:
             p.errors += [f"{label}：{t}" for t in problems]
             return p
-        r = check_plugin(folder, expected_id=expected_id, label=label, packed=True, official_native=official_native)
+        r = check_plugin(folder, expected_id=expected_id, label=label, packed=True, official_native=official_native, unreviewed_native=unreviewed_native)
         p.errors += r.errors
         p.warnings += r.warnings
         p.manifest = r.manifest
@@ -810,7 +826,7 @@ class Asset:
         self.fields: dict = {}  # 生成的字段（dateAdded 除外）；检查没过是空的
 
 
-def check_asset(url: str, expected_id: str | None = None, release: dict | None = None) -> Asset:
+def check_asset(url: str, expected_id: str | None = None, release: dict | None = None, *, unreviewed_native: bool = False) -> Asset:
     """release：已经拿到的那个 Release（update.py 列 Release 时就有），不给就去问 GitHub。"""
     a = Asset(url)
     parts = a.parts
@@ -836,7 +852,7 @@ def check_asset(url: str, expected_id: str | None = None, release: dict | None =
     elif registry.digest_of(asset) and registry.digest_of(asset) != hashlib.sha256(data).hexdigest():
         a.errors.append(f"{parts.file}：下载到的 sha256 和 GitHub 记的不一样")
     a.package = check_package(data, parts.id, parts.version, parts.file,
-                              official_native=registry.official_native(parts.repo, parts.id))
+                              official_native=registry.official_native(parts.repo, parts.id), unreviewed_native=unreviewed_native)
     a.errors += a.package.errors
     a.warnings += a.package.warnings
     if not a.errors:
@@ -973,14 +989,20 @@ def check_entry_fields(r: Report, obj, root: Path) -> None:
                                      and perms == sorted(set(perms), key=PERMISSIONS.index)):
         r.error("permissions 要是 Win顺 认识的权限名，不重复，按固定的顺序排（entry.py 会排好）")
     runtime = obj.get("runtime")
+    unreviewed = obj.get("review") == "unreviewed-native"
+    if "review" in obj and not unreviewed:
+        r.error("review 只支持 unreviewed-native；作者不能自行标记已审核或官方")
     if "runtime" in obj and not (isinstance(runtime, dict) and set(runtime) == {"mode", "program"} and (
-            (runtime["mode"] in ("once", "resident") and (runtime["program"] in ALLOWED_PROGRAMS
+            (runtime["mode"] in ("once", "resident") and isinstance(runtime["program"], str) and (runtime["program"] in ALLOWED_PROGRAMS
+                or (unreviewed and isinstance(runtime["program"], str) and runtime["program"].lower().endswith(".exe") and inside_folder(runtime["program"]))
                 or (registry.official_native(obj.get("repo", ""), obj.get("id", ""))
                     and runtime["program"] == registry.OFFICIAL_NATIVE[obj["id"]][0])))
             or (runtime["mode"] == "zero-code" and runtime["program"] is None))):
-        r.error('runtime 要是 {"mode": once 或 resident, "program": python、pwsh、powershell 或 node}，'
+        r.error('runtime 要是 {"mode": once 或 resident, "program": 解释器或已标注未审核的包内 exe}，'
                 '零代码插件是 {"mode": "zero-code", "program": null}')
     min_win = obj.get("minWinShun")
+    if unreviewed and (not isinstance(min_win, str) or not registry.PLAIN_VERSION_RE.fullmatch(min_win) or registry.version_key(min_win) < registry.version_key("0.22.0")):
+        r.error("未审核原生插件需要 minWinShun >= 0.22.0")
     if "minWinShun" in obj and not (isinstance(min_win, str) and (not min_win or VERSION_RE.fullmatch(min_win))):
         r.error("minWinShun 要是空的，或者像 0.15.0 这样")
     for key in ("releaseDate", "dateAdded"):
@@ -1007,7 +1029,7 @@ def check_entry_online(r: Report) -> Asset | None:
     url = obj.get("url")
     if registry.asset_url(url) is None:
         return None  # 不联网的检查已经报过了
-    a = check_asset(url, expected_id=r.id)
+    a = check_asset(url, expected_id=r.id, unreviewed_native=obj.get("review") == "unreviewed-native")
     r.errors += [f"{r.label}：{t}" for t in a.errors]
     r.warnings += [f"{r.label}：{t}" for t in a.warnings]
     if a.fields:
@@ -1136,6 +1158,8 @@ def check_pr_entry(r: Report) -> None:
     """PR 改到的一个条目：谁能改什么，再联网核对；给审核者留下源码和对比的链接。"""
     e, old = r.entry or {}, r.old
     r.change = "新增" if old is None else ("更新" if e.get("version") != old.get("version") else "修改")
+    if old and old.get("review") == "unreviewed-native" and e.get("review") != "unreviewed-native":
+        r.error("未审核原生插件不能通过投稿去掉 review 标记")
     for key in registry.MAINTAINER_KEYS:
         if bool(e.get(key)) != bool((old or {}).get(key)):
             r.error(f"{key} 只有维护者能改")
@@ -1166,7 +1190,7 @@ def check_pr_entry(r: Report) -> None:
         old_parts = registry.asset_url(old.get("url"))
         if old_parts and old_parts.repo.lower() == parts.repo.lower():
             r.notes.append(f"- 和上一版对比：{registry.compare_url(parts.repo, old_parts.tag, parts.tag)}")
-        before = check_asset(old["url"], expected_id=r.id) if old_parts else None
+        before = check_asset(old["url"], expected_id=r.id, unreviewed_native=old.get("review") == "unreviewed-native") if old_parts else None
         if before and before.package and before.package.manifest and asset.package.manifest:
             r.notes += Diff(before.package, asset.package).markdown()
         else:

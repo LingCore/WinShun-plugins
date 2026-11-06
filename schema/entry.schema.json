@@ -11,6 +11,7 @@
     "id": {"description": "作者.名字，和文件名、包里 plugin.json 的 id 一样", "type": "string", "pattern": "^[a-z0-9_-][a-z0-9._-]*\\.[a-z0-9._-]*[a-z0-9_-]$", "maxLength": 64},
     "repo": {"description": "插件所在的 GitHub 公开仓库：作者/仓库", "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,38}/[A-Za-z0-9._-]{1,100}$"},
     "autoUpdate": {"description": "作者以后发的新版本自动跟上（多要权限、运行方式变了的要维护者看过）", "type": "boolean", "default": false},
+    "review": {"const": "unreviewed-native", "description": "社区原生插件必须显式标记未审核；作者不能自行声明已审核或官方。最低 WinShun 0.22.0。"},
     "bundled": {"description": "维护者：随 Win顺 自带", "type": "boolean", "default": false},
     "hosted": {"description": "维护者：在本仓库的 legacy/<id>/ 里打包发布", "type": "boolean", "default": false},
     "version": {"description": "生成：包的版本，三段数字", "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
@@ -28,7 +29,7 @@
       "description": "生成：运行方式；零代码插件是 {\"mode\": \"zero-code\", \"program\": null}",
       "oneOf": [
         {"type": "object", "additionalProperties": false, "required": ["mode", "program"],
-         "properties": {"mode": {"enum": ["once", "resident"]}, "program": {"enum": ["python", "pwsh", "powershell", "node", "WinShunBookmarks.exe", "WinShunBreak.exe", "WinShunCapture.exe", "WinShunLocalSend.exe", "WinShunOcrSearch.exe", "WinShunSemantic.exe", "WinShunTranslate.exe"]}}},
+         "properties": {"mode": {"enum": ["once", "resident"]}, "program": {"anyOf": [{"enum": ["python", "pwsh", "powershell", "node"]}, {"type": "string", "pattern": "^(?![\\\\/])(?!.*(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$))(?!.*:).+\\.[eE][xX][eE]$"}]}}},
         {"type": "object", "additionalProperties": false, "required": ["mode", "program"],
          "properties": {"mode": {"const": "zero-code"}, "program": {"type": "null"}}}
       ]
@@ -47,5 +48,5 @@
     },
     "time": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"}
   },
-  "allOf": [{"if": {"required": ["runtime"], "properties": {"runtime": {"required": ["program"], "properties": {"program": {"enum": ["WinShunBookmarks.exe", "WinShunBreak.exe", "WinShunCapture.exe", "WinShunLocalSend.exe", "WinShunOcrSearch.exe", "WinShunSemantic.exe", "WinShunTranslate.exe"]}}}}}, "then": {"properties": {"id": {"enum": ["winshun.bookmarks", "winshun.break", "winshun.capture", "winshun.localsend", "winshun.ocr-search", "winshun.semantic", "winshun.translate"]}, "repo": {"const": "LingCore/WinShun-plugins"}}}}]
+  "allOf": [{"if": {"properties": {"runtime": {"properties": {"mode": {"enum": ["once", "resident"]}, "program": {"type": "string", "pattern": "^(?![\\\\/])(?!.*(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$))(?!.*:).+\\.[eE][xX][eE]$"}}, "required": ["mode", "program"]}}, "required": ["runtime"]}, "then": {"anyOf": [{"properties": {"id": {"enum": ["winshun.bookmarks", "winshun.break", "winshun.capture", "winshun.localsend", "winshun.ocr-search", "winshun.semantic", "winshun.translate", "winshun.explorer-tabs"]}, "repo": {"const": "LingCore/WinShun-plugins"}}}, {"properties": {"review": {"const": "unreviewed-native"}}, "required": ["review"]}]}}]
 }

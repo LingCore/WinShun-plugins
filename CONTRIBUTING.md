@@ -1,5 +1,17 @@
 # 怎么把插件放进插件库
 
+## 未审核的原生插件（待配套 Win顺 0.22.0 发布）
+
+社区原生包可包含 `.exe`、`.dll`，不再仅限解释器脚本。必须提供公开源码、许可证，以及对应 Release 的源码标签/提交和构建说明，建议通过 GitHub Actions 从固定提交构建并提供构建记录。托管源码、构建日志和包的校验值均不等于代码安全审核；不得将“未审核”宣传为“安全认证”。
+
+1. `plugin.json` 的 `minWinShun` 至少为 `0.22.0`。旧客户端没有这类包的安装风险确认。
+2. 将 `.wsplugin` 发布在自己的公开 GitHub 仓库，README 写明用途、权限、源码版本和构建方式。
+3. 用 `python tools/entry.py <Release附件地址> --unreviewed-native` 生成条目。条目的 `review: "unreviewed-native"` 会进入 index；作者不能自行写 `official` 或 `reviewed`，也不能在后续投稿中移除标记。
+4. 提交 `plugins/<id>.json`。继续检查 Release 来源、ID/版本、大小、哈希、链接、重复文件和路径穿越；不执行上传包。此类别允许 exe/dll，其他被禁的驱动、批处理、编译脚本等仍拒绝。压缩包最多 64 MiB、解压最多 256 MiB、单文件最多 64 MiB。
+5. 新版本由维护者核对收录来源，保留未审核标记；Win顺 安装及每次更新分别要求用户确认，不走后台自动安装或“全部更新”。
+
+原生 Qt 插件可选择主仓库 `docs/plugins.md` 中的共享 Qt 契约；这不会赋予它审核状态或管理员权限。没有 `review` 字段的历史脚本条目继续按原先的源码审核流程处理，官方原生白名单保持独立。
+
 插件怎么写，看 Win顺 主仓库的文档：[docs/plugins.md](https://github.com/LingCore/WinShun/blob/main/docs/plugins.md)。设置 → 插件 → 高级 → 开发者模式 里有"新建插件…"，能生成一个能跑的模板。
 
 这个仓库不放插件的代码，只放一份目录：每个插件一个文件 `plugins/<id>.json`（叫"条目"），写着插件在哪个仓库、下载哪个文件、这个文件的 sha256。Win顺 设置 → 插件 → 插件库 读的就是用这些条目生成的列表。插件的代码放在你自己的 GitHub 仓库里，由你自己发布。
@@ -73,8 +85,8 @@
 
 - 每个插件写明 `author` 和 `license`。你发布的代码要能按这个许可证放出来。
 - `id` 写成 `作者.名字`，比如 `zhangsan.ip`。`winshun.` 开头的留给 Win顺 自带的插件。
-- 社区包只放文本和图片：不收 `.exe` `.dll` `.bat` `.cmd` `.vbs` `.jar` 这类能直接运行的文件，也不收 `.pyc`。单个文件不超过 1 MB，整个包解开不超过 5 MB。
-- 社区插件的运行方式只用 `python`、`pwsh`、`powershell`、`node`。自己带 exe 的社区插件可从压缩包安装，不由此库分发。下方官方原生包有按来源及文件名限定的独立规则。
+- 普通社区脚本包只放文本和图片：不收 `.exe` `.dll` `.bat` `.cmd` `.vbs` `.jar` 或 `.pyc`。单个文件不超过 1 MB，整个包解开不超过 5 MB。exe/dll 包须走上方“未审核的原生插件”类别。
+- 普通社区脚本运行方式是 `python`、`pwsh`、`powershell`、`node`；未审核原生类别也支持包内 exe 的相对路径。下方官方原生包仍有独立白名单规则。
 - 图标用 PNG、JPG 或 ICO，不用 SVG。
 - PowerShell 脚本（`.ps1`、`.psm1`）存成带 BOM 的 UTF-8，否则 Windows PowerShell 5.1 里的中文会乱码。
 - 权限只要用得到的。`network`、`processes`、`files:write`、`ui`、`winshun:content`、剪贴板，这几项审核时会逐条对照代码看；README 里要写清为什么要。
