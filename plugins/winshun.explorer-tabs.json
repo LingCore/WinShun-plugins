@@ -2,17 +2,17 @@
   "id": "winshun.explorer-tabs",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": true,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.0.0/winshun.explorer-tabs-1.0.0.wsplugin",
-  "sha256": "873a832b5e705ce2af2ccb2e011ae5551974f9d5fea7ae69dff3f504168312e2",
-  "size": 248509,
+  "version": "1.0.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.0.1/winshun.explorer-tabs-1.0.1.wsplugin",
+  "sha256": "5f54b13cc35b72d0f1558c491a614a4b06323cf4c53d31612a3539698aabd0c6",
+  "size": 249594,
   "name": {
     "en": "Explorer tabs",
     "zh": "资源管理器标签页"
   },
   "description": {
-    "en": "A folder that opens in a new File Explorer window becomes a tab of the window already open",
-    "zh": "新开的文件夹窗口并到已经开着的资源管理器里，成为一个标签页"
+    "en": "A folder that opens in a new File Explorer window becomes a tab of the window already open. Needs Windows 11 22H2 or newer",
+    "zh": "新开的文件夹窗口并到已经开着的资源管理器里，成为一个标签页。需要 Windows 11 22H2 或更新"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "mode": "resident",
     "program": "WinShunExplorerTabs.exe"
   },
-  "minWinShun": "0.19.0",
-  "releaseDate": "2026-11-04T03:02:02Z",
+  "minWinShun": "0.21.0",
+  "releaseDate": "2026-11-06T09:18:59Z",
   "dateAdded": "2026-11-04T03:02:24Z"
 }
