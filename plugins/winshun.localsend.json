@@ -2,10 +2,10 @@
   "id": "winshun.localsend",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.4",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.localsend-v1.0.4/winshun.localsend-1.0.4.wsplugin",
-  "sha256": "4fd178b19fe4e61ef1891d298b8845449a3628bed01eadae34bf50cf0a1be4a1",
-  "size": 463267,
+  "version": "1.0.5",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.localsend-v1.0.5/winshun.localsend-1.0.5.wsplugin",
+  "sha256": "eeac66dd322e4cc217653b171d48678aa4381b30d98f802ec69f45d835ab5c24",
+  "size": 937259,
   "name": {
     "zh": "局域网传输",
     "en": "LAN transfer"
@@ -33,6 +33,6 @@
     "program": "WinShunLocalSend.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-06T09:19:16Z",
+  "releaseDate": "2026-11-07T01:22:52Z",
   "dateAdded": "2026-11-01T08:10:31Z"
 }
