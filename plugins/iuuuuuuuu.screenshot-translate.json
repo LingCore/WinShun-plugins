@@ -2,17 +2,18 @@
   "id": "iuuuuuuuu.screenshot-translate",
   "repo": "iuuuuuuuu/winshun-screenshot-translate",
   "autoUpdate": true,
-  "version": "0.3.3",
-  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.3.3/iuuuuuuuu.screenshot-translate-0.3.3.wsplugin",
-  "sha256": "add1dd2d76fa3233ce48858bbdf11db78f459d28355aa8fc97d7a853f709e102",
-  "size": 714661,
+  "review": "unreviewed-native",
+  "version": "0.4.0",
+  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.0/iuuuuuuuu.screenshot-translate-0.4.0.wsplugin",
+  "sha256": "973ecec18b0083dd8703b1a02e6b5d15c250113654d8563d2b3dfaa70a922911",
+  "size": 31076133,
   "name": {
     "zh": "截图翻译",
     "en": "Screenshot Translate"
   },
   "description": {
-    "zh": "Windows OCR 截图翻译，译文按原位置显示，支持对照、剪贴板翻译及独立渠道配置。",
-    "en": "Translate screen regions with Windows OCR, preserve text positions, compare the source, and configure each service independently."
+    "zh": "无需 Python 的原生截图、剪贴板、划词和鼠标指词翻译；支持可编辑原文、固定跟随、管理员选区及渠道自动降级。",
+    "en": "Native screenshot, clipboard, selection and pointer OCR translation, with editable source, pinned following, elevated selection access and service fallback."
   },
   "author": "iuuuuuuuu",
   "license": "MIT",
@@ -31,13 +32,14 @@
     "clipboard:read",
     "clipboard:write",
     "ui",
-    "network"
+    "network",
+    "elevated"
   ],
   "runtime": {
     "mode": "resident",
-    "program": "python"
+    "program": "ScreenshotTranslate.exe"
   },
-  "minWinShun": "0.19.0",
-  "releaseDate": "2026-11-06T10:30:44Z",
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-07T10:23:00Z",
   "dateAdded": "2026-11-05T23:48:00Z"
 }
