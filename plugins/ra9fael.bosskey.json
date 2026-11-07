@@ -1,0 +1,32 @@
+{
+  "id": "ra9fael.bosskey",
+  "repo": "ra9fael/winshun-bosskey",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.1.0",
+  "url": "https://github.com/ra9fael/winshun-bosskey/releases/download/v0.1.0/ra9fael.bosskey-0.1.0.wsplugin",
+  "sha256": "5a79ab5b778fd3ee2f0388262b5c4347bc3f9926effca91e443fd394efad449d",
+  "size": 570521,
+  "name": {
+    "zh": "老板键",
+    "en": "Boss Key"
+  },
+  "description": "boss 来了：一键全屏伪装成蓝屏 / Windows 更新 / gcc 编译现场；退出按键序列与自动消失时间可配置。",
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "boss",
+    "摸鱼"
+  ],
+  "permissions": [
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "bosskey.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-07T09:34:51Z",
+  "dateAdded": "2026-11-07T09:35:28Z"
+}
