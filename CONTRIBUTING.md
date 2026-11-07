@@ -1,6 +1,6 @@
 # 怎么把插件放进插件库
 
-## 未审核的原生插件（待配套 Win顺 0.22.0 发布）
+## 未审核的原生插件（Win顺 0.22.0 起）
 
 社区原生包可包含 `.exe`、`.dll`，不再仅限解释器脚本。必须提供公开源码、许可证，以及对应 Release 的源码标签/提交和构建说明，建议通过 GitHub Actions 从固定提交构建并提供构建记录。托管源码、构建日志和包的校验值均不等于代码安全审核；不得将“未审核”宣传为“安全认证”。
 
@@ -107,6 +107,7 @@ wsbench --plugin 你的插件文件夹 --query "ip" --runs 5
 `legacy/` 里是以前直接提交到这个仓库的插件：`day.ocr`、`day.rename`、`crazy-zxx.yigengming`。它们还在这里打包发布：
 
 - 要修改：照旧提 PR，改 `legacy/<id>/` 里的文件，记得把 `version` 升上去。合并后 CI 会打包、发 Release，并把条目指向新版本。PR 里不用改 `plugins/<id>.json`。不再收新的老插件。
+- `day.ocr` 和 `day.rename` 使用 `desktop.json` 声明的 Windows 自包含构建，运行时和依赖随包提供。源码目录的 Python 清单用于调试，线上分发的包使用 EXE 清单并带未审核原生标记。构建与验证步骤见 [desktop.md](tools/desktop.md)。
 - 想搬到自己的仓库（推荐，以后发版本不用等合并）：
   ```
   git clone https://github.com/LingCore/WinShun-plugins

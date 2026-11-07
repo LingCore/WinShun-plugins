@@ -21,8 +21,48 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  desktop:
+    if: github.repository == 'LingCore/WinShun-plugins'
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Prepare the pinned desktop build runtime
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Path build/desktop -Force | Out-Null
+          $archive = Join-Path $PWD 'build/desktop/python.tar.gz'
+          Invoke-WebRequest 'https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.15.2%2B20261026-x86_64-pc-windows-msvc-install_only_stripped.tar.gz' -OutFile $archive
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne '02e532b60e720aa3d77e757c349ae9cc945441c05851fa646336fc9ff0403041') {
+            throw 'Python runtime checksum mismatch'
+          }
+          tar -xf $archive -C build/desktop
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & ./build/desktop/python/python.exe -m pip install --disable-pip-version-check --require-hashes --only-binary=:all: -r tools/desktop-requirements.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+
+      - name: Build and verify new desktop versions
+        shell: pwsh
+        run: |
+          & ./build/desktop/python/python.exe -I tools/build_desktop.py day.ocr day.rename --pending --build-dir build/desktop/work --out dist/desktop
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: desktop-plugins
+          path: dist/desktop/
+          compression-level: 0
+          if-no-files-found: error
+
   publish:
     if: github.repository == 'LingCore/WinShun-plugins'
+    needs: desktop
     runs-on: ubuntu-latest
     environment: index-signing # holds INDEX_SIGNING_KEYS; only main may use it
     env:
@@ -72,6 +112,53 @@ jobs:
       - name: Pack the legacy plugins
         run: python -I tools/build.py --legacy --out dist
 
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: desktop-plugins
+          path: dist/desktop
+
+      - name: Verify and include the Windows desktop packages
+        run: |
+          python -I - <<'PY'
+          import hashlib
+          import io
+          import json
+          import shutil
+          import sys
+          import zipfile
+          from pathlib import Path
+          sys.path.insert(0, 'tools')
+          import check
+          import registry
+          source = Path('dist/desktop')
+          rows = []
+          for line in (source / 'desktop.tsv').read_text(encoding='utf-8').splitlines():
+              pid, version, filename, digest, name = line.split('\t')
+              data = (source / filename).read_bytes()
+              package = check.check_package(data, pid, version, filename, unreviewed_native=True)
+              if package.errors:
+                  raise SystemExit('\n'.join(package.errors))
+              receipt = registry.load_json(source / f'{pid}-{version}.build.json')
+              if hashlib.sha256(data).hexdigest() != digest or receipt['sha256'] != digest:
+                  raise SystemExit(f'{pid}: artifact checksum mismatch')
+              if (source / f'{filename}.sha256').read_text(encoding='ascii').split()[0] != digest:
+                  raise SystemExit(f'{pid}: checksum attachment mismatch')
+              with zipfile.ZipFile(io.BytesIO(data)) as archive:
+                  embedded = json.loads(archive.read('build-info.json'))
+              for key in ('id', 'version', 'sourceCommit', 'sourceSha256', 'toolchain', 'requirementsSha256'):
+                  if embedded[key] != receipt[key]:
+                      raise SystemExit(f'{pid}: build receipt differs from package')
+              if receipt['review'] != 'unreviewed-native' or not receipt['selfTest']['ok']:
+                  raise SystemExit(f'{pid}: desktop validation receipt missing')
+              published = registry.load_json(Path('plugins') / f'{pid}.json')['version']
+              if registry.version_key(version) <= registry.version_key(published):
+                  continue
+              shutil.copyfile(source / filename, Path('dist') / filename)
+              rows.append(line + '\n')
+          with Path('dist/legacy.tsv').open('ab') as output:
+              output.write(''.join(rows).encode('utf-8'))
+          PY
+
       - name: Release the legacy versions that have no release yet
         run: |
           set -euo pipefail
@@ -93,10 +180,19 @@ jobs:
                 fail=1
               fi
             else
-              gh release create "$tag" "dist/$file" \
-                --target "$head" --latest=false \
+              target="$head"
+              assets=("dist/$file")
+              notes="Win顺 设置 → 插件 → 从压缩包安装，选这个 .wsplugin 文件。"
+              if [ -f "dist/desktop/$id-$version.build.json" ]; then
+                target=$(jq -r .sourceCommit "dist/desktop/$id-$version.build.json")
+                git cat-file -e "$target^{commit}"
+                assets+=("dist/desktop/$file.sha256" "dist/desktop/$id-$version.build.json")
+                notes="$notes 需要 Win顺 0.22.0 及以上版本。运行时和依赖随包提供，按未审核原生插件收录，安装和每次更新需确认。源码提交为 $target，构建收据及 SHA256 随附件提供。"
+              fi
+              gh release create "$tag" "${assets[@]}" \
+                --target "$target" --latest=false \
                 --title "$name $version" \
-                --notes "Win顺 设置 → 插件 → 从压缩包安装，选这个 .wsplugin 文件。"
+                --notes "$notes"
             fi
           done < dist/legacy.tsv
           if [ "$fail" -ne 0 ]; then exit 1; fi
@@ -106,7 +202,11 @@ jobs:
           set -euo pipefail
           while IFS=$'\t' read -r id version file _ _; do
             if [ "$(jq -r .version "plugins/$id.json")" != "$version" ]; then
-              python -I tools/entry.py "https://github.com/$GITHUB_REPOSITORY/releases/download/$id-v$version/$file"
+              review=()
+              if [ -f "dist/desktop/$id-$version.build.json" ]; then
+                review+=(--unreviewed-native)
+              fi
+              python -I tools/entry.py "https://github.com/$GITHUB_REPOSITORY/releases/download/$id-v$version/$file" "${review[@]}"
             fi
           done < dist/legacy.tsv
 

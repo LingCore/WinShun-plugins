@@ -4,15 +4,21 @@ WinShun 常驻插件。输入 `ocr` 打开独立窗口。截图或上传图片�
 
 作者：[Day / askd126](https://github.com/askd126) · 许可证：[MIT](LICENSE)
 
-## 安装（社区脚本版）
+## 自包含包
+
+Windows x64 自包含包将固定版本的 Python、Tcl/Tk 和界面依赖随插件提供，适用于 Win顺 0.22.0 及以上版本。在设置 → 插件 → 从压缩包安装中选择 `.wsplugin`，确认原生插件安装及权限后启用，输入 `ocr` 打开窗口。模型配置使用原有设置键，由 Win顺 保存。
+
+维护者可按[构建说明](../../tools/desktop.md)生成自包含候选包，构建器会检查最终包并运行隔离环境自检。
+
+## 源码调试（社区脚本版）
 
 这是符合本仓库规则的 **Python 源码版本**，与自行分发的内置环境安装包不同：不包含 EXE、DLL 或 Python 运行时。适用于 Windows 10/11 x64，需要 **Python 3.12+（含 Tcl/Tk）**。
 
 1. 在插件库安装，或将本文件夹完整放到 `%LOCALAPPDATA%\WinShun\plugins\day.ocr\`。便携版使用其实际插件目录。
-2. 使用 WinShun 插件卡片显示的同一个 Python 解释器安装 `requirements.txt`，不要把依赖装到其他 Python 环境。以源码检出目录为例：
+2. 从诊断包的 `plugins.log` 启动记录确认 Win顺 使用的 Python，用该解释器安装 `requirements.txt`。以源码检出目录为例：
 
    ```powershell
-   python -m pip install -r plugins/day.ocr/requirements.txt
+   python -m pip install -r legacy/day.ocr/requirements.txt
    ```
 
    如果 Python 位于别处，请用其 `python.exe` 完整路径代替 `python`。Tkinter 不通过 pip 安装，需在 python.org Windows 安装程序中包含 Tcl/Tk 组件。
@@ -59,14 +65,16 @@ API 地址、模型名称和 API Key 的填写方式与 OpenAI Chat Completions 
 本目录包含全部运行源码、依赖清单、MIT 许可证和离线回归测试。`main.py` 负责窗口，`protocol.py` 负责 JSON-RPC，`ocr_api.py` 负责核心功能。
 
 ```powershell
-python plugins/day.ocr/bootstrap.py --standalone
-python plugins/day.ocr/bootstrap.py --self-test
-python -B -m unittest discover -s plugins/day.ocr/tests -v
-python tools/check.py --changed day.ocr
+python legacy/day.ocr/bootstrap.py --standalone
+python legacy/day.ocr/bootstrap.py --self-test
+python -B -m unittest discover -s legacy/day.ocr/tests -v
+python tools/check.py legacy/day.ocr --id day.ocr
 ```
 
 `--self-test` 不联网、不读取剪贴板，也不修改用户文件。回归测试的文件操作只发生在临时目录，远端 API 使用模拟响应；不以单元测试代替真实模型及系统拖放/截图验证。会在桌面上显示并缩放窗口的测试需显式设置 `WINSHUN_VISIBLE_LAYOUT_TEST=1`，默认跳过。
 
 维护者补测（2026-10-26）：在独立 Python 3.12.14 环境安装固定版本依赖，含可见 DPI 用例的 24 项本插件测试通过。真实接口验收使用硅基流动 `Qwen/Qwen3-VL-8B-Instruct`，只发送一张生成的 960×320 中英文测试图片；通过原样 `OcrApp.start_ocr` 和生产 HTTP 工作线程调用服务，约 6.5 秒后结果回填窗口文本框，英文、数字及“中文测试：插件验收”均正确。此项使用真实服务，离线回归测试中的服务调用仍为模拟。未验证真实系统截图交互、所有服务商及模型，也未替用户升级默认 Python 或保存模型密钥。
 
-仓库 CI 在维护者合并后按标准脚本插件格式发布 `.wsplugin`。该包仍需以上 Python 依赖，不会下载或启动外部二进制程序。
+2026-11-07 自包含候选包验证使用 Python 3.15.2 和 Tcl/Tk 9.0.4，24 项插件测试通过，包含显式启用的可见 DPI 用例。最终包在 Python 不可用的 Host → Runner 环境中完成首次启动和脚本版升级验证，窗口、关键词和模型设置正常，插件数据保留。
+
+1.1.0 起，发布工作流按 `desktop.json` 配置在 Windows 上构建自包含 `.wsplugin`，原生安装和每次更新均需用户确认。以上手工安装依赖的步骤适用于源码调试。

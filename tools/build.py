@@ -3,9 +3,9 @@
 
 用法：
   python tools/build.py <文件夹> [--id ID] [--out DIR]   检查并打包一个插件文件夹（作者仓库的发布工作流用它）
-  python tools/build.py --legacy [--out DIR]             打包 legacy/ 下的全部老插件，另写 DIR/legacy.tsv（本仓库的发布工作流用）
+  python tools/build.py --legacy [--out DIR]             打包 legacy/ 下的脚本插件，另写 DIR/legacy.tsv（自包含包由 Windows 任务构建）
 
-同样的文件一定打出同样的包（文件按名字排序、时间固定、不压缩），所以 sha256 可以拿来比对。
+同样的文件一定打出同样的包（文件按名字排序、时间固定、默认不压缩），所以 sha256 可以拿来比对。
 打进包的文件和 check.py 检查的是同一份（check.source_files：提交过的文件，以点开头的不要）。
 index.json 和 README 的插件表由 index.py 用条目生成。只用标准库，Python 3.10+。
 """
@@ -35,12 +35,12 @@ def pick(text, locale: str = "zh") -> str:
     return ""
 
 
-def pack(folder: Path, target: Path) -> None:
+def pack(folder: Path, target: Path, *, compression: int = zipfile.ZIP_STORED) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(target, "w", zipfile.ZIP_STORED) as z:
+    with zipfile.ZipFile(target, "w", compression) as z:
         for p in check.source_files(folder):  # 已按相对路径排好
             info = zipfile.ZipInfo(p.relative_to(folder).as_posix(), FIXED_TIME)
-            info.compress_type = zipfile.ZIP_STORED
+            info.compress_type = compression
             info.create_system = 3
             info.external_attr = 0o100644 << 16
             z.writestr(info, p.read_bytes())
@@ -68,7 +68,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="检查并打包插件文件夹")
     ap.add_argument("folder", nargs="?", help="要打包的插件文件夹（比如你自己仓库的根目录）")
     ap.add_argument("--id", help="和插件文件夹一起用：它应该是的 id")
-    ap.add_argument("--legacy", action="store_true", help="打包 legacy/ 下的全部老插件")
+    ap.add_argument("--legacy", action="store_true", help="打包 legacy/ 下的脚本插件，跳过 desktop.json 声明的自包含包")
     ap.add_argument("--out", default="dist", help="输出文件夹，默认 dist/")
     ap.add_argument("--root", default=str(registry.ROOT), help="插件库仓库（--legacy 用），默认是工具所在的这个")
     ap.add_argument("--github-output", metavar="FILE",
@@ -84,6 +84,8 @@ def main() -> int:
     if args.legacy:
         rows, bad = [], 0
         for folder in check.legacy_folders(Path(args.root)):
+            if (folder / "desktop.json").is_file():
+                continue  # Built and verified on Windows by build_desktop.py.
             r, built = build(folder, out, folder.name, f"legacy/{folder.name}")
             for text in r.errors:
                 print("错误：" + text)
