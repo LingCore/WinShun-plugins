@@ -1,11 +1,11 @@
 {
   "id": "winshun.explorer-tabs",
   "repo": "LingCore/WinShun-plugins",
-  "autoUpdate": true,
-  "version": "1.0.1",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.0.1/winshun.explorer-tabs-1.0.1.wsplugin",
-  "sha256": "5f54b13cc35b72d0f1558c491a614a4b06323cf4c53d31612a3539698aabd0c6",
-  "size": 249594,
+  "autoUpdate": false,
+  "version": "1.0.2",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.0.2/winshun.explorer-tabs-1.0.2.wsplugin",
+  "sha256": "492feb45696a8e556bac561ca380202e3b768eca2f0af3562df2c7e22f66a47a",
+  "size": 249593,
   "name": {
     "en": "Explorer tabs",
     "zh": "资源管理器标签页"
@@ -29,7 +29,7 @@
     "mode": "resident",
     "program": "WinShunExplorerTabs.exe"
   },
-  "minWinShun": "0.21.0",
-  "releaseDate": "2026-11-06T09:18:59Z",
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-07T02:30:43Z",
   "dateAdded": "2026-11-04T03:02:24Z"
 }

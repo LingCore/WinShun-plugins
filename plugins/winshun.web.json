@@ -2,10 +2,10 @@
   "id": "winshun.web",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.web-v2.0.0/winshun.web-2.0.0.wsplugin",
-  "sha256": "e4235bdf0f8d00c61ba7e02acfca9dfbc18e98b3edccccbd7afc6b1fecb916a9",
-  "size": 1608,
+  "version": "2.0.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.web-v2.0.1/winshun.web-2.0.1.wsplugin",
+  "sha256": "efed869bd266b0ada4658f5af4be064fca12d95647bd6732b9036b421ea56652",
+  "size": 1609,
   "name": {
     "en": "Web search",
     "zh": "网页搜索"
@@ -23,7 +23,7 @@
     "mode": "zero-code",
     "program": null
   },
-  "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-03T03:08:50Z",
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-07T02:31:15Z",
   "dateAdded": "2026-10-23T09:12:46Z"
 }

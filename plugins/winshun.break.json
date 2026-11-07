@@ -2,9 +2,9 @@
   "id": "winshun.break",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.break-v1.1.0/winshun.break-1.1.0.wsplugin",
-  "sha256": "0265924299567c4b5ff8ab4df36aa2545bb5cabbc48f7b9b166601cca95324bc",
+  "version": "1.1.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.break-v1.1.1/winshun.break-1.1.1.wsplugin",
+  "sha256": "cf4c0f2327ecef7ffc108bb01c6ef85b6f09e706ec31f37d9968714dd2b8d371",
   "size": 240924,
   "name": {
     "zh": "休息提醒",
@@ -29,6 +29,6 @@
     "program": "WinShunBreak.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-06T13:00:40Z",
+  "releaseDate": "2026-11-07T02:30:29Z",
   "dateAdded": "2026-11-01T08:10:28Z"
 }
