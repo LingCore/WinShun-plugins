@@ -3,17 +3,17 @@
   "repo": "ra9fael/winshun-wifi",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.1",
-  "url": "https://github.com/ra9fael/winshun-wifi/releases/download/v0.1.1/ra9fael.wifi-0.1.1.wsplugin",
-  "sha256": "85a12d07960268f247cc9db88073e7493ea8fa136d02d6f36e508bdd3ba357ef",
-  "size": 557203,
+  "version": "0.2.1",
+  "url": "https://github.com/ra9fael/winshun-wifi/releases/download/v0.2.1/ra9fael.wifi-0.2.1.wsplugin",
+  "sha256": "f24ffef55d07fafa6ca7b621402e8871af389097ca659118211dd24457837e58",
+  "size": 899506,
   "name": {
     "zh": "Wi-Fi",
     "en": "Wi-Fi"
   },
   "description": {
-    "zh": "列出已保存与附近的 Wi-Fi：Enter 连接，Ctrl+Enter 断开，Shift+Enter 查看密码，支持忘记网络与复制配置；纯 wlanapi，不解析 netsh",
-    "en": "List saved and nearby Wi-Fi networks: Enter connects, Ctrl+Enter disconnects, Shift+Enter reveals the password; forget or copy profiles. Native wlanapi, no netsh parsing"
+    "zh": "管理已保存与附近的 Wi-Fi：连接、断开、查看密码、生成扫码连接二维码、忘记网络与复制配置",
+    "en": "Manage saved and nearby Wi-Fi: connect, disconnect, reveal passwords, generate scan-to-join QR codes, forget networks and copy profiles"
   },
   "author": "ra9fael",
   "license": "MIT",
@@ -23,7 +23,9 @@
     "无线"
   ],
   "permissions": [
+    "files:write",
     "clipboard:write",
+    "ui",
     "elevated"
   ],
   "runtime": {
@@ -31,6 +33,6 @@
     "program": "wifi.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T00:56:03Z",
+  "releaseDate": "2026-11-08T20:48:16Z",
   "dateAdded": "2026-11-08T00:34:07Z"
 }
