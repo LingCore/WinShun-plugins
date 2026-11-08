@@ -5,7 +5,7 @@
   "review": "unreviewed-native",
   "version": "0.1.1",
   "url": "https://github.com/ra9fael/winshun-wifi/releases/download/v0.1.1/ra9fael.wifi-0.1.1.wsplugin",
-  "sha256": "12e5da45372964900283d806dc9c41f74fa3481256fd23f378ea397f0d8adf18",
+  "sha256": "85a12d07960268f247cc9db88073e7493ea8fa136d02d6f36e508bdd3ba357ef",
   "size": 557203,
   "name": {
     "zh": "Wi-Fi",
@@ -31,6 +31,6 @@
     "program": "wifi.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T00:32:56Z",
+  "releaseDate": "2026-11-08T00:56:03Z",
   "dateAdded": "2026-11-08T00:34:07Z"
 }
