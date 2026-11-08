@@ -1,0 +1,35 @@
+{
+  "id": "ra9fael.binarylab",
+  "repo": "ra9fael/winshun-binarylab",
+  "autoUpdate": false,
+  "review": "unreviewed-native",
+  "version": "0.3.3",
+  "url": "https://github.com/ra9fael/winshun-binarylab/releases/download/gdi-v0.3.3/ra9fael.binarylab-0.3.3.wsplugin",
+  "sha256": "c4dd369ce6a664bf72eafd112ebd0aba8cddd78ab82b2a047dd3382c8384ee4e",
+  "size": 982868,
+  "name": {
+    "zh": "二进制工作台 · GDI",
+    "en": "Binary Lab · GDI"
+  },
+  "description": "纯内存计算的嵌入式二进制工具：位运算与进制转换、hex/bin/oct 字节流解码、C 风格结构体排布；可选交互式位编辑器窗口。",
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "bits",
+    "bytes",
+    "struct"
+  ],
+  "permissions": [
+    "clipboard:write",
+    "ui",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "binarylab.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-08T21:39:52Z",
+  "dateAdded": "2026-11-08T22:02:44Z"
+}
