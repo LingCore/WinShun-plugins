@@ -1,0 +1,38 @@
+{
+  "id": "ra9fael.whatis",
+  "repo": "ra9fael/winshun-whatis",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.1.2",
+  "url": "https://github.com/ra9fael/winshun-whatis/releases/download/v0.1.2/ra9fael.whatis-0.1.2.wsplugin",
+  "sha256": "a707906efce5485161a8406dda01a1d7860f0d3d86e40d2e79e92196d1989668",
+  "size": 821025,
+  "name": {
+    "zh": "这是什么",
+    "en": "What Is This"
+  },
+  "description": {
+    "zh": "指向一个窗口，找到创建它的进程、EXE 路径与 PID；可复制路径、定位文件和查看窗口信息",
+    "en": "Point at a window to identify its process, EXE path and PID; copy the path, reveal the file and inspect window details"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-whatis",
+  "keywords": [
+    "whatis",
+    "这是什么",
+    "窗口是谁"
+  ],
+  "permissions": [
+    "clipboard:write",
+    "ui",
+    "winshun:open"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "whatis.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-08T21:39:09Z",
+  "dateAdded": "2026-11-08T22:15:29Z"
+}
