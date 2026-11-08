@@ -3,25 +3,24 @@
   "repo": "ra9fael/winshun-qr",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.0",
-  "url": "https://github.com/ra9fael/winshun-qr/releases/download/v0.1.0/ra9fael.qr-0.1.0.wsplugin",
-  "sha256": "61b742b9015170d96099b05974c95dfbc29a5092520ff477bd1dfa64bf0da1f2",
-  "size": 796134,
+  "version": "0.2.1",
+  "url": "https://github.com/ra9fael/winshun-qr/releases/download/v0.2.1/ra9fael.qr-0.2.1.wsplugin",
+  "sha256": "61cff03afb15704871c2d95a148e8104bb243dd6a90a508cbf498ae3f26177b7",
+  "size": 920347,
   "name": {
     "zh": "二维码",
     "en": "QR code"
   },
   "description": {
-    "zh": "文字、链接或剪贴板内容生成二维码：Enter 复制图片，Ctrl+Enter 预览，Shift+Enter 存 PNG；qrwifi 直接列出连接过的 Wi-Fi 生成扫码即连的二维码",
-    "en": "Turn text, a link or the clipboard into a QR code: Enter copies the image, Ctrl+Enter previews, Shift+Enter saves a PNG; qrwifi lists the Wi-Fi networks you have joined and builds a scan-to-join code"
+    "zh": "文字、链接或剪贴板内容生成二维码：Enter 复制图片，Ctrl+Enter 预览，Shift+Enter 存 PNG",
+    "en": "Turn text, a link or the clipboard into a QR code: Enter copies the image, Ctrl+Enter previews, Shift+Enter saves a PNG"
   },
   "author": "ra9fael",
   "license": "MIT",
   "homepage": "https://github.com/ra9fael/winshun-qr",
   "keywords": [
     "qr",
-    "二维码",
-    "qrwifi"
+    "二维码"
   ],
   "permissions": [
     "files:write",
@@ -34,6 +33,6 @@
     "program": "qr.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T00:58:02Z",
+  "releaseDate": "2026-11-08T20:48:53Z",
   "dateAdded": "2026-11-08T00:10:45Z"
 }
