@@ -3,10 +3,10 @@
   "repo": "iuuuuuuuu/winshun-screenshot-translate",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.4.5",
-  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.5/iuuuuuuuu.screenshot-translate-0.4.5.wsplugin",
-  "sha256": "c2e0d8a8c4007126f2587466bc6cbc8f855be6efae3b2fe757c9e997372b2242",
-  "size": 31233631,
+  "version": "0.4.6",
+  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.6/iuuuuuuuu.screenshot-translate-0.4.6.wsplugin",
+  "sha256": "196a7e2725ba7364f86a83bda356fb4714b001fa25d6612bbbe5ab3c344ef569",
+  "size": 31305043,
   "name": {
     "zh": "截图翻译",
     "en": "Screenshot Translate"
@@ -40,6 +40,6 @@
     "program": "ScreenshotTranslate.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-07T16:11:10Z",
+  "releaseDate": "2026-11-08T09:44:21Z",
   "dateAdded": "2026-11-05T23:48:00Z"
 }
