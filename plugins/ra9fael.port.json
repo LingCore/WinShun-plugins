@@ -5,7 +5,7 @@
   "review": "unreviewed-native",
   "version": "0.1.1",
   "url": "https://github.com/ra9fael/winshun-port/releases/download/v0.1.1/ra9fael.port-0.1.1.wsplugin",
-  "sha256": "2c4952ed46637346510d7a00c81331bb839e5955ca78f355be165c161686ed83",
+  "sha256": "886b7d4f0f4527b81c6d8ef368a0dc2db4048f8f66f7d8eb1c84f04598b0c1b8",
   "size": 559683,
   "name": {
     "zh": "端口占用",
@@ -32,6 +32,6 @@
     "program": "port.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T00:48:25Z",
+  "releaseDate": "2026-11-08T00:56:08Z",
   "dateAdded": "2026-11-08T00:48:43Z"
 }
