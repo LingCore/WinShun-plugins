@@ -1,0 +1,37 @@
+{
+  "id": "ra9fael.port",
+  "repo": "ra9fael/winshun-port",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.1.1",
+  "url": "https://github.com/ra9fael/winshun-port/releases/download/v0.1.1/ra9fael.port-0.1.1.wsplugin",
+  "sha256": "2c4952ed46637346510d7a00c81331bb839e5955ca78f355be165c161686ed83",
+  "size": 559683,
+  "name": {
+    "zh": "端口占用",
+    "en": "Port usage"
+  },
+  "description": {
+    "zh": "查端口被谁占用：port 8080 列出监听/连接该端口的进程，Enter 结束，Ctrl+Enter 连子进程；port java 反查某进程占的所有端口；留空列出全部监听端口",
+    "en": "Find what occupies a port: port 8080 lists processes on it, Enter kills, Ctrl+Enter kills the tree; port java lists every port a process holds; empty lists all listening ports"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-port",
+  "keywords": [
+    "port",
+    "端口"
+  ],
+  "permissions": [
+    "processes",
+    "clipboard:write",
+    "elevated"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "port.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-08T00:48:25Z",
+  "dateAdded": "2026-11-08T00:48:43Z"
+}
