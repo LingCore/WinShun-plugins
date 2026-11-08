@@ -5,7 +5,7 @@
   "review": "unreviewed-native",
   "version": "0.1.0",
   "url": "https://github.com/ra9fael/winshun-qr/releases/download/v0.1.0/ra9fael.qr-0.1.0.wsplugin",
-  "sha256": "6184d3f7a0d72381675ccab32c099c1a078d47255554fa38a6e4aef7ed42d764",
+  "sha256": "61b742b9015170d96099b05974c95dfbc29a5092520ff477bd1dfa64bf0da1f2",
   "size": 796134,
   "name": {
     "zh": "二维码",
@@ -34,6 +34,6 @@
     "program": "qr.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T00:09:22Z",
+  "releaseDate": "2026-11-08T00:58:02Z",
   "dateAdded": "2026-11-08T00:10:45Z"
 }
