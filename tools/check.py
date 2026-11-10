@@ -17,11 +17,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import re
 import subprocess
 import sys
 import tempfile
+import zipfile
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -171,7 +173,7 @@ def read_runtime(v, e: Errors, native_program: str | None = None) -> dict | None
     else:
         # Manifest.cpp 把它当插件文件夹里的 exe；本仓库不收二进制
         if relative_inside(program, "runtime.program", e):
-            e.fail("普通脚本包的 runtime.program 只能是 python、pwsh、powershell 或 node；exe/dll 包请用 --unreviewed-native 投稿")
+            e.fail("普通脚本包的 runtime.program 只能是 python、pwsh、powershell 或 node；带 exe/dll 的包按未审核原生插件收录（tools/entry.py 会自动标上，本地检查加 --unreviewed-native）")
     if "args" in v:
         string_list(v["args"], "runtime.args", e)
     script = string_field(v, "script", where, e)
@@ -786,6 +788,25 @@ class Package:
         self.files: dict[str, tuple[str, int]] = {}  # 相对路径 → (sha256, 字节数)
 
 
+def looks_native(data: bytes) -> bool:
+    """包里有 exe/dll，或者 runtime.program 是包内的 exe：这样的包按未审核原生插件收录。
+    只看文件名和清单，不解开、不运行；坏包算不是（后面的检查会报它）。"""
+    try:
+        with zipfile.ZipFile(io.BytesIO(data)) as archive:
+            infos = archive.infolist()
+            if any(i.filename.lower().endswith((".exe", ".dll")) for i in infos):
+                return True
+            manifest = next((i for i in infos if i.filename == "plugin.json"), None)
+            if manifest is None or manifest.file_size > MAX_FILE:
+                return False
+            obj = json.loads(archive.read(manifest).decode("utf-8-sig"))
+    except (zipfile.BadZipFile, ValueError, UnicodeDecodeError, OSError, RuntimeError):
+        return False
+    runtime = obj.get("runtime") if isinstance(obj, dict) else None
+    program = runtime.get("program") if isinstance(runtime, dict) else None
+    return isinstance(program, str) and program.lower().endswith(".exe")
+
+
 def check_package(data: bytes, expected_id: str, version: str, label: str, *, official_native: bool = False, unreviewed_native: bool = False) -> Package:
     """解到系统的临时文件夹（不在仓库里）检查，查完就删。不运行包里的任何东西。"""
     p = Package(label)
@@ -824,10 +845,13 @@ class Asset:
         self.release: dict | None = None
         self.package: Package | None = None
         self.fields: dict = {}  # 生成的字段（dateAdded 除外）；检查没过是空的
+        self.unreviewed_native = False  # 按未审核原生插件检查的：条目标了，或者 auto_native 时包里有 exe/dll
 
 
-def check_asset(url: str, expected_id: str | None = None, release: dict | None = None, *, unreviewed_native: bool = False) -> Asset:
-    """release：已经拿到的那个 Release（update.py 列 Release 时就有），不给就去问 GitHub。"""
+def check_asset(url: str, expected_id: str | None = None, release: dict | None = None, *, unreviewed_native: bool = False,
+                auto_native: bool = False) -> Asset:
+    """release：已经拿到的那个 Release（update.py 列 Release 时就有），不给就去问 GitHub。
+    auto_native：包里有 exe/dll 就按未审核原生插件检查（官方插件除外），Asset.unreviewed_native 说是不是。"""
     a = Asset(url)
     parts = a.parts
     if parts is None:
@@ -842,6 +866,9 @@ def check_asset(url: str, expected_id: str | None = None, release: dict | None =
     except registry.FetchError as ex:
         a.errors.append(f"{url}：{ex}")
         return a
+    if auto_native and not unreviewed_native and not registry.official_native(parts.repo, parts.id) and looks_native(data):
+        unreviewed_native = True
+    a.unreviewed_native = unreviewed_native
     asset = registry.asset_of(a.release, parts.file) if a.release else None
     if a.release is None:
         a.errors.append(f"{parts.repo} 里找不到标签 {parts.tag} 的 Release")
@@ -1029,7 +1056,10 @@ def check_entry_online(r: Report) -> Asset | None:
     url = obj.get("url")
     if registry.asset_url(url) is None:
         return None  # 不联网的检查已经报过了
-    a = check_asset(url, expected_id=r.id, unreviewed_native=obj.get("review") == "unreviewed-native")
+    a = check_asset(url, expected_id=r.id, unreviewed_native=obj.get("review") == "unreviewed-native", auto_native=True)
+    if a.unreviewed_native and obj.get("review") != "unreviewed-native":
+        r.error('包里有 exe/dll，按“未审核的原生插件”收录：条目要带 "review": "unreviewed-native"'
+                f"（python tools/entry.py {url} 重新生成会自动加上）")
     r.errors += [f"{r.label}：{t}" for t in a.errors]
     r.warnings += [f"{r.label}：{t}" for t in a.warnings]
     if a.fields:

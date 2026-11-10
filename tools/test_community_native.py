@@ -1,4 +1,4 @@
-"""Unreviewed native packages are opt-in, bounded and never silently trusted."""
+"""Native packages are labelled unreviewed, bounded and never silently trusted."""
 import hashlib
 import io
 import json
@@ -111,16 +111,52 @@ class CommunityNative(unittest.TestCase):
             check.check_pr_entry(report)
         self.assertTrue(any("review" in error for error in report.errors))
 
-    def test_registry_update_never_auto_accepts_native_release(self):
+    def release_of(self, data):
+        return {"draft": False, "prerelease": False, "published_at": "2026-11-06T00:00:00Z",
+                "assets": [{"name": "community.native-1.0.0.wsplugin", "digest": "sha256:" + hashlib.sha256(data).hexdigest()}]}
+
+    def test_registry_update_accepts_native_release_keeping_its_label(self):
+        # Win顺 asks the user before installing or updating it: the library only checks it.
         e = entry()
         data = package()
-        release = {"draft": False, "prerelease": False, "published_at": "2026-11-06T00:00:00Z",
-                   "assets": [{"name": "community.native-1.0.0.wsplugin", "digest": "sha256:" + hashlib.sha256(data).hexdigest()}]}
+        release = self.release_of(data)
         with patch.object(registry, "fetch", return_value=data), patch.object(registry, "release_by_tag", return_value=release):
             action, finding, accepted = update.look(e, "1.0.0", release, {"browser_download_url": e["url"]})
-        self.assertIsNone(accepted)
-        self.assertEqual(finding.kind, "pr")
-        self.assertEqual(finding.entry["review"], "unreviewed-native")
+        self.assertIsNone(finding)
+        self.assertEqual(accepted["review"], "unreviewed-native")
+
+    def test_script_plugin_turning_native_is_labelled_not_refused(self):
+        e = {k: v for k, v in entry().items() if k != "review"}
+        data = package()
+        release = self.release_of(data)
+        with patch.object(registry, "fetch", return_value=data), patch.object(registry, "release_by_tag", return_value=release):
+            action, finding, accepted = update.look(e, "1.0.0", release, {"browser_download_url": e["url"]})
+        self.assertIsNone(finding)
+        self.assertEqual(accepted["review"], "unreviewed-native")
+
+    def test_native_is_told_by_its_files(self):
+        self.assertTrue(check.looks_native(package()))
+        self.assertTrue(check.looks_native(package(extra={"bin/tool.exe": b"MZ"}, runtime={"mode": "once", "program": "python"})))
+        script = io.BytesIO()
+        with zipfile.ZipFile(script, "w") as archive:
+            archive.writestr("plugin.json", json.dumps({"id": "a.b", "runtime": {"mode": "once", "program": "python"}}))
+            archive.writestr("main.py", "print(1)")
+        self.assertFalse(check.looks_native(script.getvalue()))
+        self.assertFalse(check.looks_native(b"not a zip"))
+
+    def test_entry_of_native_package_needs_the_label(self):
+        e = entry()
+        data = package()
+        report = check.Report(e["id"])
+        report.entry = {k: v for k, v in e.items() if k != "review"}
+        with patch.object(registry, "fetch", return_value=data), patch.object(registry, "release_by_tag", return_value=self.release_of(data)):
+            check.check_entry_online(report)
+        self.assertTrue(any("unreviewed-native" in error for error in report.errors))
+        report = check.Report(e["id"])
+        report.entry = e
+        with patch.object(registry, "fetch", return_value=data), patch.object(registry, "release_by_tag", return_value=self.release_of(data)):
+            check.check_entry_online(report)
+        self.assertEqual(report.errors, [])
 
 
 if __name__ == "__main__":

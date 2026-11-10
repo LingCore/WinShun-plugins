@@ -58,7 +58,9 @@ def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[st
     pid, repo = entry["id"], entry["repo"]
     url = asset_info.get("browser_download_url") or ""
     unreviewed = entry.get("review") == "unreviewed-native"
-    new = check.check_asset(url, expected_id=pid, release=release, unreviewed_native=unreviewed)
+    # 包里有 exe/dll 的（脚本插件改成了带程序的也一样）按未审核原生插件收录，不拒收。
+    new = check.check_asset(url, expected_id=pid, release=release, unreviewed_native=unreviewed, auto_native=True)
+    native = new.unreviewed_native
     parts = registry.asset_url(url)
     old_parts = registry.asset_url(entry["url"])
     links = [f"- 插件仓库：https://github.com/{repo}"]
@@ -72,22 +74,22 @@ def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[st
         body += links + [""] + problems_lines(new) + ["", "作者修好以后再发一个更高的版本就行，插件库会自动跟上。"]
         return "检查没过，开 Issue", Finding("issue", pid, version, f"自动更新没通过检查：{pid} {version}", body), None
 
-    updated = registry.ordered({**entry, **new.fields})  # id、repo、autoUpdate、bundled、hosted、dateAdded 照旧
+    updated = registry.ordered({**entry, **new.fields, **({"review": "unreviewed-native"} if native else {})})  # id、repo、autoUpdate、bundled、hosted、dateAdded 照旧
     old = check.check_asset(entry["url"], expected_id=pid, unreviewed_native=unreviewed)  # 现在收录的包，拿来比权限和文件
+    # 插件由作者维护，插件库只做机器检查。Win顺 会问用户的就直接收录：未审核原生插件的
+    # 每次安装和更新都要用户确认；多要的权限，更新前先问用户同意。Win顺 不会再问的
+    # 改动（脚本插件的权限范围、运行方式变了），才开 PR 给维护者看。
     reasons: list[str] = []
-    if unreviewed:
-        reasons.append("未审核原生插件的新版本需维护者核对来源，继续保留未审核标记")
     diff_lines: list[str] = []
     if old.package is None or old.package.manifest is None:
-        reasons.append("现在收录的包下载或检查不了，没法比较")
+        if not native:
+            reasons.append("现在收录的包下载或检查不了，没法比较")
     else:
         diff = check.Diff(old.package, new.package)
         diff_lines = diff.markdown()
-        if diff.added:
-            reasons.append("多要了权限 " + "、".join(diff.added))
-        if diff.rescoped:
+        if diff.rescoped and not native:
             reasons.append("权限的范围变了：" + "、".join(diff.rescoped))
-        if diff.runtime:
+        if diff.runtime and not native:
             reasons.append("运行方式变了：" + "、".join(f"runtime.{k}" for k, _, _ in diff.runtime))
     if not reasons:
         return "直接收录", None, updated
