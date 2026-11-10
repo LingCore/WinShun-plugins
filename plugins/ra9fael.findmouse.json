@@ -1,0 +1,35 @@
+{
+  "id": "ra9fael.findmouse",
+  "repo": "ra9fael/winshun-findmouse",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.4.4",
+  "url": "https://github.com/ra9fael/winshun-findmouse/releases/download/v0.4.4/ra9fael.findmouse-0.4.4.wsplugin",
+  "sha256": "6cdae7c324a985e89fd4c99756566817020b30144c741b75f16cda130c0414a9",
+  "size": 769608,
+  "name": {
+    "zh": "晃动找鼠标",
+    "en": "Find My Mouse"
+  },
+  "description": {
+    "zh": "快速左右晃动鼠标时在指针位置显示一圈涟漪动效，帮助找回光标；也提供 mouse 关键字手动触发、开关检测和诊断",
+    "en": "Show a ripple at the pointer when the mouse is shaken quickly, so a lost cursor is easy to spot; the mouse keyword triggers it manually and toggles detection"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-findmouse",
+  "keywords": [
+    "mouse",
+    "找鼠标"
+  ],
+  "permissions": [
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "findmouse.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-08T11:52:39Z",
+  "dateAdded": "2026-11-08T22:11:56Z"
+}
