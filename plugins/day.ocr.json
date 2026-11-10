@@ -2,11 +2,12 @@
   "id": "day.ocr",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": true,
+  "review": "unreviewed-native",
   "hosted": true,
-  "version": "1.0.4",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/day.ocr-v1.0.4/day.ocr-1.0.4.wsplugin",
-  "sha256": "9ae9d3166a1f087890c816d565ab97a23b22d44ed2c01267c7fe36e9754a096a",
-  "size": 62991,
+  "version": "1.1.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/day.ocr-v1.1.0/day.ocr-1.1.0.wsplugin",
+  "sha256": "4e1d90179636f50eea6b1510c05db169e4300d572e5e09e125354dea4f2b36f7",
+  "size": 21003654,
   "name": {
     "zh": "OCR Studio",
     "en": "OCR Studio"
@@ -27,9 +28,9 @@
   ],
   "runtime": {
     "mode": "resident",
-    "program": "python"
+    "program": "OCRStudio.exe"
   },
-  "minWinShun": "",
-  "releaseDate": "2026-10-26T12:19:16Z",
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-10T05:16:04Z",
   "dateAdded": "2026-10-26T12:19:16Z"
 }

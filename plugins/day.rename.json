@@ -2,11 +2,12 @@
   "id": "day.rename",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": true,
+  "review": "unreviewed-native",
   "hosted": true,
-  "version": "1.0.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/day.rename-v1.0.2/day.rename-1.0.2.wsplugin",
-  "sha256": "c179904781f885164d9f9d94280761558c9351e955605d093781fa9fcb956cc2",
-  "size": 111397,
+  "version": "1.1.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/day.rename-v1.1.0/day.rename-1.1.0.wsplugin",
+  "sha256": "e6d5e6683d2965ff2030ac1ec02ae9103b51063a513dce3a728b2ed578abff04",
+  "size": 22154783,
   "name": {
     "zh": "批量重命名",
     "en": "Batch Rename"
@@ -28,9 +29,9 @@
   ],
   "runtime": {
     "mode": "resident",
-    "program": "python"
+    "program": "BatchRename.exe"
   },
-  "minWinShun": "",
-  "releaseDate": "2026-10-26T12:19:19Z",
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-10T05:16:07Z",
   "dateAdded": "2026-10-26T12:19:19Z"
 }
