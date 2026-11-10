@@ -1,0 +1,32 @@
+{
+  "id": "xhelyz.labor-tax",
+  "repo": "Xhelyz/winshun-labor-tax",
+  "autoUpdate": true,
+  "version": "1.0.0",
+  "url": "https://github.com/Xhelyz/winshun-labor-tax/releases/download/v1.0.0/xhelyz.labor-tax-1.0.0.wsplugin",
+  "sha256": "df16e038aac968210dab2cf8d2a18e347ec094067a39d0bdea6ebd6b800db9ee",
+  "size": 58736,
+  "name": {
+    "zh": "劳务报酬计算器",
+    "en": "Labour Remuneration Tax"
+  },
+  "description": {
+    "zh": "劳务报酬个税预扣预缴：税前算税后，税后反推税前",
+    "en": "Labour remuneration withholding tax: gross to net, net to gross"
+  },
+  "author": "Xhelyz",
+  "license": "MIT",
+  "homepage": "https://github.com/Xhelyz/winshun-labor-tax",
+  "keywords": [
+    "劳务",
+    "lw"
+  ],
+  "permissions": [],
+  "runtime": {
+    "mode": "once",
+    "program": "python"
+  },
+  "minWinShun": "0.7.0",
+  "releaseDate": "2026-11-09T02:19:16Z",
+  "dateAdded": "2026-11-09T02:20:22Z"
+}
