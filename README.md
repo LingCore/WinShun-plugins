@@ -44,6 +44,7 @@
 | [按意思找](https://github.com/LingCore/WinShun/tree/main/src/semantic-plugin) | `?` `？` | ? 一句话：按文档讲的是什么来找，不用记得原词。用你选的模型（本机的 Ollama，或云服务的密钥） | LingCore | **network**、**winshun:content** | [1.0.4](https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.0.4/winshun.semantic-1.0.4.wsplugin) |
 | [翻译](https://github.com/LingCore/WinShun/tree/main/src/translate-plugin) | `tr` `fy` `dict` `词典` | tr 翻译、dict AI 词典，支持 DeepL、微软翻译及 OpenAI 兼容模型服务；使用自己的密钥 | LingCore | **network** | [2.2.1](https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.1/winshun.translate-2.2.1.wsplugin) |
 | [网页搜索](https://github.com/LingCore/WinShun/tree/main/src/web-plugin) | — | 用关键词打开网站或搜索网页，可自定义网站、图标和搜索建议；不运行额外进程 | LingCore | 无 | [2.0.1](https://github.com/LingCore/WinShun-plugins/releases/download/winshun.web-v2.0.1/winshun.web-2.0.1.wsplugin) |
+| [劳务报酬计算器](https://github.com/Xhelyz/winshun-labor-tax) | `劳务` `lw` | 劳务报酬个税预扣预缴：税前算税后，税后反推税前 | Xhelyz | 无 | [1.0.0](https://github.com/Xhelyz/winshun-labor-tax/releases/download/v1.0.0/xhelyz.labor-tax-1.0.0.wsplugin) |
 <!-- plugins:end -->
 
 点名称看插件的源码。权限加粗的几项（联网、起子进程、写文件、开窗口、读文档文字、剪贴板、以管理员身份运行）值得多看一眼插件 README 里的说明。
