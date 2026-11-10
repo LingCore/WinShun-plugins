@@ -1,0 +1,44 @@
+{
+  "id": "anghost.translate",
+  "repo": "ailianyiren/winshun-omnitranslate",
+  "autoUpdate": true,
+  "version": "1.1.0",
+  "url": "https://github.com/ailianyiren/winshun-omnitranslate/releases/download/v1.1.0/anghost.translate-1.1.0.wsplugin",
+  "sha256": "b05f12dbff3f96e29de01ad4b2f34f1eb1ab323aa76ee785154de84bd86d35f7",
+  "size": 204172,
+  "name": {
+    "zh": "顺译 · 多源翻译",
+    "en": "OmniTranslate"
+  },
+  "description": {
+    "zh": "支持有道词典与微软免 Key 翻译，以及智谱、AI 大模型、DeepL、百度、有道、火山、腾讯、Google 多服务并发流式对比，支持全局划词唤起、静默替换、代码变量命名与 Anki 导出",
+    "en": "Concurrent multi-provider streaming translation, keyless Youdao Dictionary & Microsoft Translate, Zhipu/AI/DeepL/Baidu/Volcengine/Tencent/Google, global selection hotkeys, code variable naming, and Anki export"
+  },
+  "author": "anghost",
+  "license": "MIT",
+  "homepage": "https://github.com/ailianyiren/winshun-omnitranslate",
+  "keywords": [
+    "ot",
+    "sy",
+    "顺译",
+    "翻译",
+    "od",
+    "cd",
+    "查词",
+    "trh",
+    "翻译历史"
+  ],
+  "permissions": [
+    "clipboard:read",
+    "clipboard:write",
+    "ui",
+    "network"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "python"
+  },
+  "minWinShun": "0.18.0",
+  "releaseDate": "2026-11-10T03:17:18Z",
+  "dateAdded": "2026-11-10T03:18:36Z"
+}
