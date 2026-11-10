@@ -1,0 +1,40 @@
+{
+  "id": "ra9fael.envhosts",
+  "repo": "ra9fael/winshun-envhosts",
+  "autoUpdate": false,
+  "review": "unreviewed-native",
+  "version": "0.7.5",
+  "url": "https://github.com/ra9fael/winshun-envhosts/releases/download/gdi/v0.7.5/ra9fael.envhosts-0.7.5.wsplugin",
+  "sha256": "4bfa05c2f0ae0602cc8627e977fb70350d7644943d0730acccb207f29f450560",
+  "size": 528971,
+  "name": {
+    "zh": "环境变量 / hosts 编辑（GDI）",
+    "en": "Env & hosts editor (GDI)"
+  },
+  "description": {
+    "zh": "可视化编辑用户环境变量与 hosts 条目：交互窗口支持多选批量、分隔项编辑与中英文界面；改写前自动备份，系统级目标未提权时明确降级",
+    "en": "Visual editor for user env vars and hosts: multi-select batch commands, split-item editing and a zh/en UI; auto-backup before writes; honest degradation for admin-only targets"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-envhosts",
+  "keywords": [
+    "env",
+    "环境变量",
+    "hosts"
+  ],
+  "permissions": [
+    "files:write",
+    "clipboard:write",
+    "ui",
+    "files:read",
+    "elevated"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "envhosts.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-08T16:08:23Z",
+  "dateAdded": "2026-11-08T22:08:54Z"
+}
