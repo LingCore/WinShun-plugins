@@ -1,0 +1,36 @@
+{
+  "id": "alioneo.copynotification",
+  "repo": "Alioneo/winshun-copynotification",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.3.2",
+  "url": "https://github.com/Alioneo/winshun-copynotification/releases/download/v0.3.2/alioneo.copynotification-0.3.2.wsplugin",
+  "sha256": "0e9cc4fe9b6571c001658e185094ae3659cc6a3ac47d6539c3e7088a51126b78",
+  "size": 540344,
+  "name": {
+    "zh": "剪贴板通知",
+    "en": "Clipboard notification"
+  },
+  "description": {
+    "zh": "复制文字或图片时在桌面右下角弹出一张轻提示卡片，并把手机（小米互联）同步过来的内容接力写入剪贴板；不抢焦点、不打断输入",
+    "en": "A small card at the bottom right when you copy text or an image, and relays phone (Xiaomi) clipboard content; it never takes focus"
+  },
+  "author": "Alioneo",
+  "license": "MIT",
+  "homepage": "https://github.com/Alioneo/winshun-copynotification",
+  "keywords": [
+    "剪贴板通知"
+  ],
+  "permissions": [
+    "clipboard:read",
+    "clipboard:write",
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "clipboard-notify.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-07T07:24:00Z",
+  "dateAdded": "2026-11-07T07:31:41Z"
+}
