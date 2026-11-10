@@ -1,0 +1,42 @@
+{
+  "id": "ra9fael.shell",
+  "repo": "ra9fael/winshun-shell",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.2.2",
+  "url": "https://github.com/ra9fael/winshun-shell/releases/download/v0.2.2/ra9fael.shell-0.2.2.wsplugin",
+  "sha256": "977b6755a8e13df45e188c305beb464d8e39e621502899f8d0391c8517d63fa6",
+  "size": 878182,
+  "name": {
+    "zh": "命令执行",
+    "en": "Quick Shell"
+  },
+  "description": {
+    "zh": "在搜索框里执行 shell 命令：手动输入或直接执行剪贴板内容，支持 cmd、PowerShell、Git Bash、MSYS2、WSL 和自定义 shell；普通命令结果在列表里实时刷新，Ctrl+Enter 在终端里打开；可经 UAC 确认以管理员在终端窗口执行（仅 cmd 和 PowerShell，窗口跑完留存）。",
+    "en": "Run shell commands from the search box: type them or run the clipboard's content. Supports cmd, PowerShell 7, Git Bash, MSYS2, WSL and custom shells; normal commands refresh their results live in the list, Ctrl+Enter runs them in a terminal, and cmd and PowerShell can run as administrator in a terminal window after a UAC prompt (the window stays)."
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-shell",
+  "keywords": [
+    ">",
+    "cmd",
+    "pwsh",
+    "bash",
+    "msys",
+    "wsl"
+  ],
+  "permissions": [
+    "processes",
+    "clipboard:read",
+    "clipboard:write",
+    "notifications"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "shell.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-08T00:31:15Z",
+  "dateAdded": "2026-11-08T00:26:42Z"
+}
