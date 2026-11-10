@@ -6,24 +6,25 @@
   "url": "https://github.com/888bik/obsidian-quicknote/releases/download/v1.0.1/888bik.obsidian-quicknote-1.0.1.wsplugin",
   "sha256": "5e8259d950ccfddfee7c1e2555c979af7269402888ac2d30978437618bb0c2c6",
   "size": 62927,
-  "name": {
-    "zh": "Obsidian 快速记录中心",
-    "en": "Obsidian Quick Note"
-  },
-  "description": {
-    "zh": "在 Win顺 中快速记录笔记、添加待办、打开日记和收集箱，并搜索标题与使用模板。",
-    "en": "Quickly capture notes, add todos, open daily notes and inbox in WinShun, search titles and use templates."
-  },
+  "name": "Obsidian 快速记录中心",
+  "description": "在 Win顺 中快速记录笔记、添加待办、打开日记和收集箱，并搜索标题与使用模板。",
   "author": "888bik",
   "license": "MIT",
   "homepage": "https://github.com/888bik/obsidian-quicknote",
   "keywords": [
-    "obsidian",
-    "note"
+    "note",
+    "记录",
+    "笔记",
+    "todo",
+    "待办",
+    "daily",
+    "日记",
+    "inbox",
+    "收集箱"
   ],
   "permissions": [
-    "files:read",
-    "files:write"
+    "files:write",
+    "files:read"
   ],
   "runtime": {
     "mode": "once",
