@@ -1,0 +1,35 @@
+{
+  "id": "ra9fael.volume",
+  "repo": "ra9fael/winshun-volume",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.1.1",
+  "url": "https://github.com/ra9fael/winshun-volume/releases/download/v0.1.1/ra9fael.volume-0.1.1.wsplugin",
+  "sha256": "bf50c50f2cba600a6cd00a8bd810cd55d69e90bcdf8574b4ee9ae30f6418c923",
+  "size": 304620,
+  "name": {
+    "zh": "任务栏音量",
+    "en": "Taskbar volume"
+  },
+  "description": {
+    "zh": "Ctrl+滚轮悬停任务栏图标调单个应用音量，Ctrl+滚轮音量图标调总音量，Ctrl+左键切换静音；也支持 vol 关键字用键盘完成同样的事",
+    "en": "Ctrl+wheel over a taskbar icon adjusts that app's volume, over the volume icon adjusts master volume, Ctrl+click toggles mute; the vol keyword does the same from the keyboard"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-volume",
+  "keywords": [
+    "vol",
+    "音量"
+  ],
+  "permissions": [
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "volume.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-07T09:19:40Z",
+  "dateAdded": "2026-11-07T09:20:07Z"
+}
