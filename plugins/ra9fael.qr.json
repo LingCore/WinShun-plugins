@@ -1,0 +1,38 @@
+{
+  "id": "ra9fael.qr",
+  "repo": "ra9fael/winshun-qr",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.2.1",
+  "url": "https://github.com/ra9fael/winshun-qr/releases/download/v0.2.1/ra9fael.qr-0.2.1.wsplugin",
+  "sha256": "61cff03afb15704871c2d95a148e8104bb243dd6a90a508cbf498ae3f26177b7",
+  "size": 920347,
+  "name": {
+    "zh": "二维码",
+    "en": "QR code"
+  },
+  "description": {
+    "zh": "文字、链接或剪贴板内容生成二维码：Enter 复制图片，Ctrl+Enter 预览，Shift+Enter 存 PNG",
+    "en": "Turn text, a link or the clipboard into a QR code: Enter copies the image, Ctrl+Enter previews, Shift+Enter saves a PNG"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-qr",
+  "keywords": [
+    "qr",
+    "二维码"
+  ],
+  "permissions": [
+    "files:write",
+    "clipboard:read",
+    "clipboard:write",
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "qr.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-08T20:48:53Z",
+  "dateAdded": "2026-11-08T00:10:45Z"
+}
