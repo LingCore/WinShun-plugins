@@ -2,17 +2,17 @@
   "id": "me.ai-ask",
   "repo": "888bik/me.ai-ask",
   "autoUpdate": true,
-  "version": "1.2.1",
-  "url": "https://github.com/888bik/me.ai-ask/releases/download/v1.2.1/me.ai-ask-1.2.1.wsplugin",
-  "sha256": "a09834c330ab9abda6491b5f545b20484ec4433ef1b95489cf2e0f556a16906d",
-  "size": 119533,
+  "version": "1.2.4",
+  "url": "https://github.com/888bik/me.ai-ask/releases/download/v1.2.4/me.ai-ask-1.2.4.wsplugin",
+  "sha256": "ac7cae0032ab031e2649f554699c5a9b13efa273906b5d5319c6517da300ef28",
+  "size": 134687,
   "name": {
     "zh": "问 AI",
     "en": "Ask AI"
   },
   "description": {
-    "zh": "ai + 问题，回车直接出答案，答案流式显示",
-    "en": "Ask ai + question and get a streamed answer without opening a browser"
+    "zh": "ai + 问题，回车提问，答案流式显示，答案出来后再回车复制全文",
+    "en": "Ask ai + question with Enter; the answer streams in; press Enter again to copy it"
   },
   "author": "888bik",
   "license": "MIT",
@@ -30,6 +30,6 @@
     "program": "python"
   },
   "minWinShun": "0.12.0",
-  "releaseDate": "2026-11-11T02:40:56Z",
+  "releaseDate": "2026-11-11T13:15:39Z",
   "dateAdded": "2026-11-11T02:42:26Z"
 }
