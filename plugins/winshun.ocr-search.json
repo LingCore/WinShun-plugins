@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.9",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.9/winshun.ocr-search-1.0.9.wsplugin",
-  "sha256": "0a9da390b334e4f4eab386eed28bca23b5c090528a62a2fca7bf99cd1b1eff3a",
-  "size": 1294953,
+  "version": "1.0.10",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.10/winshun.ocr-search-1.0.10.wsplugin",
+  "sha256": "d61bf7beb6df06879b0df0b879ab85bbfd57472c1a6344f2918e117414abb426",
+  "size": 1296598,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,7 +30,7 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-10T05:56:33Z",
+  "minWinShun": "0.23.0",
+  "releaseDate": "2026-11-11T09:20:29Z",
   "dateAdded": "2026-11-03T03:09:38Z"
 }
