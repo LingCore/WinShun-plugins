@@ -3,10 +3,10 @@
   "repo": "Alioneo/winshun-copynotification",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.3.2",
-  "url": "https://github.com/Alioneo/winshun-copynotification/releases/download/v0.3.2/alioneo.copynotification-0.3.2.wsplugin",
-  "sha256": "0e9cc4fe9b6571c001658e185094ae3659cc6a3ac47d6539c3e7088a51126b78",
-  "size": 540344,
+  "version": "0.3.3",
+  "url": "https://github.com/Alioneo/winshun-copynotification/releases/download/v0.3.3/alioneo.copynotification-0.3.3.wsplugin",
+  "sha256": "565bcba3e90230b0c4c4c85bb2f4797b821f6b72d758ce37743f82b44affc67e",
+  "size": 541655,
   "name": {
     "zh": "剪贴板通知",
     "en": "Clipboard notification"
@@ -31,6 +31,6 @@
     "program": "clipboard-notify.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-07T07:24:00Z",
+  "releaseDate": "2026-11-11T01:38:09Z",
   "dateAdded": "2026-11-07T07:31:41Z"
 }
