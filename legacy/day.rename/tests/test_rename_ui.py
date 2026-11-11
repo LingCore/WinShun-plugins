@@ -151,5 +151,39 @@ class RenameUiTests(unittest.TestCase):
             ctk.set_window_scaling(1)
 
 
+class QuietStartTests(unittest.TestCase):
+    """Starting behind Win顺's search box takes no foreground (WinShun #242)."""
+
+    class User32:
+        def __init__(self, locks):
+            self.locks, self.calls = locks, []
+
+        def LockSetForegroundWindow(self, code):
+            self.calls.append(code)
+            return int(self.locks)
+
+    def run_with(self, locks, fail=False):
+        user32 = self.User32(locks)
+        with patch.object(ui.ctypes, "windll", create=True) as windll:
+            windll.user32 = user32
+            try:
+                with ui.quiet_start():
+                    self.assertEqual(user32.calls, [1])  # held while the window is made
+                    if fail:
+                        raise RuntimeError("no window")
+            except RuntimeError:
+                pass
+        return user32.calls
+
+    def test_locks_then_unlocks(self):
+        self.assertEqual(self.run_with(True), [1, 2])
+
+    def test_unlocks_when_the_window_fails(self):
+        self.assertEqual(self.run_with(True, fail=True), [1, 2])
+
+    def test_no_unlock_without_the_lock(self):
+        self.assertEqual(self.run_with(False), [1])  # not ours to release
+
+
 if __name__ == "__main__":
     unittest.main()

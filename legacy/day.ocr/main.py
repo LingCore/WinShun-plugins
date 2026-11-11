@@ -1,5 +1,6 @@
 """OCR Studio for WinShun: one resident process, Tk UI, background HTTP worker."""
 import argparse
+import contextlib
 import ctypes
 import json
 import os
@@ -480,6 +481,20 @@ class OcrApp:
 
 
 
+@contextlib.contextmanager
+def quiet_start():
+    """Tk activates the first window it makes, a withdrawn one too. Started by Win顺 while its
+    search box is in front, that hidden window took the keyboard and the box closed, before
+    Enter (WinShun #242). The foreground stays where it is until the window exists."""
+    user32 = ctypes.windll.user32
+    locked = bool(user32.LockSetForegroundWindow(1))  # LSFW_LOCK
+    try:
+        yield
+    finally:
+        if locked:
+            user32.LockSetForegroundWindow(2)  # LSFW_UNLOCK
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--standalone", action="store_true", help="直接打开窗口，不连接 WinShun")
@@ -487,10 +502,13 @@ def main():
     args = parser.parse_args()
     dpi_awareness()
     ctk.set_appearance_mode("light")
-    root = ctk.CTk()
-    if not args.standalone:
-        root.withdraw()
-    app = OcrApp(root, standalone=args.standalone)
+    with contextlib.nullcontext() if args.standalone or args.self_test else quiet_start():
+        root = ctk.CTk()
+        if not args.standalone:
+            root.withdraw()
+        app = OcrApp(root, standalone=args.standalone)
+        if not args.standalone:
+            root.update()  # the window exists from here on, still hidden
     if args.self_test:
         from system_capture import SystemApi, INPUT
         SystemApi()

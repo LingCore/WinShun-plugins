@@ -73,7 +73,7 @@ class ProtocolTests(unittest.TestCase):
         replies = [json.loads(line) for line in output.getvalue().splitlines()]
         self.assertEqual([m["id"] for m in replies], [1, 2, 3, 4])
         self.assertEqual(replies[0]["result"]["protocolVersion"], "1")
-        self.assertEqual([e[0] for e in events], ["settings", "show", "settings", "quit"]  # the query shows nothing, the action does)
+        self.assertEqual([e[0] for e in events], ["settings", "show", "settings", "quit"])  # the query shows nothing, the action does
         self.assertNotIn("secret", output.getvalue())
 
     def test_eof_and_malformed_input(self):
