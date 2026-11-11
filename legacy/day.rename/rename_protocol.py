@@ -30,8 +30,8 @@ def serve(stream_in, stream_out, post):
                 post(("data_dir", params["dataDir"]))
             send({"id": request_id, "result": {"protocolVersion": "1", "name": "day.rename"}})
         elif method == "query":
-            # instant command: typing the exact keyword opens the local window.
-            post(("show", None))
+            # The keyword typed: the row only. The window opens on Enter (action), so that
+            # typing these letters to look for something else opens nothing (issue #36).
             send({"id": request_id, "result": {"items": [{
                 "id": "open", "title": "打开批量重命名", "subtitle": "本地规则 / 名称预览 / 批量执行",
                 "icon": "glyph:U+E8AC"}]}})

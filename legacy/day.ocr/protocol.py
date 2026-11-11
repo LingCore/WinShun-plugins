@@ -28,8 +28,8 @@ def serve(stream_in, stream_out, post):
             post(("settings", params.get("settings") or {}))
             send({"id": request_id, "result": {"protocolVersion": "1", "name": "day.ocr"}})
         elif method == "query":
-            # instant command: typing the exact keyword opens the local window.
-            post(("show", None))
+            # The keyword typed: the row only. The window opens on Enter (action), so that
+            # typing these letters to look for something else opens nothing (issue #36).
             send({"id": request_id, "result": {"items": [{
                 "id": "open", "title": "打开 OCR Studio", "subtitle": "截图 / 上传图片 / 复制识别结果",
                 "icon": "glyph:U+E8A7"}]}})

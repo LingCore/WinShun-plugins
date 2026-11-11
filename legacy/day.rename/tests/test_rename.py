@@ -248,6 +248,17 @@ class RenameAiTests(unittest.TestCase):
         rename_serve(io.StringIO("\n".join(json.dumps(m) for m in messages)), output, events.append)
         self.assertEqual(json.loads(output.getvalue().splitlines()[0])["result"]["name"], "day.rename")
         self.assertIn(("data_dir", "data"), events)
+        self.assertNotIn(("show", None), events)  # the keyword typed lists the row and opens nothing (issue #36)
+
+    def test_window_opens_on_the_action_only(self):
+        events, output = [], io.StringIO()
+        messages = [{"id": 1, "method": "initialize", "params": {"settings": {}}}, {"id": 2, "method": "query"},
+                    {"id": 3, "method": "action"}, {"id": 4, "method": "shutdown"}]
+        rename_serve(io.StringIO("\n".join(json.dumps(m) for m in messages)), output, events.append)
+        self.assertEqual(events.count(("show", None)), 1)
+        replies = [json.loads(line) for line in output.getvalue().splitlines()]
+        self.assertEqual(replies[1]["result"]["items"][0]["id"], "open")
+        self.assertEqual(replies[2]["result"]["effects"], [{"type": "hide"}])
 
 
 if __name__ == "__main__":
