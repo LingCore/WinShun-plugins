@@ -59,6 +59,16 @@ class CommunityNative(unittest.TestCase):
             with self.subTest(change=change):
                 self.assertTrue(inspect(package(**change), unreviewed_native=True).errors)
 
+    def test_elevated_with_host_qt_needs_0_23(self):
+        # LingCore/WinShun#255：0.23.0 起带 elevated 的插件也能用宿主的 Qt（夹具用的就是宿主的 Qt）。
+        for minimum, accepted in (("0.22.0", False), ("0.22.9", False), ("0.23.0", True), ("0.24.1", True), ("1.0.0", True)):
+            with self.subTest(minimum=minimum):
+                result = inspect(package(permissions=["elevated"], minWinShun=minimum), unreviewed_native=True)
+                self.assertEqual(not result.errors, accepted, result.errors)
+        # 自带 Qt 的不受这条限制。
+        own_qt = {"mode": "once", "program": "bin/tool.exe"}
+        self.assertEqual(inspect(package(permissions=["elevated"], runtime=own_qt), unreviewed_native=True).errors, [])
+
     def test_other_binary_types_and_path_traversal_stay_rejected(self):
         for name in ("../escape.dll", "/absolute.exe", "driver.sys", "start.cmd", "encoded.pyc"):
             with self.subTest(name=name):

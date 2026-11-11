@@ -1,5 +1,6 @@
 """WinShun Batch Rename: local preview first, optional AI, explicit file mutation."""
 import argparse
+import contextlib
 import ctypes
 import json
 import os
@@ -744,6 +745,9 @@ class RenameApp:
         self.shown_once = True
         self.root.deiconify()
         self.root.lift()
+        # Over the other windows also where Windows keeps the keyboard elsewhere (Win顺 before 0.23.0).
+        self.root.attributes("-topmost", True)
+        self.root.after(150, lambda: self.root.attributes("-topmost", False))
         self.root.focus_force()
         if self.journal.exists():
             self.status.set("存在上次批次记录，可点击撤销 / 恢复")
@@ -800,6 +804,20 @@ class RenameApp:
         self.root.after(70, self.poll)
 
 
+@contextlib.contextmanager
+def quiet_start():
+    """Tk activates the first window it makes, a withdrawn one too. Started by Win顺 while its
+    search box is in front, that hidden window took the keyboard and the box closed, before
+    Enter (WinShun #242). The foreground stays where it is until the window exists."""
+    user32 = ctypes.windll.user32
+    locked = bool(user32.LockSetForegroundWindow(1))  # LSFW_LOCK
+    try:
+        yield
+    finally:
+        if locked:
+            user32.LockSetForegroundWindow(2)  # LSFW_UNLOCK
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--standalone", action="store_true")
@@ -810,9 +828,11 @@ def main():
     except (AttributeError, OSError):
         pass
     ctk.set_appearance_mode("light")
-    root = ctk.CTk()
-    root.withdraw()
-    app = RenameApp(root, args.standalone, native=not args.self_test)
+    with contextlib.nullcontext() if args.standalone or args.self_test else quiet_start():
+        root = ctk.CTk()
+        root.withdraw()
+        app = RenameApp(root, args.standalone, native=not args.self_test)
+        root.update()  # the window exists from here on, still hidden
     if args.self_test:
         NativeFiles()  # Resolve Win32 bindings without reading the clipboard.
         root.update_idletasks()
