@@ -483,8 +483,12 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
     if "elevated" in info["permissions"]:
         # Manifest.cpp：只给自带 exe 的插件，不能和 runtime.sandbox strict 一起用
         runtime = o.get("runtime") if isinstance(o.get("runtime"), dict) else {}
-        if runtime.get("qt") == "host":
-            e.fail("共享宿主 Qt 只支持普通权限插件")
+        # 0.23.0 起 elevated 也能用宿主的 Qt（LingCore/WinShun#255）；更早的 Win顺 拒绝这种清单，
+        # 所以要它自己写明最低版本，旧版就不会把它列出来。
+        if runtime.get("qt") == "host" and not (
+                isinstance(min_win, str) and registry.PLAIN_VERSION_RE.fullmatch(min_win)
+                and registry.version_key(min_win) >= registry.version_key("0.23.0")):
+            e.fail("elevated 权限和共享宿主 Qt 一起用，要写 minWinShun 0.23.0 或更高（更早的 Win顺 不支持）")
         if not str(runtime.get("program", "")).lower().endswith(".exe"):
             e.fail("elevated 权限只给自带程序的插件（runtime.program 为 exe）")
         if runtime.get("sandbox") == "strict":
