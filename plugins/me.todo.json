@@ -1,0 +1,35 @@
+{
+  "id": "me.todo",
+  "repo": "888bik/me.todo",
+  "autoUpdate": true,
+  "version": "3.4.5",
+  "url": "https://github.com/888bik/me.todo/releases/download/v3.4.5/me.todo-3.4.5.wsplugin",
+  "sha256": "cc521a86a8cc774f8f45d6916df018c880c40863f8496ba1f3136b29873ad14a",
+  "size": 458195,
+  "name": {
+    "zh": "待办",
+    "en": "Todo"
+  },
+  "description": {
+    "zh": "桌面待办便签：db 直接查看待办列表，支持搜索/添加/完成待办、标签与子任务、重复提醒、截止日期、今日/周/月视图、导入导出、完成统计、窗口尺寸记忆、单实例详情弹窗、月视图任务定位和锁定置顶",
+    "en": "Desktop todo sticky note: show todo list with db, search/add/complete tasks, tags and subtasks, repeating reminders, due dates, today/week/month views, import/export, completion stats, remembered window size, reusable details dialog, calendar task navigation, lock-only always-on-top, light/dark theme"
+  },
+  "author": "888bik",
+  "license": "MIT",
+  "homepage": "https://github.com/888bik/me.todo",
+  "keywords": [
+    "db",
+    "todo"
+  ],
+  "permissions": [
+    "ui",
+    "notifications"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "python"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-11-12T06:10:50Z",
+  "dateAdded": "2026-11-12T04:41:27Z"
+}
