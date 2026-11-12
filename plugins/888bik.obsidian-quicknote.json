@@ -2,10 +2,10 @@
   "id": "888bik.obsidian-quicknote",
   "repo": "888bik/obsidian-quicknote",
   "autoUpdate": true,
-  "version": "1.0.1",
-  "url": "https://github.com/888bik/obsidian-quicknote/releases/download/v1.0.1/888bik.obsidian-quicknote-1.0.1.wsplugin",
-  "sha256": "5e8259d950ccfddfee7c1e2555c979af7269402888ac2d30978437618bb0c2c6",
-  "size": 62927,
+  "version": "1.0.2",
+  "url": "https://github.com/888bik/obsidian-quicknote/releases/download/v1.0.2/888bik.obsidian-quicknote-1.0.2.wsplugin",
+  "sha256": "b0f16b18bbc7d14873fcde9e2d26f14280b269dd4acd683110ff8db530885f47",
+  "size": 69637,
   "name": "Obsidian 快速记录中心",
   "description": "在 Win顺 中快速记录笔记、添加待办、打开日记和收集箱，并搜索标题与使用模板。",
   "author": "888bik",
@@ -31,6 +31,6 @@
     "program": "python"
   },
   "minWinShun": "",
-  "releaseDate": "2026-11-10T15:10:09Z",
+  "releaseDate": "2026-11-11T12:22:04Z",
   "dateAdded": "2026-11-10T15:13:03Z"
 }
