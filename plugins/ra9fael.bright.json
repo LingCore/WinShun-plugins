@@ -3,17 +3,17 @@
   "repo": "ra9fael/winshun-bright",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.0",
-  "url": "https://github.com/ra9fael/winshun-bright/releases/download/v0.1.0/ra9fael.bright-0.1.0.wsplugin",
-  "sha256": "aba6614c2f6d2283d7aec038dc846d0f9c5af56499fb8a56824021959694a6d5",
-  "size": 332522,
+  "version": "0.9.0",
+  "url": "https://github.com/ra9fael/winshun-bright/releases/download/v0.9.0/ra9fael.bright-0.9.0.wsplugin",
+  "sha256": "1ec957c0ca9b858517fa949b99e4d8a8124e258f59ccd3067f246b6a56bcf146",
+  "size": 963679,
   "name": {
     "zh": "屏幕亮度",
     "en": "Display brightness"
   },
   "description": {
-    "zh": "Ctrl+Alt+滚轮调显示器亮度（内屏 WMI、外屏 DDC/CI），Ctrl+Alt+点击开关暖色滤镜；bright 关键字按显示器逐台调节",
-    "en": "Ctrl+Alt+wheel adjusts monitor brightness (WMI for built-in panels, DDC/CI for external), Ctrl+Alt+click toggles the warm filter; the bright keyword adjusts per monitor"
+    "zh": "Ctrl+Alt+滚轮按鼠标所在屏调亮度（可改修饰键；内屏 WMI、外屏 DDC/CI，都不可用时可用软件遮罩模拟），Ctrl+Alt+点击开关暖色滤镜；bright 关键字按显示器逐台调节",
+    "en": "Ctrl+Alt+wheel adjusts the brightness of the display under the pointer (the chord is configurable; WMI for built-in panels, DDC/CI for external, and a software layer when neither answers), Ctrl+Alt+click toggles the warm filter; the bright keyword adjusts per monitor"
   },
   "author": "ra9fael",
   "license": "MIT",
@@ -31,6 +31,6 @@
     "program": "bright.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T00:57:52Z",
+  "releaseDate": "2026-11-12T05:55:53Z",
   "dateAdded": "2026-11-08T22:05:48Z"
 }
