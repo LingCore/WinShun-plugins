@@ -35,6 +35,7 @@ OFFICIAL_NATIVE = {
     "winshun.bookmarks": ("WinShunBookmarks.exe", (), "bookmarks-plugin"),
     "winshun.break": ("WinShunBreak.exe", (), "break-plugin"),
     "winshun.capture": ("WinShunCapture.exe", ("WinShunCaptureApp.dll",), "capture-plugin"),
+    "winshun.cloudbackup": ("WinShunCloudBackup.exe", (), "cloudbackup-plugin"),
     "winshun.explorer-tabs": ("WinShunExplorerTabs.exe", (), "explorer-tabs-plugin"),
     "winshun.localsend": ("WinShunLocalSend.exe", (), "localsend-plugin"),
     "winshun.ocr-search": ("WinShunOcrSearch.exe", ("WinShunOcrSearchApp.dll",), "ocr-search-plugin"),

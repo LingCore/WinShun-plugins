@@ -39,10 +39,10 @@ MANIFEST_VERSION = 1
 PERMISSIONS = [
     "files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network",
     "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read",
-    "notifications", "network:listen", "system:settings", "elevated",
+    "notifications", "network:listen", "system:settings", "elevated", "winshun:backup",
 ]
 # 审核者要多看一眼的
-RISKY = {"elevated", "network", "network:listen", "system:settings", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
+RISKY = {"elevated", "winshun:backup", "network", "network:listen", "system:settings", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
 
 ALLOWED_PROGRAMS = {"python", "pwsh", "powershell", "node"}  # 社区条目；官方原生包另按仓库、id 和文件名逐一检查
 FORBIDDEN_EXT = {".exe", ".dll", ".sys", ".com", ".scr", ".msi", ".bat", ".cmd", ".vbs", ".jar", ".pyc"}
@@ -480,6 +480,11 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
         e.fail("minWinShun 要像 0.7.0 这样")
     info["runtime"] = read_runtime(o.get("runtime"), e, native_program)
     info["permissions"] = read_permissions(o.get("permissions"), e)
+    if "winshun:backup" in info["permissions"] and not (
+            isinstance(min_win, str) and registry.PLAIN_VERSION_RE.fullmatch(min_win)
+            and registry.version_key(min_win) >= registry.version_key("0.26.0")):
+        # 0.26.0 才有这个权限；更早的 Win顺 不认识它，整个清单都读不了
+        e.fail("winshun:backup 权限要写 minWinShun 0.26.0 或更高（更早的 Win顺 不认识它）")
     if "elevated" in info["permissions"]:
         # Manifest.cpp：只给自带 exe 的插件，不能和 runtime.sandbox strict 一起用
         runtime = o.get("runtime") if isinstance(o.get("runtime"), dict) else {}

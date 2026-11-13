@@ -1,0 +1,36 @@
+{
+  "id": "winshun.cloudbackup",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.cloudbackup-v1.0.0/winshun.cloudbackup-1.0.0.wsplugin",
+  "sha256": "183edb6b1a5d4003af32563d0a040ceb15ba9a5b6d999ee2814936825d696fb2",
+  "size": 257136,
+  "name": {
+    "zh": "云备份",
+    "en": "Cloud Backup"
+  },
+  "description": {
+    "zh": "把 Win顺 的设置备份自动传到 WebDAV（坚果云、NAS 等）或 GitHub 私有仓库，换电脑时输入 cloud 一键恢复",
+    "en": "Keeps Win顺's settings backup on a WebDAV server or in a private GitHub repository; type cloud to restore it on another PC"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "cloud",
+    "云备份"
+  ],
+  "permissions": [
+    "network",
+    "notifications",
+    "winshun:backup"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "WinShunCloudBackup.exe"
+  },
+  "minWinShun": "0.26.0",
+  "releaseDate": "2026-11-13T01:32:35Z",
+  "dateAdded": "2026-11-13T01:34:30Z"
+}
