@@ -1,0 +1,38 @@
+{
+  "id": "w3c0929.clickthrough",
+  "repo": "w3c0929/winshun-clickthrough",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "1.5.0",
+  "url": "https://github.com/w3c0929/winshun-clickthrough/releases/download/v1.5.0/w3c0929.clickthrough-1.5.0.wsplugin",
+  "sha256": "bdeda61b8a0e2ea05bd9316e05c8d23282010772b6c828e3e7a0ae3eed58a326",
+  "size": 114310,
+  "name": {
+    "zh": "点击穿透",
+    "en": "Click-through"
+  },
+  "description": {
+    "zh": "把窗口变成点击穿透：鼠标点过去落到下面的窗口，同时按设置变淡；再次触发或退出时恢复（复刻 AltSnap 的 ClickThrough）",
+    "en": "Make a window click-through: clicks fall to the window below, dimmed by the setting; toggle again or exit to restore (AltSnap's ClickThrough)"
+  },
+  "author": "w3c0929",
+  "license": "MIT",
+  "homepage": "https://github.com/w3c0929/winshun-clickthrough",
+  "keywords": [
+    "ct",
+    "穿透",
+    "点击穿透",
+    "clickthrough"
+  ],
+  "permissions": [
+    "ui",
+    "elevated"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "ClickThrough.exe"
+  },
+  "minWinShun": "0.23.0",
+  "releaseDate": "2026-11-13T09:39:31Z",
+  "dateAdded": "2026-11-13T09:40:06Z"
+}
