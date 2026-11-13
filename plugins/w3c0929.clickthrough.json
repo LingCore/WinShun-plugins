@@ -3,10 +3,10 @@
   "repo": "w3c0929/winshun-clickthrough",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "1.5.8",
-  "url": "https://github.com/w3c0929/winshun-clickthrough/releases/download/v1.5.8/w3c0929.clickthrough-1.5.8.wsplugin",
-  "sha256": "39565b257016f130dab9029c583c0e70eb06529efc5de80ebaa5d7f108345e8c",
-  "size": 135457,
+  "version": "1.5.9",
+  "url": "https://github.com/w3c0929/winshun-clickthrough/releases/download/v1.5.9/w3c0929.clickthrough-1.5.9.wsplugin",
+  "sha256": "59fbf957aeb4fb53e9d844915dd04aa2cd98cd9754f0ba4f4775adeded43057f",
+  "size": 135654,
   "name": {
     "zh": "点击穿透",
     "en": "Click-through"
@@ -33,6 +33,6 @@
     "program": "ClickThrough.exe"
   },
   "minWinShun": "0.23.0",
-  "releaseDate": "2026-11-13T21:47:55Z",
+  "releaseDate": "2026-11-13T21:53:04Z",
   "dateAdded": "2026-11-13T09:40:06Z"
 }
