@@ -2,17 +2,18 @@
   "id": "me.open-url",
   "repo": "888bik/winshun-open-url",
   "autoUpdate": true,
-  "version": "1.0.1",
-  "url": "https://github.com/888bik/winshun-open-url/releases/download/v1.0.1/me.open-url-1.0.1.wsplugin",
-  "sha256": "709e6aecca87b8f0ce537f432cfef9567a88ada4b2e54c3eeb4b335233805d8b",
-  "size": 25043,
+  "review": "unreviewed-native",
+  "version": "1.1.0",
+  "url": "https://github.com/888bik/winshun-open-url/releases/download/v1.1.0/me.open-url-1.1.0.wsplugin",
+  "sha256": "347de33568b4b9b06b570e24d7e88cd42d38a9a0ce1c3ede21433ba63137ad75",
+  "size": 862882,
   "name": {
     "zh": "打开网址",
     "en": "Open URL"
   },
   "description": {
-    "zh": "输入一个网址，回车在默认浏览器中打开。",
-    "en": "Type a web address and press Enter to open it in the default browser."
+    "zh": "原生 EXE 版网址识别，无需安装 Python；输入网址即可在默认浏览器打开。",
+    "en": "Native executable URL detection. No Python installation required."
   },
   "author": "888bik",
   "license": "MIT",
@@ -23,9 +24,9 @@
   "permissions": [],
   "runtime": {
     "mode": "once",
-    "program": "python"
+    "program": "open-url.exe"
   },
-  "minWinShun": "",
-  "releaseDate": "2026-11-10T13:25:44Z",
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-13T14:40:06Z",
   "dateAdded": "2026-11-10T13:27:37Z"
 }
