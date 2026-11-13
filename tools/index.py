@@ -5,6 +5,8 @@
   python tools/index.py                     写 dist/index.json
   python tools/index.py --readme            同时改写 README.md 里的插件表
   python tools/index.py --compare OLD.json  再和一份已发布的 index.json 比：OLD 里每个插件的每个字段都要一模一样
+  python tools/index.py --readmes DIR       DIR 里有 readme-<id>-<version>.md（tools/readmes.py 取出来的）的插件，
+                                            加上 readme（网址）和 readmeSha256：Win顺 的插件库用它显示“说明”
 
 index.json 只加字段、不改已有的：旧版 Win顺（0.14、0.15）不认识的字段会忽略，网址也一直是
 index 这个 Release 上的 index.json。不打包、不下载任何东西。只用标准库，Python 3.10+。
@@ -12,6 +14,7 @@ index 这个 Release 上的 index.json。不打包、不下载任何东西。只
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -19,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # python -I 不会自己加脚本所在的文件夹
 import check  # noqa: E402
+import readmes  # noqa: E402
 import registry  # noqa: E402
 from build import pick  # noqa: E402
 
@@ -40,9 +44,9 @@ def source_of(e: dict) -> str:
     return f"https://github.com/{e['repo']}"
 
 
-def item_of(e: dict) -> dict:
+def item_of(e: dict, readme_dir: Path | None = None) -> dict:
     """一个条目 → index.json 里的一项。前 16 个字段的名字、顺序和取法和迁移前的 index.json 一样；新字段加在后面。"""
-    return {
+    item = {
         "id": e["id"],
         "name": e["name"],
         "version": e["version"],
@@ -66,9 +70,15 @@ def item_of(e: dict) -> dict:
         "dateAdded": e["dateAdded"],
         "review": e.get("review", "official" if e["repo"].lower() == registry.REPO.lower() and e["id"].startswith("winshun.") else "reviewed"),
     }
+    # 包里的 README（和 index.json 放在同一个 Release 上）：有才写，没有就没有这两个字段
+    name = readmes.file_name(e["id"], e["version"])
+    if readme_dir is not None and (readme_dir / name).is_file():
+        item["readme"] = f"https://github.com/{registry.REPO}/releases/download/index/{name}"
+        item["readmeSha256"] = hashlib.sha256((readme_dir / name).read_bytes()).hexdigest()
+    return item
 
 
-def build_index(root: Path) -> dict | None:
+def build_index(root: Path, readme_dir: Path | None = None) -> dict | None:
     """条目有错误就不生成（返回 None），错误已经打印出来。"""
     reports, stray = check.load_entries(root)
     errors = stray + [t for r in reports for t in r.errors]
@@ -78,7 +88,7 @@ def build_index(root: Path) -> dict | None:
         print("条目检查没过，不生成 index.json。先跑 python tools/check.py")
         return None
     entries = sorted((r.entry for r in reports), key=lambda e: e["id"])
-    return {"schema": 1, "generated": registry.now(), "plugins": [item_of(e) for e in entries]}
+    return {"schema": 1, "generated": registry.now(), "plugins": [item_of(e, readme_dir) for e in entries]}
 
 
 # ---------------------------------------------------------------- README 的插件表
@@ -173,13 +183,14 @@ def main() -> int:
     ap.add_argument("--out", default="dist", help="输出文件夹，默认 dist/")
     ap.add_argument("--readme", action="store_true", help="同时改写 README.md 里的插件表")
     ap.add_argument("--compare", metavar="OLD", help="和这份已发布的 index.json 比，不一样就退出码 1")
+    ap.add_argument("--readmes", metavar="DIR", help="tools/readmes.py 写出的文件夹：有说明的插件加上 readme、readmeSha256")
     ap.add_argument("--root", default=str(registry.ROOT), help="插件库仓库，默认是工具所在的这个")
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     args = ap.parse_args()
 
     root = Path(args.root).resolve()
-    index = build_index(root)
+    index = build_index(root, Path(args.readmes) if args.readmes else None)
     if index is None:
         return 1
     out = Path(args.out)

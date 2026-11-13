@@ -210,8 +210,17 @@ jobs:
             fi
           done < dist/legacy.tsv
 
+      # What 说明 shows in Win顺's 插件库 before installing: each package's README.md, kept beside
+      # index.json as readme-<id>-<version>.md. Those already on the release are reused, not fetched again.
+      - name: Collect the plugins' READMEs
+        run: |
+          set -euo pipefail
+          mkdir -p dist/readmes-live
+          gh release download index -p 'readme-*.md' -D dist/readmes-live 2> /dev/null || true
+          python -I tools/readmes.py --have dist/readmes-live --out dist/readmes
+
       - name: Build index.json and the README table
-        run: python -I tools/index.py --out dist --readme
+        run: python -I tools/index.py --out dist --readme --readmes dist/readmes
 
       # The only step that sees the private key(s). Writes dist/index.json.sig and verifies it against keys/*.pub.
       - name: Sign index.json
@@ -232,6 +241,26 @@ jobs:
           git commit -m "Registry: entries for new legacy releases, plugin table [skip ci]"
           git pull --rebase origin main
           git push origin HEAD:main
+
+      # Before index.json, which names them. Then the ones no entry names any more go.
+      - name: Upload the READMEs to the "index" release
+        run: |
+          set -euo pipefail
+          if ! gh release view index > /dev/null 2>&1; then
+            gh release create index --target "$(git rev-parse HEAD)" --latest=false \
+              --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
+          fi
+          shopt -s nullglob
+          for f in dist/readmes/readme-*.md; do
+            if [ ! -f "dist/readmes-live/$(basename "$f")" ]; then
+              gh release upload index "$f" --clobber
+            fi
+          done
+          for f in dist/readmes-live/readme-*.md; do
+            if [ ! -f "dist/readmes/$(basename "$f")" ]; then
+              gh release delete-asset index "$(basename "$f")" --yes
+            fi
+          done
 
       - name: Upload index.json to the "index" release
         run: |

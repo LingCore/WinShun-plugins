@@ -70,7 +70,10 @@ jobs:
           fi
           git pull --rebase origin main
           python -I tools/check.py
-          python -I tools/index.py --out dist --readme
+          mkdir -p dist/readmes-live
+          gh release download index -p 'readme-*.md' -D dist/readmes-live 2> /dev/null || true
+          python -I tools/readmes.py --have dist/readmes-live --out dist/readmes
+          python -I tools/index.py --out dist --readme --readmes dist/readmes
           if ! git diff --quiet README.md; then
             git add README.md
             git commit -m "README: update the plugin table [skip ci]"
@@ -82,6 +85,26 @@ jobs:
         env:
           INDEX_SIGNING_KEYS: ${{ secrets.INDEX_SIGNING_KEYS }}
         run: python -I tools/sign_index.py sign dist/index.json
+
+      # Before index.json, which names them. Then the ones no entry names any more go.
+      - name: Upload the READMEs to the "index" release
+        run: |
+          set -euo pipefail
+          if ! gh release view index > /dev/null 2>&1; then
+            gh release create index --target "$(git rev-parse HEAD)" --latest=false \
+              --title "index" --notes "Plugin index, rewritten by CI on every publish. Do not edit."
+          fi
+          shopt -s nullglob
+          for f in dist/readmes/readme-*.md; do
+            if [ ! -f "dist/readmes-live/$(basename "$f")" ]; then
+              gh release upload index "$f" --clobber
+            fi
+          done
+          for f in dist/readmes-live/readme-*.md; do
+            if [ ! -f "dist/readmes/$(basename "$f")" ]; then
+              gh release delete-asset index "$(basename "$f")" --yes
+            fi
+          done
 
       - name: Upload index.json and index.json.sig if they changed
         run: |
