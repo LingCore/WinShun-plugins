@@ -1,0 +1,39 @@
+{
+  "id": "ra9fael.tio",
+  "repo": "ra9fael/winshun-tio",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.1.4",
+  "url": "https://github.com/ra9fael/winshun-tio/releases/download/v0.1.4/ra9fael.tio-0.1.4.wsplugin",
+  "sha256": "2096bad61c929aa79cde12d6a9fbcc9c987590dc6f53c4e3665a857a2d00d471",
+  "size": 9413347,
+  "name": {
+    "zh": "tio 串口终端",
+    "en": "tio serial terminal"
+  },
+  "description": {
+    "zh": "用嵌入包的 tio 打开串口终端：在搜索框里就地设置端口、波特率、数据位、校验、停止位和流控，Enter 启动、再 Enter 停止；也可开独立窗口按会话配置。独立窗口可确认开启双向远程串口共享，局域网客户端可读写串口。",
+    "en": "Open a serial terminal with the bundled tio: set the port, baud rate, data bits, parity, stop bits and flow control in the search box, Enter starts and Enter again stops, or configure per session in a standalone window. The standalone window can explicitly confirm bidirectional remote serial sharing; LAN clients can read and write to the serial device."
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-tio",
+  "keywords": [
+    "tio",
+    "串口",
+    "serial"
+  ],
+  "permissions": [
+    "processes",
+    "clipboard:write",
+    "ui",
+    "network:listen"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "tio.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-13T23:33:08Z",
+  "dateAdded": "2026-11-13T22:20:20Z"
+}
