@@ -1,0 +1,39 @@
+{
+  "id": "w3c0929.clickthrough",
+  "repo": "w3c0929/winshun-clickthrough",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "1.8.2",
+  "url": "https://github.com/w3c0929/winshun-clickthrough/releases/download/v1.8.2/w3c0929.clickthrough-1.8.2.wsplugin",
+  "sha256": "00d7495307a52a236c313560af5e02cfcb67c53372628c6c900d4566fbb465ad",
+  "size": 166553,
+  "name": {
+    "zh": "鼠标穿透",
+    "en": "Click-through"
+  },
+  "description": {
+    "zh": "把窗口变成鼠标穿透：鼠标点过去落到下面的窗口，同时按设置变淡；再次触发或退出时恢复",
+    "en": "Make a window click-through: clicks fall to the window below, dimmed by the setting; toggle again or exit to restore"
+  },
+  "author": "w3c0929",
+  "license": "MIT",
+  "homepage": "https://github.com/w3c0929/winshun-clickthrough",
+  "keywords": [
+    "ct",
+    "穿透",
+    "鼠标穿透",
+    "点击穿透",
+    "clickthrough"
+  ],
+  "permissions": [
+    "ui",
+    "elevated"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "ClickThrough.exe"
+  },
+  "minWinShun": "0.23.0",
+  "releaseDate": "2026-11-14T00:05:17Z",
+  "dateAdded": "2026-11-13T09:40:06Z"
+}
