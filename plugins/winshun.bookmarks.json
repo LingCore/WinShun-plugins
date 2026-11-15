@@ -2,24 +2,26 @@
   "id": "winshun.bookmarks",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.0.5",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.0.5/winshun.bookmarks-2.0.5.wsplugin",
-  "sha256": "7d3dd95d77f3ea181f15d0eab6e81bcfc9cb713559d15908665b2664625a76aa",
-  "size": 229337,
+  "version": "2.1.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.1.0/winshun.bookmarks-2.1.0.wsplugin",
+  "sha256": "50d527ca6155e7d1882f381dce41aa4aebdc1a776e56a26581688213e1f98654",
+  "size": 245155,
   "name": {
     "zh": "浏览器书签",
     "en": "Browser bookmarks"
   },
   "description": {
-    "zh": "bm 词：搜 Chrome 和 Edge 的书签（含账户书签），支持拼音，Enter 打开",
-    "en": "bm words: searches Chrome and Edge bookmarks, account ones too, by pinyin as well; Enter opens"
+    "zh": "bm 词：搜 Chrome 和 Edge 的书签（含账户书签），支持拼音，Enter 打开；在设置里打开后，bh 词 搜浏览历史",
+    "en": "bm words: searches Chrome and Edge bookmarks, account ones too, by pinyin as well; Enter opens. Once turned on in the settings, bh words searches the browsing history"
   },
   "author": "LingCore",
   "license": "MIT",
   "homepage": "https://github.com/LingCore/WinShun",
   "keywords": [
     "bm",
-    "sq"
+    "sq",
+    "bh",
+    "ls"
   ],
   "permissions": [
     "files:read"
@@ -29,6 +31,6 @@
     "program": "WinShunBookmarks.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-14T06:37:24Z",
+  "releaseDate": "2026-11-15T01:31:17Z",
   "dateAdded": "2026-10-23T09:12:34Z"
 }
