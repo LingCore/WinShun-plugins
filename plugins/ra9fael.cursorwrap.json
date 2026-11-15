@@ -1,0 +1,36 @@
+{
+  "id": "ra9fael.cursorwrap",
+  "repo": "ra9fael/winshun-cursorwrap",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.10.2",
+  "url": "https://github.com/ra9fael/winshun-cursorwrap/releases/download/v0.10.2/ra9fael.cursorwrap-0.10.2.wsplugin",
+  "sha256": "e97d869273b4c7ae5f2c84eec98b14fe8f3e392d7f3047bba8f70f1a9932ef68",
+  "size": 1725339,
+  "name": {
+    "zh": "光标回绕",
+    "en": "Cursor wrap"
+  },
+  "description": {
+    "zh": "光标到达屏幕外边时从对边进入（多显示器边缘拓扑，支持仅纵向/仅横向与按住 Ctrl/Shift 激活）；cursorwrap 关键字查看状态与开关",
+    "en": "The cursor re-enters from the opposite edge when it reaches an outer edge (multi-monitor edge topology; vertical/horizontal-only modes and Ctrl/Shift activation); the cursorwrap keyword shows status and toggles it"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-cursorwrap",
+  "keywords": [
+    "cursorwrap",
+    "wrap",
+    "环绕"
+  ],
+  "permissions": [
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "cursorwrap.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-15T07:27:03Z",
+  "dateAdded": "2026-11-15T07:28:32Z"
+}
