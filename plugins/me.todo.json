@@ -2,10 +2,10 @@
   "id": "me.todo",
   "repo": "888bik/me.todo",
   "autoUpdate": true,
-  "version": "3.4.10",
-  "url": "https://github.com/888bik/me.todo/releases/download/v3.4.10/me.todo-3.4.10.wsplugin",
-  "sha256": "a14f1e8f2ca91e1ad10b9456e5c26a0ba7ffaee7c36e2bb13e3faa0653900a80",
-  "size": 503077,
+  "version": "3.5.2",
+  "url": "https://github.com/888bik/me.todo/releases/download/v3.5.2/me.todo-3.5.2.wsplugin",
+  "sha256": "0cc6d82b863ad4b4ce0e9bfbfa1c6972656c6e0b069bf6b9b4a9b13f1e08f84c",
+  "size": 546469,
   "name": {
     "zh": "待办",
     "en": "Todo"
@@ -30,6 +30,6 @@
     "program": "python"
   },
   "minWinShun": "",
-  "releaseDate": "2026-11-14T15:26:37Z",
+  "releaseDate": "2026-11-15T04:33:24Z",
   "dateAdded": "2026-11-12T04:41:27Z"
 }
