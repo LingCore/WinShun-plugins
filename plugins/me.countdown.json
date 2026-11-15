@@ -1,0 +1,35 @@
+{
+  "id": "me.countdown",
+  "repo": "888bik/winshun-countdown",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "1.3.0",
+  "url": "https://github.com/888bik/winshun-countdown/releases/download/v1.3.0/me.countdown-1.3.0.wsplugin",
+  "sha256": "ce1e36f1e79df89e3682866938b563162c11e2ce50515cfd6ef7dde255d36809",
+  "size": 2641624,
+  "name": {
+    "zh": "倒计时",
+    "en": "Countdown"
+  },
+  "description": {
+    "zh": "原生 Go 版倒计时，无需安装 Python。支持多个计时器，到期后需确认并持续提醒。",
+    "en": "Native Go countdown timers. Multiple timers, acknowledgement pending state, and repeated reminders until confirmed."
+  },
+  "author": "888bik",
+  "license": "MIT",
+  "homepage": "https://github.com/888bik/winshun-countdown",
+  "keywords": [
+    "倒计时"
+  ],
+  "permissions": [
+    "ui",
+    "notifications"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "countdown.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-15T09:00:32Z",
+  "dateAdded": "2026-11-15T09:01:52Z"
+}
