@@ -2,10 +2,10 @@
   "id": "winshun.explorer-tabs",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.2/winshun.explorer-tabs-1.1.2.wsplugin",
-  "sha256": "f5757a343d01558947e24386ffc454d4c1e1770fe3eedf16f2b1d855f8102809",
-  "size": 279937,
+  "version": "1.1.3",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.3/winshun.explorer-tabs-1.1.3.wsplugin",
+  "sha256": "56ea68ee4b84e3dbd6ad827300ed25a6caf131c652882a3955ae04ac560656b3",
+  "size": 280731,
   "name": {
     "en": "Explorer tabs",
     "zh": "资源管理器标签页"
@@ -29,11 +29,11 @@
     "mode": "resident",
     "program": "WinShunExplorerTabs.exe"
   },
-  "minWinShun": "0.31.0",
-  "releaseDate": "2026-11-15T07:32:51Z",
+  "minWinShun": "0.32.0",
+  "releaseDate": "2026-11-16T09:18:09Z",
   "dateAdded": "2026-11-04T03:02:24Z",
   "notes": {
-    "zh": "连按两次 `Win+E` 出两个窗口的原因找到了（LingCore/WinShun#331）：第一个窗口在最前面时再按 `Win+E`，新窗口被当成“在资源管理器里主动要的新窗口”（和 `Ctrl+N` 一样）而保留。现在 `Win+E` 打开的窗口一律并成标签页；最前面的窗口已经显示着同一个位置时，再加一个标签页。紧接着按别的键（比如 `Ctrl+N`）开的窗口仍然保留。日志里的“window asked for”现在会写明当时最前面的是什么。权限没有变化。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.31.0。",
-    "en": "The cause of two windows from two presses of `Win+E` is found (LingCore/WinShun#331): with the first window in front, the second counted as a window asked for from File Explorer (as `Ctrl+N` is) and was kept. A window opened by `Win+E` now always becomes a tab, and when the window in front already shows the same place it gets one more tab. A window opened with another key right after (`Ctrl+N`, say) is still kept. \"window asked for\" in the log now names what was in front. Permissions are unchanged. Install or update through Settings → Plugins → Library. Requires WinShun 0.31.0."
+    "zh": "有的电脑上新开的文件夹窗口一直不并成标签页（诊断日志里是“1 known, 0 able”）：读不到资源管理器进程的权限级别时（安全软件常常不让读），插件把它当成了比自己高而跳过。现在按资源管理器平常的级别处理，日志也写明每个窗口没被选中的原因（#331）。需要主程序 0.32.0。权限不变。",
+    "en": "On some PCs new folder windows never became tabs (\"1 known, 0 able\" in the diagnostics): when Explorer's integrity level could not be read, as security software often refuses, the plugin took it as above its own and skipped it. It now counts as Explorer's usual level, and the log says why each window was passed over (#331). Requires WinShun 0.32.0. Permissions unchanged."
   }
 }
