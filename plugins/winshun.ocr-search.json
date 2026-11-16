@@ -32,5 +32,9 @@
   },
   "minWinShun": "0.31.0",
   "releaseDate": "2026-11-15T07:32:42Z",
-  "dateAdded": "2026-11-03T03:09:38Z"
+  "dateAdded": "2026-11-03T03:09:38Z",
+  "notes": {
+    "zh": "用 Win顺 0.31.0 的共用代码重新打包：窗口占用的内存更少（图标文字不再连带加载电脑里的所有字体，字体文件直接映射），用法没有变化。权限没有变化。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.31.0。",
+    "en": "Rebuilt with WinShun 0.31.0's shared code: its window uses less memory (icon text no longer pulls in every font installed, and font files are mapped); no change in behaviour. Permissions are unchanged. Install or update through Settings → Plugins → Library. Requires WinShun 0.31.0."
+  }
 }

@@ -28,5 +28,9 @@
   },
   "minWinShun": "0.22.0",
   "releaseDate": "2026-11-13T14:40:06Z",
-  "dateAdded": "2026-11-10T13:27:37Z"
+  "dateAdded": "2026-11-10T13:27:37Z",
+  "notes": {
+    "zh": "## 1.1.0\n\n- 由 Python 脚本改为独立 Windows x64 EXE，用户不再需要安装 Python。\n- 保留插件 ID、网址自动识别、url 关键字、裸域名设置和原有安全校验。\n- 防抖调整为 120ms，普通文件名（如 main.py、readme.md）不再触发插件。\n- 单次执行内存预算 64 MiB、超时 1200ms。\n- 不申请权限，不联网，不访问文件或剪贴板。\n\n安装：Win顺 设置 → 插件 → 从压缩包安装，选 me.open-url-1.1.0.wsplugin。原生 EXE 插件安装时会弹一次确认，点确认即可。",
+    "en": "## 1.1.0\n\n- 由 Python 脚本改为独立 Windows x64 EXE，用户不再需要安装 Python。\n- 保留插件 ID、网址自动识别、url 关键字、裸域名设置和原有安全校验。\n- 防抖调整为 120ms，普通文件名（如 main.py、readme.md）不再触发插件。\n- 单次执行内存预算 64 MiB、超时 1200ms。\n- 不申请权限，不联网，不访问文件或剪贴板。\n\n安装：Win顺 设置 → 插件 → 从压缩包安装，选 me.open-url-1.1.0.wsplugin。原生 EXE 插件安装时会弹一次确认，点确认即可。"
+  }
 }

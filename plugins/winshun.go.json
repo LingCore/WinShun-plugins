@@ -36,5 +36,9 @@
   },
   "minWinShun": "",
   "releaseDate": "2026-10-29T05:01:20Z",
-  "dateAdded": "2026-10-23T09:12:38Z"
+  "dateAdded": "2026-10-23T09:12:38Z",
+  "notes": {
+    "zh": "随 Win顺 0.16.0 发布：申请了「启动程序」权限（code、np 命令要带参数启动 VS Code 和记事本）。",
+    "en": "随 Win顺 0.16.0 发布：申请了「启动程序」权限（code、np 命令要带参数启动 VS Code 和记事本）。"
+  }
 }

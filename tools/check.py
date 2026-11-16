@@ -854,6 +854,7 @@ class Asset:
         self.release: dict | None = None
         self.package: Package | None = None
         self.fields: dict = {}  # 生成的字段（dateAdded 除外）；检查没过是空的
+        self.notes: dict | None = None  # Release 的说明拆成的 {zh, en}；不在 fields 里：说明后来改了，条目不算错
         self.unreviewed_native = False  # 按未审核原生插件检查的：条目标了，或者 auto_native 时包里有 exe/dll
 
 
@@ -875,6 +876,7 @@ def check_asset(url: str, expected_id: str | None = None, release: dict | None =
     except registry.FetchError as ex:
         a.errors.append(f"{url}：{ex}")
         return a
+    a.notes = registry.notes_of(a.release)
     if auto_native and not unreviewed_native and not registry.official_native(parts.repo, parts.id) and looks_native(data):
         unreviewed_native = True
     a.unreviewed_native = unreviewed_native
@@ -1044,6 +1046,11 @@ def check_entry_fields(r: Report, obj, root: Path) -> None:
     for key in ("releaseDate", "dateAdded"):
         if key in obj and registry.parse_time(obj[key]) is None:
             r.error(f"{key} 要像 2026-10-28T12:00:00Z 这样（UTC）")
+    notes = obj.get("notes")
+    if "notes" in obj and not (isinstance(notes, dict) and notes and set(notes) <= {"zh", "en"}
+                               and all(isinstance(t, str) and t.strip() and len(t) <= registry.NOTES_MAX for t in notes.values())):
+        r.error(f'notes 要是 {{"zh": …, "en": …}}，每种语言一段 Markdown，最多 {registry.NOTES_MAX} 个字符；'
+                f"它是从 Release 的说明生成的，不要手写（python tools/notes.py {r.id} 重新生成）")
     legacy = root / "legacy" / r.id
     if obj.get("hosted"):
         if not (legacy / "plugin.json").is_file():
@@ -1077,6 +1084,8 @@ def check_entry_online(r: Report) -> Asset | None:
             r.error(f"{k} 和包里的不一样（条目里是 {brief(obj.get(k))}，包里是 {brief(a.fields[k])}）")
         if wrong:
             r.error(f"用 python tools/entry.py {url} 重新生成这个文件，生成的字段不要手改")
+        if not registry.same(obj.get("notes"), a.notes):  # 只提醒：作者改了 Release 的说明，不该让条目过不了检查
+            r.warn(f"notes 和 Release 现在的说明不一样（python tools/notes.py {r.id} 重新生成；说明不用手写，在 Release 里写）")
     return a
 
 

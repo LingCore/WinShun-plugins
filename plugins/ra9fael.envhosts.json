@@ -36,5 +36,9 @@
   },
   "minWinShun": "0.22.0",
   "releaseDate": "2026-11-08T16:08:23Z",
-  "dateAdded": "2026-11-08T22:08:54Z"
+  "dateAdded": "2026-11-08T22:08:54Z",
+  "notes": {
+    "zh": "# GDI 0.7.5\n\n同一个插件 ID；安装另一版会替换当前版，设置和备份保留，草稿按版本类型隔离。\nBoth editions share one plugin ID. Installing the other replaces this edition. Settings/backups are retained; drafts are stored separately per backend.\n\n下载 / Downloads: [GDI](https://github.com/ra9fael/winshun-envhosts/releases/latest) · [QML](https://github.com/ra9fael/winshun-envhosts/tree/qml#安装)\n\n插件库目前不区分后端；QML 请从 QML 发布页更新。\nThe plugin library does not track backends; update QML from its release page.\n\n### Added\n\n- Maintained GDI/QML branches and mutually exclusive packages sharing one plugin ID.\n- Backend/version verification before packaging, separate release tags and bilingual download choices.\n\n### Fixed\n\n- Isolate GDI drafts, route legacy drafts by format and archive original bytes without overwriting newer drafts.\n- Refuse incompatible QML multi-string/raw backups and preserve user/system scope boundaries when restoring shared snapshots.",
+    "en": "# GDI 0.7.5\n\n同一个插件 ID；安装另一版会替换当前版，设置和备份保留，草稿按版本类型隔离。\nBoth editions share one plugin ID. Installing the other replaces this edition. Settings/backups are retained; drafts are stored separately per backend.\n\n下载 / Downloads: [GDI](https://github.com/ra9fael/winshun-envhosts/releases/latest) · [QML](https://github.com/ra9fael/winshun-envhosts/tree/qml#安装)\n\n插件库目前不区分后端；QML 请从 QML 发布页更新。\nThe plugin library does not track backends; update QML from its release page.\n\n### Added\n\n- Maintained GDI/QML branches and mutually exclusive packages sharing one plugin ID.\n- Backend/version verification before packaging, separate release tags and bilingual download choices.\n\n### Fixed\n\n- Isolate GDI drafts, route legacy drafts by format and archive original bytes without overwriting newer drafts.\n- Refuse incompatible QML multi-string/raw backups and preserve user/system scope boundaries when restoring shared snapshots."
+  }
 }

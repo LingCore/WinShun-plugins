@@ -31,5 +31,9 @@
   },
   "minWinShun": "",
   "releaseDate": "2026-10-23T09:12:40Z",
-  "dateAdded": "2026-10-23T09:12:40Z"
+  "dateAdded": "2026-10-23T09:12:40Z",
+  "notes": {
+    "zh": "Win顺 设置 → 插件 → 从压缩包安装，选这个 .wsplugin 文件。",
+    "en": "Win顺 设置 → 插件 → 从压缩包安装，选这个 .wsplugin 文件。"
+  }
 }

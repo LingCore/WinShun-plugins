@@ -31,5 +31,9 @@
   },
   "minWinShun": "0.17.0",
   "releaseDate": "2026-11-07T02:31:02Z",
-  "dateAdded": "2026-11-01T08:10:33Z"
+  "dateAdded": "2026-11-01T08:10:33Z",
+  "notes": {
+    "zh": "适配 Win顺 0.22.0，更新插件及共享源码构建。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.17.0。",
+    "en": "Built for the WinShun 0.22.0 release from the plugin and shared production sources. Install or update through Settings → Plugins → Library. Requires WinShun 0.17.0 or newer."
+  }
 }

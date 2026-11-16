@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""插件库的共用部分：条目的字段、包的网址、下载、GitHub 接口、安全地解开 .wsplugin、读写条目。
+"""插件库的共用部分：条目的字段、包的网址、下载、GitHub 接口、安全地解开 .wsplugin、Release 说明（notes）、读写条目。
 
 check.py、entry.py、index.py、update.py 都用它，它自己不检查插件（那是 check.py 的事）。
 只用标准库，Python 3.10+。
@@ -28,6 +28,7 @@ MAX_PACKAGE = 64 * 1024 * 1024    # 和 Win顺 的 Gallery.h kMaxPackageBytes �
 MAX_UNPACKED = 256 * 1024 * 1024  # Install.h kMaxArchiveBytes：解开后最多这么大
 MAX_ENTRIES = 10000               # 压缩包里最多这么多项
 MAX_API = 16 * 1024 * 1024        # 一次 GitHub 接口的回答
+NOTES_MAX = 2000                  # 条目里 notes 每种语言最多这么多个字符（含结尾的 …）
 
 # Native binaries are accepted only from these official release assets.
 # A manifest, entry flag or an author's choice of id cannot grant this exception.
@@ -51,7 +52,8 @@ AUTHOR_KEYS = ("id", "repo", "autoUpdate", "review")  # review 只能显式选�
 MAINTAINER_KEYS = ("bundled", "hosted")     # 只有维护者能改
 GENERATED_KEYS = ("version", "url", "sha256", "size", "name", "description", "author", "license", "homepage",
                   "keywords", "permissions", "runtime", "minWinShun", "releaseDate", "dateAdded")  # 工具生成，不手写
-ENTRY_KEYS = AUTHOR_KEYS + MAINTAINER_KEYS + GENERATED_KEYS
+OPTIONAL_KEYS = ("notes",)  # 工具生成，可以没有：从 Release 的说明来，说明后来改了也不算条目错（check.py 只提醒）
+ENTRY_KEYS = AUTHOR_KEYS + MAINTAINER_KEYS + GENERATED_KEYS + OPTIONAL_KEYS
 
 REPO_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9-]{0,38}/[A-Za-z0-9._-]{1,100}")
 PLAIN_VERSION_RE = re.compile(r"\d+\.\d+\.\d+")
@@ -271,6 +273,95 @@ def unpack(data: bytes, dest: Path) -> list[str]:
         except Exception as ex:  # 坏数据、CRC 不对、文件和文件夹同名……
             problems.append(f"{name}：解不开（{ex}）")
     return problems
+
+
+# ---------------------------------------------------------------- Release 说明 → notes
+
+CJK_RANGES = ((0x3040, 0x30FF), (0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xF900, 0xFAFF))  # 假名和汉字
+# 出处、校验值不是“改了什么”（index 里另有 sha256 和 source），整行丢掉：
+#   源码 · Source: LingCore/WinShun 1ab46575、Source: …、[完整源码 / Source](网址)、SHA256: …
+PROVENANCE_RE = re.compile(r"[\s>*_-]*(?:源码\s*[·:：]|Source\s*[:：]|\[[^\]]*(?:源码|Source)[^\]]*\]\([^)]*\)\s*$)", re.IGNORECASE)
+CHECKSUM_RE = re.compile(r"[\s>*_`-]*sha-?256(?:sum)?\b", re.IGNORECASE)
+RULE_RE = re.compile(r"-{3,}|\*{3,}|_{3,}")  # --- 分隔线
+HEADING_RE = re.compile(r" {0,3}#{1,6}(?:\s|$)")
+SUBSTANTIVE = 8  # 一种语言的正文（不含标题）至少这么重才算有内容：拉丁字母算 1，汉字算 3
+
+
+def paragraphs(text: str) -> list[str]:
+    """按空行分段；``` 围起来的代码块里的空行不分段。Markdown 留着原样（列表、标题都在段里）。"""
+    out: list[str] = []
+    current: list[str] = []
+    fenced = False
+    for line in text.split("\n"):
+        stripped = line.strip()
+        if stripped.startswith(("```", "~~~")):
+            fenced = not fenced
+        if not stripped and not fenced:
+            if current:
+                out.append("\n".join(current))
+                current = []
+        else:
+            current.append(line)
+    if current:
+        out.append("\n".join(current))
+    return [p.strip() for p in out if p.strip()]
+
+
+def letters(paragraph: str) -> tuple[int, int]:
+    """(汉字和假名数, 拉丁字母数)。代码和网址不算：`Ctrl+N`、https://… 在中文段里也是英文。"""
+    plain = re.sub(r"```.*?```|`[^`\n]*`", " ", paragraph, flags=re.DOTALL)
+    plain = re.sub(r"\]\([^)\s]*\)|https?://\S+", " ", plain)
+    cjk = sum(1 for c in plain if any(lo <= ord(c) <= hi for lo, hi in CJK_RANGES))
+    return cjk, sum(1 for c in plain if c.isascii() and c.isalpha())
+
+
+def cap_notes(text: str, limit: int = NOTES_MAX) -> str:
+    """最多 limit 个字符（含结尾的 …）：尽量在段落或换行的地方断开，断不开就硬切。"""
+    if len(text) <= limit:
+        return text
+    head = text[: limit - 1]
+    for sep in ("\n\n", "\n"):
+        i = head.rfind(sep)
+        if i >= len(head) // 2:  # 太靠前的不要，不然只剩个开头
+            head = head[:i]
+            break
+    return head.rstrip() + "…"
+
+
+def split_notes(body) -> dict | None:
+    """Release 的说明（Markdown）→ {"zh": …, "en": …}；没有内容就是 None。
+
+    按空行分段，Markdown 照旧留在段里；出处和校验值的行丢掉；每段按字多的一种文字归到中文或英文
+    （汉字数 ≥ 拉丁字母数的三分之一算中文：中文段里夹着 Win+E，英文段里夹着“坚果云”，都不会归错）；
+    没有文字的段跟着上一段。一边没有正文（空的，或者只有标题、一两个词）就用另一边的：
+    只写了一种语言的 Release，两种语言显示同一段。每边最多 NOTES_MAX 个字符。
+    """
+    if not isinstance(body, str):
+        return None
+    kept: list[tuple[str, str, int]] = []  # (段, 语言, 正文的分量)
+    side = "zh"
+    for paragraph in paragraphs(body.replace("\r\n", "\n").replace("\r", "\n")):
+        paragraph = "\n".join(line for line in paragraph.split("\n") if not PROVENANCE_RE.match(line)).strip()
+        if not paragraph or RULE_RE.fullmatch(paragraph) or CHECKSUM_RE.match(paragraph):
+            continue
+        cjk, latin = letters(paragraph)
+        if cjk or latin:
+            side = "zh" if cjk * 3 >= latin else "en"
+        heading = all(HEADING_RE.match(line) for line in paragraph.split("\n"))
+        kept.append((paragraph, side, 0 if heading else cjk * 3 + latin))
+    real = [lang for lang in ("zh", "en") if sum(w for _, s, w in kept if s == lang) >= SUBSTANTIVE]
+    if len(real) == 2:
+        texts = {lang: "\n\n".join(p for p, s, _ in kept if s == lang) for lang in ("zh", "en")}
+    else:
+        shared = "\n\n".join(p for p, s, _ in kept if not real or s == real[0])
+        texts = {"zh": shared, "en": shared}
+    texts = {lang: cap_notes(text.strip()) for lang, text in texts.items()}
+    return texts if texts["zh"] else None
+
+
+def notes_of(release: dict | None) -> dict | None:
+    """一个 Release（GitHub 接口回的那个对象）的说明 → notes。"""
+    return split_notes(release.get("body")) if isinstance(release, dict) else None
 
 
 # ---------------------------------------------------------------- 条目文件

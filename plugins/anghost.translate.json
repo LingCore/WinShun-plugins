@@ -40,5 +40,9 @@
   },
   "minWinShun": "0.18.0",
   "releaseDate": "2026-11-10T03:17:18Z",
-  "dateAdded": "2026-11-10T03:18:36Z"
+  "dateAdded": "2026-11-10T03:18:36Z",
+  "notes": {
+    "zh": "Win顺 设置 → 插件 → 从压缩包安装，选 anghost.translate-1.1.0.wsplugin。",
+    "en": "Win顺 设置 → 插件 → 从压缩包安装，选 anghost.translate-1.1.0.wsplugin。"
+  }
 }

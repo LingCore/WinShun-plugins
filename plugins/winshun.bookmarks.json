@@ -32,5 +32,9 @@
   },
   "minWinShun": "0.17.0",
   "releaseDate": "2026-11-15T01:31:17Z",
-  "dateAdded": "2026-10-23T09:12:34Z"
+  "dateAdded": "2026-10-23T09:12:34Z",
+  "notes": {
+    "zh": "多了 `bh`（或 `ls`）搜浏览历史（LingCore/WinShun#160）：Chrome、Edge 等打开过的网页，支持拼音。默认关着，在插件设置里打开“搜索浏览历史”。只在这台电脑上读浏览器自己的历史文件，仍在原来的“读取文件”权限之内，更新时不会再问权限。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.17.0。",
+    "en": "`bh` (or `ls`) searches the browsing history (LingCore/WinShun#160): pages opened in Chrome, Edge and the like, pinyin too. Off until \"Search the browsing history\" is turned on in the plugin's settings. It reads the browser's own history file on this computer, under the \"read files\" permission it already has, so the update asks for nothing new. Install or update through Settings → Plugins → Library. Requires WinShun 0.17.0."
+  }
 }

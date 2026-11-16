@@ -9,7 +9,8 @@
                                             加上 readme（网址）和 readmeSha256：Win顺 的插件库用它显示“说明”
 
 index.json 只加字段、不改已有的：旧版 Win顺（0.14、0.15）不认识的字段会忽略，网址也一直是
-index 这个 Release 上的 index.json。不打包、不下载任何东西。只用标准库，Python 3.10+。
+index 这个 Release 上的 index.json。条目里有 notes（这个版本的更新说明 {zh, en}）的，原样加上。
+不打包、不下载任何东西。只用标准库，Python 3.10+。
 """
 from __future__ import annotations
 
@@ -70,6 +71,9 @@ def item_of(e: dict, readme_dir: Path | None = None) -> dict:
         "dateAdded": e["dateAdded"],
         "review": e.get("review", "official" if e["repo"].lower() == registry.REPO.lower() and e["id"].startswith("winshun.") else "reviewed"),
     }
+    # 这个版本的更新说明 {zh, en}（条目里有才写）：Win顺 的插件库用它显示“更新内容”
+    if e.get("notes"):
+        item["notes"] = e["notes"]
     # 包里的 README（和 index.json 放在同一个 Release 上）：有才写，没有就没有这两个字段
     name = readmes.file_name(e["id"], e["version"])
     if readme_dir is not None and (readme_dir / name).is_file():

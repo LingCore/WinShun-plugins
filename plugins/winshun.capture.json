@@ -35,5 +35,9 @@
   },
   "minWinShun": "0.18.0",
   "releaseDate": "2026-11-15T09:49:03Z",
-  "dateAdded": "2026-11-01T08:10:30Z"
+  "dateAdded": "2026-11-01T08:10:30Z",
+  "notes": {
+    "zh": "截图时界面卡住超过 0.3 秒，诊断日志会记下当时程序各个线程在做什么，用来查“按下截图键后黑屏或卡一两秒”的原因。功能和权限没有变化。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.18.0。",
+    "en": "When the interface stops answering for more than 0.3 s during a capture, the diagnostics record what each thread of the program was doing, to find why some PCs go black or stall for a second or two after the capture key. No change in features or permissions. Install or update through Settings → Plugins → Library. Requires WinShun 0.18.0."
+  }
 }

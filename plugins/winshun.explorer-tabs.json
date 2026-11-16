@@ -31,5 +31,9 @@
   },
   "minWinShun": "0.31.0",
   "releaseDate": "2026-11-15T07:32:51Z",
-  "dateAdded": "2026-11-04T03:02:24Z"
+  "dateAdded": "2026-11-04T03:02:24Z",
+  "notes": {
+    "zh": "连按两次 `Win+E` 出两个窗口的原因找到了（LingCore/WinShun#331）：第一个窗口在最前面时再按 `Win+E`，新窗口被当成“在资源管理器里主动要的新窗口”（和 `Ctrl+N` 一样）而保留。现在 `Win+E` 打开的窗口一律并成标签页；最前面的窗口已经显示着同一个位置时，再加一个标签页。紧接着按别的键（比如 `Ctrl+N`）开的窗口仍然保留。日志里的“window asked for”现在会写明当时最前面的是什么。权限没有变化。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.31.0。",
+    "en": "The cause of two windows from two presses of `Win+E` is found (LingCore/WinShun#331): with the first window in front, the second counted as a window asked for from File Explorer (as `Ctrl+N` is) and was kept. A window opened by `Win+E` now always becomes a tab, and when the window in front already shows the same place it gets one more tab. A window opened with another key right after (`Ctrl+N`, say) is still kept. \"window asked for\" in the log now names what was in front. Permissions are unchanged. Install or update through Settings → Plugins → Library. Requires WinShun 0.31.0."
+  }
 }

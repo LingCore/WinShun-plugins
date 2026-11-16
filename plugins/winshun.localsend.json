@@ -34,5 +34,9 @@
   },
   "minWinShun": "0.17.0",
   "releaseDate": "2026-11-12T07:55:27Z",
-  "dateAdded": "2026-11-01T08:10:31Z"
+  "dateAdded": "2026-11-01T08:10:31Z",
+  "notes": {
+    "zh": "新增「自动接收」开关（默认关闭）：打开后发来的文件不用点接收，直接收下，收完照样有通知；同一网络里的任何设备都能发过来，只适合在信得过的网络里打开，可以配合接收密码使用（LingCore/WinShun#303）。权限没有变化。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.17.0。",
+    "en": "New setting \"Accept automatically\" (off by default): files sent to this PC are taken without asking, and the notification of what was received still shows. Any device on the same network can then send files, so turn it on only on networks you trust; a PIN adds a check (LingCore/WinShun#303). No permission changes. Install or update through Settings → Plugins → Library. Requires WinShun 0.17.0 or newer."
+  }
 }

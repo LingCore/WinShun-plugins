@@ -32,5 +32,9 @@
   },
   "minWinShun": "0.26.0",
   "releaseDate": "2026-11-13T01:32:35Z",
-  "dateAdded": "2026-11-13T01:34:30Z"
+  "dateAdded": "2026-11-13T01:34:30Z",
+  "notes": {
+    "zh": "新插件：把 Win顺 的设置备份自动传到 WebDAV（坚果云、Nextcloud、NAS）或 GitHub 私有仓库。填好插件卡片上的地址和账号，设置变了会自动上传，每处保留最近 10 份；换电脑时输入 `cloud`，在一份备份上按 Enter 再确认一次就恢复。密码存在 Windows 凭据管理器里，不进备份；公开仓库不会上传。权限：设置备份（winshun:backup）、网络、通知。最低主程序版本为 0.26.0。",
+    "en": "A new plugin: keeps WinShun's settings backup on a WebDAV server (Nextcloud, a NAS, 坚果云) or in a private GitHub repository. Fill in its card; changed settings are uploaded by themselves, the last 10 kept at each place. On another PC type `cloud` and press Enter on a backup, then once more, to restore it. Passwords stay in Windows Credential Manager; nothing is uploaded to a public repository. Permissions: the settings backup (winshun:backup), network, notifications. Requires WinShun 0.26.0."
+  }
 }

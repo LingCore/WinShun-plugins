@@ -35,5 +35,9 @@
   },
   "minWinShun": "0.22.0",
   "releaseDate": "2026-11-13T23:33:08Z",
-  "dateAdded": "2026-11-13T22:20:20Z"
+  "dateAdded": "2026-11-13T22:20:20Z",
+  "notes": {
+    "zh": "### 修复（打包）\n\n- **开发包装器按 BOM UTF-8 保存**：`tools/remote_share_gui.ps1` 原来不带 BOM，插件库的检查直接拒绝这个包——Windows PowerShell 5.1 读无 BOM 的 UTF-8 中文会乱码。文件内容不变，只补 BOM；独立窗口、`-Check` 自检照常。",
+    "en": "### 修复（打包）\n\n- **开发包装器按 BOM UTF-8 保存**：`tools/remote_share_gui.ps1` 原来不带 BOM，插件库的检查直接拒绝这个包——Windows PowerShell 5.1 读无 BOM 的 UTF-8 中文会乱码。文件内容不变，只补 BOM；独立窗口、`-Check` 自检照常。"
+  }
 }
