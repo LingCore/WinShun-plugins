@@ -34,6 +34,7 @@
     },
     "commands": {"type": "array", "items": {"$ref": "#/$defs/command"}},
     "webSearch": {"description": "官方网页搜索插件的宿主能力，网站在插件设置中管理", "type": "boolean"},
+    "translate": {"description": "翻译用的命令：写 commands 里一个命令的 id，这个命令要由插件自己的程序回答（不能有 run，不能是零代码命令）；schema 只能查类型，id 对不对由 tools/check.py 查", "type": "string", "minLength": 1},
     "settings": {"type": "array", "items": {"$ref": "#/$defs/setting"}},
     "trayMenu": {"$ref": "#/$defs/text"},
     "pictures": {"type": "array", "items": {"enum": ["pin", "edit"]}, "uniqueItems": true},
@@ -145,7 +146,9 @@
       "type": "object",
       "oneOf": [
         {"required": ["url"], "properties": {"url": {"type": "string", "description": "%s 是输入的文字"}, "home": {"type": "string"}}},
-        {"required": ["program"], "properties": {"program": {"type": "string", "minLength": 1}, "args": {"type": "string"}, "cwd": {"type": "string"}}},
+        {"required": ["program"], "properties": {"program": {"type": "string", "minLength": 1}, "args": {"type": "string"}, "cwd": {"type": "string"},
+                                                  "suggest": {"description": "files、folders 或 paths；写了 suggest，args 里就要有 %s，选中的路径填在那里", "enum": ["files", "folders", "paths"]}},
+         "if": {"required": ["suggest"]}, "then": {"required": ["args"], "properties": {"args": {"pattern": "%s"}}}},
         {"required": ["folder"], "properties": {"folder": {"type": "string", "minLength": 1}}},
         {"required": ["search"], "properties": {"search": {"oneOf": [{"type": "string"}, {"type": "object", "properties": {"query": {"type": "string"}, "scope": {"enum": ["all", "files", "folders", "content"]}}}]}}},
         {"required": ["items"], "properties": {"items": {"type": "array", "items": {"type": "object", "required": ["title"], "properties": {"title": {"type": "string"}}}}}}

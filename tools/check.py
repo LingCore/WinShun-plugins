@@ -52,7 +52,8 @@ ICON_EXT = {".png", ".jpg", ".jpeg", ".ico"}
 ICON_SCHEMES = ("ext:", "file:", "app:", "glyph:", "color:", "data:", "site:")
 KNOWN_TOP = {"$schema", "manifest", "id", "name", "version", "description", "author", "homepage", "license",
              "icon", "minWinShun", "runtime", "permissions", "commands", "settings", "ai",
-             "trayMenu", "pictures", "settingsWindow", "systemSwitches", "webSearch"}
+             "trayMenu", "pictures", "settingsWindow", "systemSwitches", "webSearch", "translate"}
+SUGGEST_KINDS = ("files", "folders", "paths")  # run.suggest：命令的 args 里 %s 要补什么
 
 VERSION_RE = re.compile(r"\d+(\.\d+)*([-+][0-9A-Za-z.-]+)?")  # Manifest.cpp kVersion
 SEMVER_RE = re.compile(r"\d+\.\d+\.\d+([-+][0-9A-Za-z.-]+)?")  # 本仓库：至少 x.y.z
@@ -314,10 +315,15 @@ def read_run(v, where: str, e: Errors) -> str:
     if "program" in v:
         kinds.append("program")
         program = string_field(v, "program", where, e)
-        string_field(v, "args", where, e)
+        args = string_field(v, "args", where, e)
         string_field(v, "cwd", where, e)
         if not program:
             e.fail(f"{where}.program 不能为空")
+        if v.get("suggest") is not None:
+            if not (isinstance(v["suggest"], str) and v["suggest"] in SUGGEST_KINDS):
+                e.fail(f"{where}.suggest 要是 files、folders 或 paths")
+            elif "%s" not in args:
+                e.fail(f"{where}.suggest 要 args 里有 %s，选中的路径填在那里")
     if "folder" in v:
         kinds.append("folder")
         if not string_field(v, "folder", where, e):
@@ -355,7 +361,7 @@ def read_run(v, where: str, e: Errors) -> str:
 
 def read_command(v, index: int, has_runtime: bool, e: Errors) -> dict:
     where = f"commands[{index}]"
-    info = {"id": "", "keywords": [], "icon": ""}
+    info = {"id": "", "keywords": [], "icon": "", "run": ""}  # run：零代码的种类，没有 run 是 ""
     if not isinstance(v, dict):
         e.fail(f"{where} 要是对象")
         return info
@@ -409,6 +415,7 @@ def read_command(v, index: int, has_runtime: bool, e: Errors) -> dict:
                 if not aid:
                     e.fail(f"{aw}.id 不能为空")
     run_kind = read_run(v.get("run"), f"{where}.run", e)
+    info["run"] = run_kind
     if not run_kind and not has_runtime:
         e.fail(f"{where} 没有 run，插件也没有 runtime：不知道怎么执行")
     if "cache" in v:
@@ -519,6 +526,13 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
             seen.add(c["id"])
     if web_search and commands:
         e.fail("webSearch 的网站由插件设置管理，commands 应为空")
+    if o.get("translate") is not None:  # 翻译用的命令：照 Manifest.cpp，要是插件自己的程序回答的那种
+        target = o["translate"]
+        command = next((c for c in info["commands"] if c["id"] == target), None) if isinstance(target, str) and target else None
+        if command is None:
+            e.fail("translate 要写 commands 里一个命令的 id")
+        elif command["run"]:
+            e.fail("translate 的命令要由插件自己的程序回答，不能是零代码命令")
     if "settings" in o:
         settings = o["settings"]
         if not isinstance(settings, list):
