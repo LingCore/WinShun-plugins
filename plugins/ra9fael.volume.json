@@ -3,10 +3,10 @@
   "repo": "ra9fael/winshun-volume",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.4",
-  "url": "https://github.com/ra9fael/winshun-volume/releases/download/v0.1.4/ra9fael.volume-0.1.4.wsplugin",
-  "sha256": "e628c437f468104921b7d653c6ada5cf643501af3792b44af65bc0eebc9093f7",
-  "size": 799370,
+  "version": "0.1.5",
+  "url": "https://github.com/ra9fael/winshun-volume/releases/download/v0.1.5/ra9fael.volume-0.1.5.wsplugin",
+  "sha256": "814957af94f41c5e0342f81148a980c8560a2282665ad4921cd76f573f42cd1f",
+  "size": 812215,
   "name": {
     "zh": "任务栏音量",
     "en": "Taskbar volume"
@@ -30,6 +30,6 @@
     "program": "volume.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-15T18:29:10Z",
+  "releaseDate": "2026-11-16T05:19:01Z",
   "dateAdded": "2026-11-07T09:20:07Z"
 }
