@@ -31,5 +31,9 @@
   },
   "minWinShun": "",
   "releaseDate": "2026-11-15T13:03:56Z",
-  "dateAdded": "2026-11-12T04:41:27Z"
+  "dateAdded": "2026-11-12T04:41:27Z",
+  "notes": {
+    "zh": "待办（me.todo）3.6.1\n\n修补版，只修一个问题。\n\n修复\n- 标题栏图标不显示：icon.ico 的 16/24/32/48 小尺寸帧是 PNG 压缩的，Tk 8.6 的 iconbitmap 认不出来，静默失败留了个通用页面图标。现在改用 LoadImageW + WM_SETICON 直接给 16px 和 32px 两个槽位设图标，绕过 Tk，标题栏正常显示蓝色对勾图标\n\n安装\n- 从 Release 下载 me.todo-3.6.1.wsplugin，在 WinShun 设置 → 插件库里安装\n- 3.4.5 起插件库 autoUpdate 会自动跟版",
+    "en": "待办（me.todo）3.6.1\n\n修补版，只修一个问题。\n\n修复\n- 标题栏图标不显示：icon.ico 的 16/24/32/48 小尺寸帧是 PNG 压缩的，Tk 8.6 的 iconbitmap 认不出来，静默失败留了个通用页面图标。现在改用 LoadImageW + WM_SETICON 直接给 16px 和 32px 两个槽位设图标，绕过 Tk，标题栏正常显示蓝色对勾图标\n\n安装\n- 从 Release 下载 me.todo-3.6.1.wsplugin，在 WinShun 设置 → 插件库里安装\n- 3.4.5 起插件库 autoUpdate 会自动跟版"
+  }
 }

@@ -33,6 +33,15 @@ ZH = "新插件：把设置备份自动传到 WebDAV（坚果云、Nextcloud）�
 EN = "A new plugin: keeps the settings backup on WebDAV (Nextcloud, 坚果云). Requires WinShun 0.26.0."
 
 
+class InstallSentenceTest(unittest.TestCase):
+    def test_install_sentence_alone_gives_no_notes(self):
+        self.assertIsNone(registry.split_notes("Win顺 设置 → 插件 → 从压缩包安装，选 a.b-1.1.0.wsplugin。"))
+
+    def test_install_sentence_dropped_rest_kept(self):
+        notes = registry.split_notes("Win顺 设置 → 插件 → 从压缩包安装，选这个 .wsplugin 文件。 需要 Win顺 0.22.0 及以上版本。")
+        self.assertEqual(notes["zh"], "需要 Win顺 0.22.0 及以上版本。")
+
+
 class SplitNotes(unittest.TestCase):
     def test_bilingual_official_body(self):
         notes = registry.split_notes(CAPTURE_BODY)

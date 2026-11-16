@@ -283,6 +283,9 @@ CJK_RANGES = ((0x3040, 0x30FF), (0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xF900, 0xF
 PROVENANCE_RE = re.compile(r"[\s>*_-]*(?:源码\s*[·:：]|Source\s*[:：]|\[[^\]]*(?:源码|Source)[^\]]*\]\([^)]*\)\s*$)", re.IGNORECASE)
 CHECKSUM_RE = re.compile(r"[\s>*_`-]*sha-?256(?:sum)?\b", re.IGNORECASE)
 RULE_RE = re.compile(r"-{3,}|\*{3,}|_{3,}")  # --- 分隔线
+# 怎么安装的那句（作者仓库和 legacy 发布的模板）：不是这个版本改了什么，Win顺 的插件库里也用不上。
+INSTALL_RE = re.compile(r"Win顺\s*设置\s*→\s*插件\s*→\s*从压缩包安装[^。\n]*[。.]?\s*"
+                        r"|In Win顺,?\s*Settings\s*→\s*Plugins\s*→\s*Install from (?:a )?package[^.\n]*\.?\s*", re.IGNORECASE)
 HEADING_RE = re.compile(r" {0,3}#{1,6}(?:\s|$)")
 SUBSTANTIVE = 8  # 一种语言的正文（不含标题）至少这么重才算有内容：拉丁字母算 1，汉字算 3
 
@@ -341,7 +344,8 @@ def split_notes(body) -> dict | None:
     kept: list[tuple[str, str, int]] = []  # (段, 语言, 正文的分量)
     side = "zh"
     for paragraph in paragraphs(body.replace("\r\n", "\n").replace("\r", "\n")):
-        paragraph = "\n".join(line for line in paragraph.split("\n") if not PROVENANCE_RE.match(line)).strip()
+        paragraph = "\n".join(line for line in paragraph.split("\n") if not PROVENANCE_RE.match(line))
+        paragraph = INSTALL_RE.sub("", paragraph).strip()
         if not paragraph or RULE_RE.fullmatch(paragraph) or CHECKSUM_RE.match(paragraph):
             continue
         cjk, latin = letters(paragraph)
