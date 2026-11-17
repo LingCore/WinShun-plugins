@@ -2,17 +2,17 @@
   "id": "winshun.explorer-tabs",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.3",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.3/winshun.explorer-tabs-1.1.3.wsplugin",
-  "sha256": "56ea68ee4b84e3dbd6ad827300ed25a6caf131c652882a3955ae04ac560656b3",
-  "size": 280731,
+  "version": "1.1.4",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.4/winshun.explorer-tabs-1.1.4.wsplugin",
+  "sha256": "2c049cc69c4d98cef104ecff4a9a985b2b188983f2eab8dd4e0a1397768c6e9e",
+  "size": 281365,
   "name": {
-    "en": "Explorer tabs",
-    "zh": "资源管理器标签页"
+    "zh": "资源管理器标签页",
+    "en": "Explorer tabs"
   },
   "description": {
-    "en": "A folder that opens in a new File Explorer window becomes a tab of the window already open. Needs Windows 11 22H2 or newer",
-    "zh": "新开的文件夹窗口并到已经开着的资源管理器里，成为一个标签页。需要 Windows 11 22H2 或更新"
+    "zh": "新开的文件夹窗口并到已经开着的资源管理器里，成为一个标签页。需要 Windows 11 22H2 或更新",
+    "en": "A folder that opens in a new File Explorer window becomes a tab of the window already open. Needs Windows 11 22H2 or newer"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -30,10 +30,10 @@
     "program": "WinShunExplorerTabs.exe"
   },
   "minWinShun": "0.32.0",
-  "releaseDate": "2026-11-16T09:18:09Z",
+  "releaseDate": "2026-11-17T03:46:33Z",
   "dateAdded": "2026-11-04T03:02:24Z",
   "notes": {
-    "zh": "有的电脑上新开的文件夹窗口一直不并成标签页（诊断日志里是“1 known, 0 able”）：读不到资源管理器进程的权限级别时（安全软件常常不让读），插件把它当成了比自己高而跳过。现在按资源管理器平常的级别处理，日志也写明每个窗口没被选中的原因（#331）。需要主程序 0.32.0。权限不变。",
-    "en": "On some PCs new folder windows never became tabs (\"1 known, 0 able\" in the diagnostics): when Explorer's integrity level could not be read, as security software often refuses, the plugin took it as above its own and skipped it. It now counts as Explorer's usual level, and the log says why each window was passed over (#331). Requires WinShun 0.32.0. Permissions unchanged."
+    "zh": "有的电脑上新开的文件夹窗口一直不并成标签页，日志里每个已开着的窗口都被系统报成“隐藏”（invisible），连看得见的也是。这一版只多记日志：对每个这样的窗口写明它的实际状态、读取时有没有出错、属于哪个程序，以及资源管理器自己认为它是显示还是隐藏，好分清是真被藏起来了还是读不到（#331）。合并的规则没有变。需要主程序 0.32.0。权限不变。",
+    "en": "On some PCs new folder windows never become tabs: the log has every open window reported \"invisible\", visible ones included. This version only logs more: for each such window its actual state, whether reading it failed, its program, and whether Explorer itself says it is shown, to tell a window really hidden from one that cannot be read (#331). The merging rules are unchanged. Requires WinShun 0.32.0. Permissions unchanged."
   }
 }
