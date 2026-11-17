@@ -65,5 +65,33 @@ class Suggest(unittest.TestCase):
                 self.assertEqual(errors(with_run(**run)), ["commands[1].run.suggest 要 args 里有 %s，选中的路径填在那里"])
 
 
+def with_number(**fields):
+    return manifest(settings=[{"key": "n", "type": "number", "title": "N", **fields}])
+
+
+class NumberRange(unittest.TestCase):
+    """number 设置的 min、max、step、unit（LingCore/WinShun#359）。"""
+
+    def test_a_range_is_accepted(self):
+        for fields in ({}, {"min": 0, "max": 100}, {"min": 0.5, "max": 2, "step": 0.1, "unit": "秒", "default": 1},
+                       {"min": 10}, {"max": 10, "step": 5}, {"min": 0, "max": 1}):
+            with self.subTest(fields=fields):
+                self.assertEqual(errors(with_number(**fields)), [])
+
+    def test_bad_ranges_are_refused(self):
+        cases = [({"min": "0", "max": 5}, "settings[0].min 要是数字"),
+                 ({"min": 6, "max": 5, "step": 0.5}, "settings[0].min 要小于 max"),
+                 ({"step": 0}, "settings[0].step 要大于 0"),
+                 ({"min": 0, "max": 0.5}, "settings[0].step 不能大于 max − min（不写 step 时是 1）"),
+                 ({"min": 0, "max": 10, "default": "3"}, "settings[0].default 要是数字")]
+        for fields, message in cases:
+            with self.subTest(fields=fields):
+                self.assertEqual(errors(with_number(**fields))[:1], [message])
+
+    def test_other_types_ignore_them(self):
+        m = manifest(settings=[{"key": "t", "type": "text", "title": "T", "min": "x"}])
+        self.assertEqual(errors(m), [])
+
+
 if __name__ == "__main__":
     unittest.main()

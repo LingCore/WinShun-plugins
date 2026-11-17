@@ -441,6 +441,26 @@ def read_setting(v, index: int, e: Errors) -> None:
     read_text(v.get("hint"), f"{where}.hint", e)
     if "options" in v and not isinstance(v["options"], list):
         e.fail(f"{where}.options 要是数组")
+    if kind == "number":  # 范围、步长和单位（Win顺 0.33.0 起，LingCore/WinShun#359），照 Manifest.cpp
+        def number(name: str):
+            x = v.get(name)
+            if x is None:
+                return None
+            if not is_num(x):
+                e.fail(f"{where}.{name} 要是数字")
+                return None
+            return float(x)
+        lo, hi, step = number("min"), number("max"), number("step")
+        read_text(v.get("unit"), f"{where}.unit", e)
+        if lo is not None and hi is not None and not lo < hi:
+            e.fail(f"{where}.min 要小于 max")
+        if step is not None and not step > 0:
+            e.fail(f"{where}.step 要大于 0")
+        if lo is not None and hi is not None and (1.0 if step is None else step) > hi - lo:
+            e.fail(f"{where}.step 不能大于 max − min（不写 step 时是 1）")
+        if (lo is not None or hi is not None or step is not None) \
+                and v.get("default") is not None and not is_num(v.get("default")):
+            e.fail(f"{where}.default 要是数字")
 
 
 def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
