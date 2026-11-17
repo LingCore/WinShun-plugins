@@ -1,0 +1,43 @@
+{
+  "id": "ra9fael.rename",
+  "repo": "ra9fael/winshun-rename",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.4.5",
+  "url": "https://github.com/ra9fael/winshun-rename/releases/download/v0.4.5/ra9fael.rename-0.4.5.wsplugin",
+  "sha256": "4a71cf97bbc583bdcb25f346b8b476021f2f7b5c7c3706964e7b087b370507aa",
+  "size": 3625801,
+  "name": {
+    "zh": "批量重命名",
+    "en": "Batch Rename"
+  },
+  "description": {
+    "zh": "批量重命名：选中一个文件夹或同目录的一组项目，按规则或文本方式预览并改名。单文件改名请用 Win顺 的 F2。",
+    "en": "Batch rename a folder or a same-directory selection with rules or a text buffer. Use WinShun F2 for a single file."
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-rename",
+  "keywords": [
+    "br",
+    "pl",
+    "rename",
+    "批量重命名"
+  ],
+  "permissions": [
+    "files:write",
+    "ui",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "rename.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-17T10:25:54Z",
+  "dateAdded": "2026-11-17T10:27:04Z",
+  "notes": {
+    "zh": "- 打包：`.wsplugin` 内附带 README.md、README.en.md 与 LICENSE，满足插件库对包内说明的要求；打包脚本缺任一文件即报错。\n- 新增根目录 LICENSE（MIT），与 plugin.json 的 `license` 字段一致。",
+    "en": "- 打包：`.wsplugin` 内附带 README.md、README.en.md 与 LICENSE，满足插件库对包内说明的要求；打包脚本缺任一文件即报错。\n- 新增根目录 LICENSE（MIT），与 plugin.json 的 `license` 字段一致。"
+  }
+}
