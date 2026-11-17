@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.21",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.21/winshun.capture-1.1.21.wsplugin",
-  "sha256": "25e66db75de219262ea4b9373b4302f9657ffa935b82f8ffe07b01ecfcb875d4",
-  "size": 2895954,
+  "version": "1.1.22",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.22/winshun.capture-1.1.22.wsplugin",
+  "sha256": "d385b8123f34af213f3d538f27be1b4e7a8624e4dfb17a621defa0a5ac4fd1fe",
+  "size": 2898196,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-17T08:18:44Z",
+  "releaseDate": "2026-11-17T08:43:51Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "Windows 10 上闲着时又会归还内存了（较早的 Windows 10 以前从不归还）。权限不变。",
-    "en": "Memory is given back when idle on Windows 10 again (older builds never gave it back). Permissions unchanged."
+    "zh": "较早的 Windows 10 上：1809 到 1909 录屏不再一开始就失败；截图直接用老办法截；2004 之前排除自己窗口不再变黑；深色标题栏生效。权限不变。",
+    "en": "On older Windows 10: recording no longer fails at once on 1809 to 1909; screenshots go straight to the older capture method; before 2004, leaving out WinShun's own windows no longer turns them black; dark title bars work. Permissions unchanged."
   }
 }
