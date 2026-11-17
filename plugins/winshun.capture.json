@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.18",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.18/winshun.capture-1.1.18.wsplugin",
-  "sha256": "22f3a33289a4fe740bdb0e6c3b24d341b0a3e86a53267bdd715b7af6235171f6",
-  "size": 2839541,
+  "version": "1.1.19",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.19/winshun.capture-1.1.19.wsplugin",
+  "sha256": "91de50b54325e5f6a35e3fcd71afc8d1817be84e38fbe6d64fa6fd2a42300b42",
+  "size": 2893227,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-16T09:17:58Z",
+  "releaseDate": "2026-11-17T03:18:20Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "截图翻译可以用其他翻译插件：先用官方的“翻译”，没设好服务或没翻成功就换下一个；翻译插件装了但关着时，直接提示并给一个按钮打开它（#340）。截图设置的“按键”页列出截图时和编辑图片时的全部固定按键，补上漏掉的 F 键（#342）。编号工具图标里的“1”居中。权限不变。",
-    "en": "Screenshot translation works through any plugin that can translate: the official Translate first, the next when one has no service set up or fails; a translator installed but switched off is said so, with a button that turns it on (#340). The Keys page of the capture settings lists every fixed key of capturing and editing, with the missing F key added (#342). The 1 in the numbering icon is centred. Permissions unchanged."
+    "zh": "截图翻译可以设单独的快捷键（#356）；贴图按 E 原地编辑，点一下贴图停一会儿列出它的按键（#343）；框选前按 Tab 只框整个窗口，再按一次恢复（#360）；框选前 Shift+方向键一次挪 10 像素；窗口跟着 Win顺 新的“密集”界面大小变（#352）。权限不变。",
+    "en": "Screenshot translation has a hotkey of its own (#356); E edits a pin in place, and a click on a pin with a pause lists its keys (#343); Tab before selecting outlines whole windows only, and again brings the rest back (#360); Shift+arrows move the pointer ten pixels before a selection; the windows follow WinShun's new Dense interface size (#352). Permissions unchanged."
   }
 }

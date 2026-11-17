@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.17",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.17/winshun.ocr-search-1.0.17.wsplugin",
-  "sha256": "48236aeee5ab5ecb41252ed001915cafa6c0f4c93d8314006468cf7361cd7064",
-  "size": 1329655,
+  "version": "1.0.18",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.18/winshun.ocr-search-1.0.18.wsplugin",
+  "sha256": "71fc39b411678b64bb7f1122ed4c46158ff9dc554ec8eb165a832a52a5c1cf9c",
+  "size": 1329757,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.32.0",
-  "releaseDate": "2026-11-16T09:18:03Z",
+  "minWinShun": "0.33.0",
+  "releaseDate": "2026-11-17T03:18:25Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "用 Win顺 0.32.0 的共用代码重新打包，用法没有变化；需要主程序 0.32.0。权限不变。",
-    "en": "Rebuilt with WinShun 0.32.0's shared code; nothing else changes. Requires WinShun 0.32.0. Permissions unchanged."
+    "zh": "用 Win顺 0.33.0 的共用代码重新打包，界面跟着新的“密集”界面大小变；需要主程序 0.33.0。权限不变。",
+    "en": "Rebuilt with WinShun 0.33.0's shared code, following the new Dense interface size. Requires WinShun 0.33.0. Permissions unchanged."
   }
 }
