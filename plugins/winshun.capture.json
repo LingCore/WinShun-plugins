@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.19",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.19/winshun.capture-1.1.19.wsplugin",
-  "sha256": "91de50b54325e5f6a35e3fcd71afc8d1817be84e38fbe6d64fa6fd2a42300b42",
-  "size": 2893227,
+  "version": "1.1.20",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.20/winshun.capture-1.1.20.wsplugin",
+  "sha256": "7f068175c6db258a1578491df2140786f37661a6e480b3d4fc7dfa734b5ce391",
+  "size": 2895912,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-17T03:18:20Z",
+  "releaseDate": "2026-11-17T07:30:03Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "截图翻译可以设单独的快捷键（#356）；贴图按 E 原地编辑，点一下贴图停一会儿列出它的按键（#343）；框选前按 Tab 只框整个窗口，再按一次恢复（#360）；框选前 Shift+方向键一次挪 10 像素；窗口跟着 Win顺 新的“密集”界面大小变（#352）。权限不变。",
-    "en": "Screenshot translation has a hotkey of its own (#356); E edits a pin in place, and a click on a pin with a pause lists its keys (#343); Tab before selecting outlines whole windows only, and again brings the rest back (#360); Shift+arrows move the pointer ten pixels before a selection; the windows follow WinShun's new Dense interface size (#352). Permissions unchanged."
+    "zh": "鼠标移到贴图上，从哪边进来，那一侧的角上就出现关闭按钮，点一下关掉贴图；下拉菜单的滚动条可以拖。权限不变。",
+    "en": "A round close button appears in a pin's corner on the side the mouse came in from, closing it in one click; drop-down menus get a scroll bar you can drag. Permissions unchanged."
   }
 }
