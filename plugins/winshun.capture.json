@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.20",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.20/winshun.capture-1.1.20.wsplugin",
-  "sha256": "7f068175c6db258a1578491df2140786f37661a6e480b3d4fc7dfa734b5ce391",
-  "size": 2895912,
+  "version": "1.1.21",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.21/winshun.capture-1.1.21.wsplugin",
+  "sha256": "25e66db75de219262ea4b9373b4302f9657ffa935b82f8ffe07b01ecfcb875d4",
+  "size": 2895954,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-17T07:30:03Z",
+  "releaseDate": "2026-11-17T08:18:44Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "鼠标移到贴图上，从哪边进来，那一侧的角上就出现关闭按钮，点一下关掉贴图；下拉菜单的滚动条可以拖。权限不变。",
-    "en": "A round close button appears in a pin's corner on the side the mouse came in from, closing it in one click; drop-down menus get a scroll bar you can drag. Permissions unchanged."
+    "zh": "Windows 10 上闲着时又会归还内存了（较早的 Windows 10 以前从不归还）。权限不变。",
+    "en": "Memory is given back when idle on Windows 10 again (older builds never gave it back). Permissions unchanged."
   }
 }

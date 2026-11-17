@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.19",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.19/winshun.ocr-search-1.0.19.wsplugin",
-  "sha256": "3f2b570bd5a6cc534233d6ede2083e2a542e4c8295ac0bf4271d43e32c672d78",
-  "size": 1329869,
+  "version": "1.0.20",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.20/winshun.ocr-search-1.0.20.wsplugin",
+  "sha256": "6d11ea98eecbc1ff99d3729a21e06c41277a95513c0edd632a041ca9248bdc04",
+  "size": 1329865,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.34.0",
-  "releaseDate": "2026-11-17T07:30:08Z",
+  "minWinShun": "0.34.1",
+  "releaseDate": "2026-11-17T08:18:59Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "用 Win顺 0.34.0 的共用代码重新打包；需要主程序 0.34.0。权限不变。",
-    "en": "Rebuilt with WinShun 0.34.0's shared code; requires WinShun 0.34.0. Permissions unchanged."
+    "zh": "Windows 10 上闲着时又会归还内存了；需要主程序 0.34.1。权限不变。",
+    "en": "Memory is given back when idle on Windows 10 again; requires WinShun 0.34.1. Permissions unchanged."
   }
 }
