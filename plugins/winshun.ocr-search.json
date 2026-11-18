@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.21",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.21/winshun.ocr-search-1.0.21.wsplugin",
-  "sha256": "4f6690ce86306e3311a1b741e171e29728ece1b15efd431698e0fda653d946aa",
-  "size": 1329977,
+  "version": "1.0.22",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.22/winshun.ocr-search-1.0.22.wsplugin",
+  "sha256": "bd3841a93d080bc4c7a81b5cbda2e5e460f0b98fca01b38c31cd775359b21f00",
+  "size": 1331144,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.34.2",
-  "releaseDate": "2026-11-17T08:43:56Z",
+  "minWinShun": "0.36.0",
+  "releaseDate": "2026-11-18T04:09:57Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "较早的 Windows 10 上深色标题栏生效；需要主程序 0.34.2。权限不变。",
-    "en": "Dark title bars work on older Windows 10; requires WinShun 0.34.2. Permissions unchanged."
+    "zh": "跟随设置 › 外观 › 悬停提示的开关；读 WebP 等图片的代码与主程序同步更新。需要主程序 0.36.0。权限不变。",
+    "en": "Follows Settings › Appearance › Hover tips; the picture-reading code is updated with WinShun's. Requires WinShun 0.36.0. Permissions unchanged."
   }
 }

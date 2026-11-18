@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.23",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.23/winshun.capture-1.1.23.wsplugin",
-  "sha256": "94f81ab1b40c80f341ded6dc1d2de7d572f5791d23319b2d16616e37cb93f7ae",
-  "size": 2906178,
+  "version": "1.1.24",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.24/winshun.capture-1.1.24.wsplugin",
+  "sha256": "fb55d02a4d9b90fbac7f4fe86fa854c70e672b7867998193f33a24c84c882923",
+  "size": 2906568,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-18T02:56:30Z",
+  "releaseDate": "2026-11-18T04:09:52Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "长截图可以横着截：左右滚动的内容（宽表格、时间轴）拼成一张宽图，面板上的“竖向/横向”按钮切换，开始时也会自己判断方向。权限不变。",
-    "en": "Sideways long screenshots: content that scrolls left and right (wide tables, timelines) comes out as one wide picture; the panel's Vertical/Horizontal button turns it, and it picks the direction by itself at the start. Permissions unchanged."
+    "zh": "设置 › 外观 › 悬停提示关掉后，截图与录屏里的图标也不再弹说明；带“i”的说明照常显示。权限不变。",
+    "en": "With Settings › Appearance › Hover tips off, the screenshot and recording windows stop popping up icon explanations too; the \"i\" notes still show. Permissions unchanged."
   }
 }
