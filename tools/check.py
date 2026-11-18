@@ -239,12 +239,21 @@ def read_permissions(v, e: Errors) -> list[str]:
     return sorted(found, key=PERMISSIONS.index)
 
 
+# Win顺 compiles triggers with QRegularExpression (PCRE2), which takes an inline
+# flag group such as (?i) anywhere, applying to the rest of its group; Python's
+# re takes one only at the start. Flags change what matches, not whether the
+# pattern is valid, so a second try leaves such groups out.
+INLINE_FLAGS_RE = re.compile(r"(?<!\\)\(\?[imsxn-]+\)")
+
+
 def regex_ok(pattern: str) -> bool:
-    try:
-        re.compile(pattern)
-        return True
-    except re.error:
-        return False
+    for candidate in (pattern, INLINE_FLAGS_RE.sub("", pattern)):
+        try:
+            re.compile(candidate)
+            return True
+        except re.error:
+            pass
+    return False
 
 
 def read_trigger(v, where: str, e: Errors) -> None:
