@@ -38,6 +38,7 @@ OFFICIAL_NATIVE = {
     "winshun.capture": ("WinShunCapture.exe", ("WinShunCaptureApp.dll",), "capture-plugin"),
     "winshun.cloudbackup": ("WinShunCloudBackup.exe", (), "cloudbackup-plugin"),
     "winshun.explorer-tabs": ("WinShunExplorerTabs.exe", (), "explorer-tabs-plugin"),
+    "winshun.gestures": ("WinShunGestures.exe", (), "gestures-plugin"),
     "winshun.localsend": ("WinShunLocalSend.exe", (), "localsend-plugin"),
     "winshun.ocr-search": ("WinShunOcrSearch.exe", ("WinShunOcrSearchApp.dll",), "ocr-search-plugin"),
     "winshun.semantic": ("WinShunSemantic.exe", (), "semantic-plugin"),

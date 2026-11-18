@@ -1,0 +1,40 @@
+{
+  "id": "winshun.gestures",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v1.0.0/winshun.gestures-1.0.0.wsplugin",
+  "sha256": "19185a65db617cd11c303abe2ccc6ccdab1e374039418207eb12e093cb28bb73",
+  "size": 218345,
+  "name": {
+    "zh": "鼠标手势",
+    "en": "Mouse gestures"
+  },
+  "description": {
+    "zh": "按住右键画一下：后退、前进、回到顶部、关闭窗口、打开 Win顺 搜索框……每个手势都能改成按键或打开程序。管理员身份运行的窗口里用不了",
+    "en": "Hold the right button and draw: back, forward, to the top, close the window, open WinShun's search… Each gesture can press keys or open a program instead. Not in windows run as administrator"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "手势",
+    "gestures"
+  ],
+  "permissions": [
+    "processes",
+    "ui",
+    "winshun:open"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "WinShunGestures.exe"
+  },
+  "minWinShun": "0.33.0",
+  "releaseDate": "2026-11-18T02:56:41Z",
+  "dateAdded": "2026-11-18T02:57:12Z",
+  "notes": {
+    "zh": "新插件：按住右键画一下。默认向左后退、向右前进、向上到顶、向下到底，右下关窗口、左下最小化，上下叫出 Win顺 的搜索框；每个手势都能改成别的动作、按键或打开某个东西，还能加最多 6 笔的手势。单按右键菜单照常出来，全屏程序、列出的程序和管理员窗口里不起作用。",
+    "en": "New plugin: hold the right button and draw. By default left goes back, right forward, up to the top, down to the bottom, down-right closes the window, down-left minimizes and up-down opens WinShun's search box; each can do another action, send keys or open something, and gestures of up to 6 strokes can be added. A plain right click still brings its menu; full-screen programs, listed programs and administrator windows are left alone."
+  }
+}

@@ -2,17 +2,17 @@
   "id": "winshun.bookmarks",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.1.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.1.0/winshun.bookmarks-2.1.0.wsplugin",
-  "sha256": "50d527ca6155e7d1882f381dce41aa4aebdc1a776e56a26581688213e1f98654",
-  "size": 245155,
+  "version": "2.2.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.2.0/winshun.bookmarks-2.2.0.wsplugin",
+  "sha256": "c09b693287943072e21d70848e7414274df99eae59b2fa03a3aa2c07fa1cfa62",
+  "size": 259109,
   "name": {
     "zh": "浏览器书签",
     "en": "Browser bookmarks"
   },
   "description": {
-    "zh": "bm 词：搜 Chrome 和 Edge 的书签（含账户书签），支持拼音，Enter 打开；在设置里打开后，bh 词 搜浏览历史",
-    "en": "bm words: searches Chrome and Edge bookmarks, account ones too, by pinyin as well; Enter opens. Once turned on in the settings, bh words searches the browsing history"
+    "zh": "bm 词：搜 Chrome、Edge、Firefox 的书签（含账户书签），支持拼音，Enter 打开；在设置里打开后，bh 词 搜浏览历史",
+    "en": "bm words: searches Chrome, Edge and Firefox bookmarks, account ones too, by pinyin as well; Enter opens. Once turned on in the settings, bh words searches the browsing history"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -31,10 +31,10 @@
     "program": "WinShunBookmarks.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-15T01:31:17Z",
+  "releaseDate": "2026-11-18T02:56:36Z",
   "dateAdded": "2026-10-23T09:12:34Z",
   "notes": {
-    "zh": "多了 `bh`（或 `ls`）搜浏览历史（LingCore/WinShun#160）：Chrome、Edge 等打开过的网页，支持拼音。默认关着，在插件设置里打开“搜索浏览历史”。只在这台电脑上读浏览器自己的历史文件，仍在原来的“读取文件”权限之内，更新时不会再问权限。设置 → 插件 → 插件库中安装或更新。最低主程序版本为 0.17.0。",
-    "en": "`bh` (or `ls`) searches the browsing history (LingCore/WinShun#160): pages opened in Chrome, Edge and the like, pinyin too. Off until \"Search the browsing history\" is turned on in the plugin's settings. It reads the browser's own history file on this computer, under the \"read files\" permission it already has, so the update asks for nothing new. Install or update through Settings → Plugins → Library. Requires WinShun 0.17.0."
+    "zh": "能搜 Firefox 的书签和历史记录：每个 Firefox 配置文件（安装版和应用商店版）都读，书签按 Firefox 里的文件夹排列；LibreWolf、Zen 之类在设置里指定 places.sqlite 即可。新增读取 Firefox 书签文件的权限，更新时会请你确认。",
+    "en": "Firefox bookmarks and history: every Firefox profile (installer and Store builds) is read, bookmarks under Firefox's own folders; LibreWolf, Zen and the like work by naming their places.sqlite in the settings. It now asks to read Firefox's bookmark files, so the update asks you to confirm."
   }
 }
