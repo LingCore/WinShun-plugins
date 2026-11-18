@@ -3,17 +3,17 @@
   "repo": "ra9fael/winshun-tio",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.4",
-  "url": "https://github.com/ra9fael/winshun-tio/releases/download/v0.1.4/ra9fael.tio-0.1.4.wsplugin",
-  "sha256": "2096bad61c929aa79cde12d6a9fbcc9c987590dc6f53c4e3665a857a2d00d471",
-  "size": 9413347,
+  "version": "0.2.0",
+  "url": "https://github.com/ra9fael/winshun-tio/releases/download/v0.2.0/ra9fael.tio-0.2.0.wsplugin",
+  "sha256": "58be618b12de0557095cb24b285aca19a750f530b799a3c524f4462db306da30",
+  "size": 9463416,
   "name": {
     "zh": "tio 串口终端",
     "en": "tio serial terminal"
   },
   "description": {
-    "zh": "用嵌入包的 tio 打开串口终端：在搜索框里就地设置端口、波特率、数据位、校验、停止位和流控，Enter 启动、再 Enter 停止；也可开独立窗口按会话配置。独立窗口可确认开启双向远程串口共享，局域网客户端可读写串口。",
-    "en": "Open a serial terminal with the bundled tio: set the port, baud rate, data bits, parity, stop bits and flow control in the search box, Enter starts and Enter again stops, or configure per session in a standalone window. The standalone window can explicitly confirm bidirectional remote serial sharing; LAN clients can read and write to the serial device."
+    "zh": "用嵌入包的 tio 打开串口终端：搜索框里选端口、按 Enter 启动、再 Enter 停止，波特率有快捷项；数据位、校验、停止位、流控、远程共享与默认值在独立窗口里。独立窗口可确认开启双向远程串口共享，局域网客户端可读写串口。",
+    "en": "Open a serial terminal with the bundled tio: pick the port in the search box, Enter starts and Enter again stops, with baud-rate shortcuts. Data bits, parity, stop bits, flow control, remote sharing and defaults live in the standalone window, which can explicitly confirm bidirectional remote serial sharing; LAN clients can read and write to the serial device."
   },
   "author": "ra9fael",
   "license": "MIT",
@@ -33,11 +33,11 @@
     "mode": "resident",
     "program": "tio.exe"
   },
-  "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-13T23:33:08Z",
+  "minWinShun": "0.30.0",
+  "releaseDate": "2026-11-18T01:49:10Z",
   "dateAdded": "2026-11-13T22:20:20Z",
   "notes": {
-    "zh": "### 修复（打包）\n\n- **开发包装器按 BOM UTF-8 保存**：`tools/remote_share_gui.ps1` 原来不带 BOM，插件库的检查直接拒绝这个包——Windows PowerShell 5.1 读无 BOM 的 UTF-8 中文会乱码。文件内容不变，只补 BOM；独立窗口、`-Check` 自检照常。",
-    "en": "### 修复（打包）\n\n- **开发包装器按 BOM UTF-8 保存**：`tools/remote_share_gui.ps1` 原来不带 BOM，插件库的检查直接拒绝这个包——Windows PowerShell 5.1 读无 BOM 的 UTF-8 中文会乱码。文件内容不变，只补 BOM；独立窗口、`-Check` 自检照常。"
+    "zh": "### 配置所有权：宿主设置页与插件各管一半\n\n- **端口、波特率、后端偏好移交给 Win顺 的设置页**（`minWinShun` 升到 0.30.0，用 `winshun/settings/update` 回写）。搜索框里改端口或波特率、窗口里改后端偏好，都会写回设置页：插件卡片与插件显示同一个值，重启后保留。这三项不再存进 `tio.json`。\n- 宿主改设置页立即生效，即使 `tio.json` 里还有旧值——迁移一次性把文件里的旧公共项移交给宿主，之后以宿主为准。\n- **后端偏好与解析结果分开**：`auto` 保持 `auto`，不再被保存动作固化成 `wt`；选了这台机器没有的后端，启动按 auto 顺序回退，偏好不变。诊断里显示解析结果与偏好。\n- **高级项归插件**：数据位、校验、停止位、流控、远程共享只存 `tio.json`；旧清单遗留的这些键在首次加载时迁入文件。\n- 搜索框刻意精简：每个串口一条启动行（副标题只带 `/dev/ttyS` 映射）、波特率快捷项、一行「打开独立窗口」（同时是配置摘要）。端口行、后端列表、控制线说明与诊断视图移出搜索框——完整参数在窗口里，控制线说明在窗口「端口与参数」卡，诊断报告在窗口「诊断」卡与 `details()`。\n- 独立窗口的波特率接受任意正整数（下拉是快捷项，不是限制）；共享端口限定 1024–65535。\n- **保存只改默认值**：正在运行的会话保持启动参数，默认值变更不启动、停止或重配置任何会话；干净的表单跟随外部更新，脏表单只提交用户改过的键。\n- manifest 声明 `settingsWindow: true`：Win顺 设置页的「设置」按钮直接打开独立窗口；`showSettings()` 不碰串口。\n\n### 测试\n\n- 纯核心断言 292 项（偏好解析、`FormEdits` 键集、`sameForm`、主列表形状）。\n- 窗口模型断言 125 项（自定义波特率接受/拒绝、auto 偏好持久化、按键提交的保存）。\n- 协议往返 52 项：`winshun/settings/update` 的移交、宿主值覆盖本地旧值、迁移只补宿主缺的键。",
+    "en": "### 配置所有权：宿主设置页与插件各管一半\n\n- **端口、波特率、后端偏好移交给 Win顺 的设置页**（`minWinShun` 升到 0.30.0，用 `winshun/settings/update` 回写）。搜索框里改端口或波特率、窗口里改后端偏好，都会写回设置页：插件卡片与插件显示同一个值，重启后保留。这三项不再存进 `tio.json`。\n- 宿主改设置页立即生效，即使 `tio.json` 里还有旧值——迁移一次性把文件里的旧公共项移交给宿主，之后以宿主为准。\n- **后端偏好与解析结果分开**：`auto` 保持 `auto`，不再被保存动作固化成 `wt`；选了这台机器没有的后端，启动按 auto 顺序回退，偏好不变。诊断里显示解析结果与偏好。\n- **高级项归插件**：数据位、校验、停止位、流控、远程共享只存 `tio.json`；旧清单遗留的这些键在首次加载时迁入文件。\n- 搜索框刻意精简：每个串口一条启动行（副标题只带 `/dev/ttyS` 映射）、波特率快捷项、一行「打开独立窗口」（同时是配置摘要）。端口行、后端列表、控制线说明与诊断视图移出搜索框——完整参数在窗口里，控制线说明在窗口「端口与参数」卡，诊断报告在窗口「诊断」卡与 `details()`。\n- 独立窗口的波特率接受任意正整数（下拉是快捷项，不是限制）；共享端口限定 1024–65535。\n- **保存只改默认值**：正在运行的会话保持启动参数，默认值变更不启动、停止或重配置任何会话；干净的表单跟随外部更新，脏表单只提交用户改过的键。\n- manifest 声明 `settingsWindow: true`：Win顺 设置页的「设置」按钮直接打开独立窗口；`showSettings()` 不碰串口。\n\n### 测试\n\n- 纯核心断言 292 项（偏好解析、`FormEdits` 键集、`sameForm`、主列表形状）。\n- 窗口模型断言 125 项（自定义波特率接受/拒绝、auto 偏好持久化、按键提交的保存）。\n- 协议往返 52 项：`winshun/settings/update` 的移交、宿主值覆盖本地旧值、迁移只补宿主缺的键。"
   }
 }
