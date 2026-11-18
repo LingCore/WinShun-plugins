@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.24",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.24/winshun.capture-1.1.24.wsplugin",
-  "sha256": "fb55d02a4d9b90fbac7f4fe86fa854c70e672b7867998193f33a24c84c882923",
-  "size": 2906568,
+  "version": "1.1.25",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.25/winshun.capture-1.1.25.wsplugin",
+  "sha256": "e7f7092809b9158c9e2bf59d7306c50fd4438ccf7183fd3d3a1ea319d4cab2d9",
+  "size": 2916552,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-18T04:09:52Z",
+  "releaseDate": "2026-11-18T10:11:56Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "设置 › 外观 › 悬停提示关掉后，截图与录屏里的图标也不再弹说明；带“i”的说明照常显示。权限不变。",
-    "en": "With Settings › Appearance › Hover tips off, the screenshot and recording windows stop popping up icon explanations too; the \"i\" notes still show. Permissions unchanged."
+    "zh": "识别出的字排成表格时，文字窗口里多一个「复制为表格」，粘进 Excel、WPS 一格一格排好；长截图时盖在选区上的预览不再被截进去，还能拖开（#378）；横向长截图有了英文界面。权限不变。",
+    "en": "When recognized words stand as a table, Copy as a table pastes them cell by cell into Excel or WPS; the long screenshot's preview over the region is no longer captured and can be dragged aside (#378); the sideways long screenshot has its English texts. Permissions unchanged."
   }
 }

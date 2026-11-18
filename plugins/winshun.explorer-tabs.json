@@ -2,17 +2,17 @@
   "id": "winshun.explorer-tabs",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.4",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.4/winshun.explorer-tabs-1.1.4.wsplugin",
-  "sha256": "2c049cc69c4d98cef104ecff4a9a985b2b188983f2eab8dd4e0a1397768c6e9e",
-  "size": 281365,
+  "version": "1.1.5",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.5/winshun.explorer-tabs-1.1.5.wsplugin",
+  "sha256": "d5d057ae34f30795b94f4c858be44351984bd517e0d18af2526ee5e3be22befb",
+  "size": 284287,
   "name": {
-    "zh": "资源管理器标签页",
-    "en": "Explorer tabs"
+    "en": "Explorer tabs",
+    "zh": "资源管理器标签页"
   },
   "description": {
-    "zh": "新开的文件夹窗口并到已经开着的资源管理器里，成为一个标签页。需要 Windows 11 22H2 或更新",
-    "en": "A folder that opens in a new File Explorer window becomes a tab of the window already open. Needs Windows 11 22H2 or newer"
+    "en": "A folder that opens in a new File Explorer window becomes a tab of the window already open. Needs Windows 11 22H2 or newer",
+    "zh": "新开的文件夹窗口并到已经开着的资源管理器里，成为一个标签页。需要 Windows 11 22H2 或更新"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -29,11 +29,11 @@
     "mode": "resident",
     "program": "WinShunExplorerTabs.exe"
   },
-  "minWinShun": "0.32.0",
-  "releaseDate": "2026-11-17T03:46:33Z",
+  "minWinShun": "0.37.0",
+  "releaseDate": "2026-11-18T10:12:07Z",
   "dateAdded": "2026-11-04T03:02:24Z",
   "notes": {
-    "zh": "有的电脑上新开的文件夹窗口一直不并成标签页，日志里每个已开着的窗口都被系统报成“隐藏”（invisible），连看得见的也是。这一版只多记日志：对每个这样的窗口写明它的实际状态、读取时有没有出错、属于哪个程序，以及资源管理器自己认为它是显示还是隐藏，好分清是真被藏起来了还是读不到（#331）。合并的规则没有变。需要主程序 0.32.0。权限不变。",
-    "en": "On some PCs new folder windows never become tabs: the log has every open window reported \"invisible\", visible ones included. This version only logs more: for each such window its actual state, whether reading it failed, its program, and whether Explorer itself says it is shown, to tell a window really hidden from one that cannot be read (#331). The merging rules are unchanged. Requires WinShun 0.32.0. Permissions unchanged."
+    "zh": "读不到资源管理器窗口时，在日志里记下加载进本插件的外来 DLL（安全软件、界面修改工具等），便于找出原因（#331）。需要 Win顺 0.37.0。权限不变。",
+    "en": "When File Explorer's windows cannot be read, the DLLs from elsewhere loaded into the plugin (security software, shell tweakers) are logged, to find the cause (#331). Needs WinShun 0.37.0. Permissions unchanged."
   }
 }

@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.22",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.22/winshun.ocr-search-1.0.22.wsplugin",
-  "sha256": "bd3841a93d080bc4c7a81b5cbda2e5e460f0b98fca01b38c31cd775359b21f00",
-  "size": 1331144,
+  "version": "1.0.23",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.23/winshun.ocr-search-1.0.23.wsplugin",
+  "sha256": "d73bfd049f581928ef4a1e5b70f72108b25ec8f22ca45bc3894464ec913b2e36",
+  "size": 1331194,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.36.0",
-  "releaseDate": "2026-11-18T04:09:57Z",
+  "minWinShun": "0.37.0",
+  "releaseDate": "2026-11-18T10:12:01Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "跟随设置 › 外观 › 悬停提示的开关；读 WebP 等图片的代码与主程序同步更新。需要主程序 0.36.0。权限不变。",
-    "en": "Follows Settings › Appearance › Hover tips; the picture-reading code is updated with WinShun's. Requires WinShun 0.36.0. Permissions unchanged."
+    "zh": "随 Win顺 0.37.0 重新构建：和截图共用的文字识别代码为「复制为表格」做了整理，搜索结果不变。需要 Win顺 0.37.0。权限不变。",
+    "en": "Rebuilt for WinShun 0.37.0: the text recognition code shared with screenshots was reorganized for Copy as a table; search results are unchanged. Needs WinShun 0.37.0. Permissions unchanged."
   }
 }

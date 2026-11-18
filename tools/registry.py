@@ -37,6 +37,7 @@ OFFICIAL_NATIVE = {
     "winshun.break": ("WinShunBreak.exe", (), "break-plugin"),
     "winshun.capture": ("WinShunCapture.exe", ("WinShunCaptureApp.dll",), "capture-plugin"),
     "winshun.cloudbackup": ("WinShunCloudBackup.exe", (), "cloudbackup-plugin"),
+    "winshun.devtools": ("WinShunDevTools.exe", ("WinShunDevToolsApp.dll",), "devtools-plugin"),
     "winshun.explorer-tabs": ("WinShunExplorerTabs.exe", (), "explorer-tabs-plugin"),
     "winshun.gestures": ("WinShunGestures.exe", (), "gestures-plugin"),
     "winshun.localsend": ("WinShunLocalSend.exe", (), "localsend-plugin"),

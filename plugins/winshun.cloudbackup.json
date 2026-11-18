@@ -2,10 +2,10 @@
   "id": "winshun.cloudbackup",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.cloudbackup-v1.0.0/winshun.cloudbackup-1.0.0.wsplugin",
-  "sha256": "183edb6b1a5d4003af32563d0a040ceb15ba9a5b6d999ee2814936825d696fb2",
-  "size": 257136,
+  "version": "1.0.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.cloudbackup-v1.0.1/winshun.cloudbackup-1.0.1.wsplugin",
+  "sha256": "2dfef7474047555950b6a43961fe5ca7700b7547d24f7b8e3b939848179d2e5c",
+  "size": 257299,
   "name": {
     "zh": "云备份",
     "en": "Cloud Backup"
@@ -31,10 +31,10 @@
     "program": "WinShunCloudBackup.exe"
   },
   "minWinShun": "0.26.0",
-  "releaseDate": "2026-11-13T01:32:35Z",
+  "releaseDate": "2026-11-18T10:12:18Z",
   "dateAdded": "2026-11-13T01:34:30Z",
   "notes": {
-    "zh": "新插件：把 Win顺 的设置备份自动传到 WebDAV（坚果云、Nextcloud、NAS）或 GitHub 私有仓库。填好插件卡片上的地址和账号，设置变了会自动上传，每处保留最近 10 份；换电脑时输入 `cloud`，在一份备份上按 Enter 再确认一次就恢复。密码存在 Windows 凭据管理器里，不进备份；公开仓库不会上传。权限：设置备份（winshun:backup）、网络、通知。最低主程序版本为 0.26.0。",
-    "en": "A new plugin: keeps WinShun's settings backup on a WebDAV server (Nextcloud, a NAS, 坚果云) or in a private GitHub repository. Fill in its card; changed settings are uploaded by themselves, the last 10 kept at each place. On another PC type `cloud` and press Enter on a backup, then once more, to restore it. Passwords stay in Windows Credential Manager; nothing is uploaded to a public repository. Permissions: the settings backup (winshun:backup), network, notifications. Requires WinShun 0.26.0."
+    "zh": "说明里的设置位置换成 Win顺 0.37.0 的新分类名称。权限不变。",
+    "en": "The settings places in its README follow WinShun 0.37.0's new categories. Permissions unchanged."
   }
 }
