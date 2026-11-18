@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.25",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.25/winshun.capture-1.1.25.wsplugin",
-  "sha256": "e7f7092809b9158c9e2bf59d7306c50fd4438ccf7183fd3d3a1ea319d4cab2d9",
-  "size": 2916552,
+  "version": "1.1.26",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.26/winshun.capture-1.1.26.wsplugin",
+  "sha256": "7567605b89f78e92d42a298c071fb67f90720dee275d7bd43af9f172e9bc2c40",
+  "size": 2922805,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-18T10:11:56Z",
+  "releaseDate": "2026-11-18T16:24:26Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "识别出的字排成表格时，文字窗口里多一个「复制为表格」，粘进 Excel、WPS 一格一格排好；长截图时盖在选区上的预览不再被截进去，还能拖开（#378）；横向长截图有了英文界面。权限不变。",
-    "en": "When recognized words stand as a table, Copy as a table pastes them cell by cell into Excel or WPS; the long screenshot's preview over the region is no longer captured and can be dragged aside (#378); the sideways long screenshot has its English texts. Permissions unchanged."
+    "zh": "文字也能贴到屏幕：复制一段文字后按贴图快捷键，或者在剪贴板历史里的文字上按 F3（Win顺 0.38.0），文字做成一张卡片贴在屏幕上，换行、缩进照原样，代码用等宽字体，在卡片上按 Ctrl+C 复制的是原来的文字（#388）。权限不变。",
+    "en": "Words can be pinned on the screen too: the pin shortcut after copying some text, or F3 on a text in the clipboard history (WinShun 0.38.0), pins it as a card with its line breaks and indents, code in a monospaced font; Ctrl+C on the card copies the words themselves (#388). Permissions unchanged."
   }
 }
