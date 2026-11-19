@@ -39,10 +39,10 @@ MANIFEST_VERSION = 1
 PERMISSIONS = [
     "files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network",
     "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read",
-    "notifications", "network:listen", "system:settings", "elevated", "winshun:backup",
+    "notifications", "network:listen", "system:settings", "elevated", "winshun:backup", "system:power",
 ]
 # 审核者要多看一眼的
-RISKY = {"elevated", "winshun:backup", "network", "network:listen", "system:settings", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
+RISKY = {"elevated", "winshun:backup", "network", "network:listen", "system:settings", "system:power", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
 
 ALLOWED_PROGRAMS = {"python", "pwsh", "powershell", "node"}  # 社区条目；官方原生包另按仓库、id 和文件名逐一检查
 FORBIDDEN_EXT = {".exe", ".dll", ".sys", ".com", ".scr", ".msi", ".bat", ".cmd", ".vbs", ".jar", ".pyc"}
@@ -450,6 +450,17 @@ def read_setting(v, index: int, e: Errors) -> None:
     read_text(v.get("hint"), f"{where}.hint", e)
     if "options" in v and not isinstance(v["options"], list):
         e.fail(f"{where}.options 要是数组")
+    # 多行文字（Win顺 0.41.0 起）和只由插件自己的设置窗口改的设置（0.41.0 起），照 Manifest.cpp
+    if "multiline" in v:
+        if not isinstance(v["multiline"], bool):
+            e.fail(f"{where}.multiline 要是 true 或 false")
+        elif v["multiline"] and kind != "text":
+            e.fail(f"{where}.multiline 只用于 text")
+    if "hidden" in v:
+        if not isinstance(v["hidden"], bool):
+            e.fail(f"{where}.hidden 要是 true 或 false")
+        elif v["hidden"] and kind not in ("text", "number", "bool", "choice"):
+            e.fail(f"{where}.hidden 只用于 text、number、bool、choice")
     if kind == "number":  # 范围、步长和单位（Win顺 0.33.0 起，LingCore/WinShun#359），照 Manifest.cpp
         def number(name: str):
             x = v.get(name)

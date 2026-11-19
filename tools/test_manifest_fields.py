@@ -95,3 +95,32 @@ class NumberRange(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def with_setting(**setting):
+    return manifest(settings=[{"key": "k", "title": "K", **setting}])
+
+
+class SettingFields(unittest.TestCase):
+    def test_multiline_is_for_text(self):
+        self.assertEqual(errors(with_setting(type="text", multiline=True)), [])
+        self.assertEqual(errors(with_setting(type="bool", multiline=False)), [])
+        self.assertEqual(errors(with_setting(type="bool", multiline=True)), ["settings[0].multiline 只用于 text"])
+        self.assertEqual(errors(with_setting(type="text", multiline=1)), ["settings[0].multiline 要是 true 或 false"])
+
+    def test_hidden_is_for_values_the_plugin_can_set(self):
+        for kind in ("text", "number", "bool", "choice"):
+            with self.subTest(type=kind):
+                self.assertEqual(errors(with_setting(type=kind, hidden=True)), [])
+        for kind in ("password", "folder", "file", "hotkey"):
+            with self.subTest(type=kind):
+                self.assertEqual(errors(with_setting(type=kind, hidden=True)), ["settings[0].hidden 只用于 text、number、bool、choice"])
+                self.assertEqual(errors(with_setting(type=kind, hidden=False)), [])
+        self.assertEqual(errors(with_setting(type="text", hidden="true")), ["settings[0].hidden 要是 true 或 false"])
+
+
+class Permissions(unittest.TestCase):
+    def test_system_power_is_known_and_last(self):
+        self.assertEqual(errors(manifest(permissions=["ui", "system:power"])), [])
+        self.assertEqual(check.PERMISSIONS[-1], "system:power")
+        self.assertIn("system:power", check.RISKY)
