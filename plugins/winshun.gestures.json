@@ -2,17 +2,17 @@
   "id": "winshun.gestures",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v1.0.0/winshun.gestures-1.0.0.wsplugin",
-  "sha256": "19185a65db617cd11c303abe2ccc6ccdab1e374039418207eb12e093cb28bb73",
-  "size": 218345,
+  "version": "2.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.0.0/winshun.gestures-2.0.0.wsplugin",
+  "sha256": "6260474af0d13fa0fc2d7bb56da54145c927df7525ed8bd7668801ec57c3d19d",
+  "size": 1404916,
   "name": {
     "zh": "鼠标手势",
     "en": "Mouse gestures"
   },
   "description": {
-    "zh": "按住右键画一下：后退、前进、回到顶部、关闭窗口、打开 Win顺 搜索框……每个手势都能改成按键或打开程序。管理员身份运行的窗口里用不了",
-    "en": "Hold the right button and draw: back, forward, to the top, close the window, open WinShun's search… Each gesture can press keys or open a program instead. Not in windows run as administrator"
+    "zh": "按住右键画一下：后退、关窗口、切标签页；选中文字后画一下：复制、搜索、翻译；画个圈、推到屏幕角落、在屏幕边上来回蹭、按住右键滚滚轮，都能设成按键、打开程序、输入文字或关机重启。可以只在某个程序里、某个角落里生效。管理员身份运行的窗口里用不了",
+    "en": "Hold the right button and draw: back, close the window, switch tabs. Select words, then draw: copy, search, translate. Circles, the screen's corners and edges, and the wheel with the right button held can press keys, open programs, type text, shut down or restart. A rule can hold in one program or one corner only. Not in windows run as administrator"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -23,18 +23,21 @@
   ],
   "permissions": [
     "processes",
+    "clipboard:write",
     "ui",
-    "winshun:open"
+    "winshun:open",
+    "system:power",
+    "selection:read"
   ],
   "runtime": {
     "mode": "resident",
     "program": "WinShunGestures.exe"
   },
-  "minWinShun": "0.33.0",
-  "releaseDate": "2026-11-18T02:56:41Z",
+  "minWinShun": "0.41.0",
+  "releaseDate": "2026-11-19T15:08:33Z",
   "dateAdded": "2026-11-18T02:57:12Z",
   "notes": {
-    "zh": "新插件：按住右键画一下。默认向左后退、向右前进、向上到顶、向下到底，右下关窗口、左下最小化，上下叫出 Win顺 的搜索框；每个手势都能改成别的动作、按键或打开某个东西，还能加最多 6 笔的手势。单按右键菜单照常出来，全屏程序、列出的程序和管理员窗口里不起作用。",
-    "en": "New plugin: hold the right button and draw. By default left goes back, right forward, up to the top, down to the bottom, down-right closes the window, down-left minimizes and up-down opens WinShun's search box; each can do another action, send keys or open something, and gestures of up to 6 strokes can be added. A plain right click still brings its menu; full-screen programs, listed programs and administrator windows are left alone."
+    "zh": "鼠标手势 2.0：选中文字后再画，向下复制、向上网页搜索、向右翻译（译文显示在气泡里，点一下复制），不经过剪贴板；浏览器、VS Code、微信等用 Chromium 做的程序和 Firefox 里不读选中的字，在那里还是平常的手势。还能画圈；同一个手势在屏幕不同角上画可以做不同的事；把鼠标推到屏幕角落停一下、在屏幕边上来回蹭、按住右键滚滚轮（默认切换标签页）也能设成动作；每个手势可以按程序换成别的动作或关掉。动作更多：标签页、窗口置顶、显示桌面、任务视图、切到上一个窗口、复制粘贴、媒体和音量、锁屏、关闭屏幕、睡眠、关机、重启、注销（关机、重启、注销、睡眠先倒数 5 秒，按 Esc 取消），还有按任意组合键、打开程序或网址、输入一段文字。插件卡片上点“设置”打开新的设置窗口，在画板上用右键画一下，再选它要做的事。1.0 里改过的手势会自动搬过去。需要 Win顺 0.41.0。新要三项权限：让 Win顺 帮它关机重启睡眠、让 Win顺 帮它读选中的文字、把译文放到剪贴板，更新时需要你确认。",
+    "en": "Mouse gestures 2.0: select some text and draw down to copy, up to search the web, right to translate (in a bubble; a click copies it), without touching the clipboard; browsers, VS Code, WeChat and other Chromium programs, and Firefox, are not read, so the plain gestures hold there. Circles; the same gesture can do something else in a corner of the screen; hot corners, rubbed screen edges and the wheel with the right button held (switches tabs by default); any gesture can be changed or turned off per program. More actions: tabs, keep on top, desktop, task view, last window, editing, media and volume, lock, screen off, sleep, shut down, restart and sign out (those four count down 5 seconds first; Esc cancels), any keys, opening a program or address, typing text. Settings on the plugin's card opens a new window: draw on its pad with the right button and pick what it does. Gestures changed in 1.0 are carried over. Needs WinShun 0.41.0. Asks for three more permissions, which the update asks you to confirm: WinShun shuts down, restarts or sleeps for it; WinShun reads the selected words for it; a translation can go to the clipboard."
   }
 }

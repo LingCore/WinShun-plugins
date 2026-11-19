@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.25",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.25/winshun.ocr-search-1.0.25.wsplugin",
-  "sha256": "13f8ea2fd9c228f0a89541c118117a761b2a2588bbdab972a94d7b766bff4cd2",
-  "size": 1348133,
+  "version": "1.0.26",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.26/winshun.ocr-search-1.0.26.wsplugin",
+  "sha256": "a77357537d63d0865a47295a27e65e34ec84792efde4d77c08ff8669560b3e56",
+  "size": 1348132,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.40.0",
-  "releaseDate": "2026-11-19T08:09:46Z",
+  "minWinShun": "0.41.0",
+  "releaseDate": "2026-11-19T15:09:13Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "图片文字搜索的窗口记住你拖出来的大小，下次打开、重启后都是这个大小，上次最大化的仍然最大化；双击窗口边框恢复默认大小。不想要可以在 Win顺 的 设置 › 外观 › 记住窗口大小 关掉。需要 Win顺 0.40.0。权限不变。",
-    "en": "The Image text search window keeps the size you leave it at, after a restart too, maximized if you left it so; a double click on its edge gives it the default size. Turn this off under WinShun's Settings › Appearance › Remember window sizes. Needs WinShun 0.40.0. Permissions unchanged."
+    "zh": "跟着 Win顺 0.41.0 的共用代码重新构建，用起来没有变化。需要 Win顺 0.41.0。权限不变。",
+    "en": "Rebuilt with WinShun 0.41.0's shared code; nothing changes in use. Needs WinShun 0.41.0. Permissions unchanged."
   }
 }
