@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.28",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.28/winshun.capture-1.1.28.wsplugin",
-  "sha256": "7139f260e6e7e0c1643dd6d178b0ba96d6bb7ef8ab679dc1c82f59cd6d7b26ed",
-  "size": 2941006,
+  "version": "1.1.29",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.29/winshun.capture-1.1.29.wsplugin",
+  "sha256": "84b99737992a2c1301f5755f454f8124fbccc0f8f3c690fe1778378b1f2bbcd0",
+  "size": 2941340,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-19T08:09:40Z",
+  "releaseDate": "2026-11-19T13:08:18Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "截图设置窗口记住你拖出来的大小，下次打开、重启后都是这个大小，上次最大化的仍然最大化；双击窗口边框恢复默认大小。不想要可以在 Win顺 的 设置 › 外观 › 记住窗口大小 关掉（Win顺 0.40.0 起有这个开关）。权限不变。",
-    "en": "The Screenshot settings window keeps the size you leave it at, after a restart too, maximized if you left it so; a double click on its edge gives it the default size. Turn this off under WinShun's Settings › Appearance › Remember window sizes (WinShun 0.40.0 and later). Permissions unchanged."
+    "zh": "修好了长截图之后屏幕上留下空框的问题：长截图结束后，“长图预览”原来的位置会留下一个只有边框和阴影的圆角空框，一直不消失。权限不变。",
+    "en": "Fixed an empty frame left on the screen after a long screenshot: where the long screenshot's preview had been, a rounded frame with only its edge and shadow stayed behind. Permissions unchanged."
   }
 }
