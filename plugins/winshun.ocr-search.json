@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.23",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.23/winshun.ocr-search-1.0.23.wsplugin",
-  "sha256": "d73bfd049f581928ef4a1e5b70f72108b25ec8f22ca45bc3894464ec913b2e36",
-  "size": 1331194,
+  "version": "1.0.24",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.24/winshun.ocr-search-1.0.24.wsplugin",
+  "sha256": "17f6b10490cf9dc6443f2e7bfe61464de4fa51f2c43a68e76b6aef9e00d7363a",
+  "size": 1342199,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.37.0",
-  "releaseDate": "2026-11-18T10:12:01Z",
+  "minWinShun": "0.39.0",
+  "releaseDate": "2026-11-19T04:37:02Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "随 Win顺 0.37.0 重新构建：和截图共用的文字识别代码为「复制为表格」做了整理，搜索结果不变。需要 Win顺 0.37.0。权限不变。",
-    "en": "Rebuilt for WinShun 0.37.0: the text recognition code shared with screenshots was reorganized for Copy as a table; search results are unchanged. Needs WinShun 0.37.0. Permissions unchanged."
+    "zh": "读很长很细的图片（三万多像素宽、几十像素高）时不再占几个 GB 内存、让程序退出，和普通图片占得差不多。需要 Win顺 0.39.0。权限不变。",
+    "en": "Reading a long thin picture (tens of thousands of pixels wide, a few dozen high) no longer takes several GB and ends the program; it takes about what any picture does. Needs WinShun 0.39.0. Permissions unchanged."
   }
 }
