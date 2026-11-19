@@ -39,10 +39,10 @@ MANIFEST_VERSION = 1
 PERMISSIONS = [
     "files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network",
     "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read",
-    "notifications", "network:listen", "system:settings", "elevated", "winshun:backup", "system:power",
+    "notifications", "network:listen", "system:settings", "elevated", "winshun:backup", "system:power", "selection:read",
 ]
 # 审核者要多看一眼的
-RISKY = {"elevated", "winshun:backup", "network", "network:listen", "system:settings", "system:power", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
+RISKY = {"elevated", "winshun:backup", "network", "network:listen", "system:settings", "system:power", "selection:read", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
 
 ALLOWED_PROGRAMS = {"python", "pwsh", "powershell", "node"}  # 社区条目；官方原生包另按仓库、id 和文件名逐一检查
 FORBIDDEN_EXT = {".exe", ".dll", ".sys", ".com", ".scr", ".msi", ".bat", ".cmd", ".vbs", ".jar", ".pyc"}

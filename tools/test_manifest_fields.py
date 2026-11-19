@@ -120,7 +120,12 @@ class SettingFields(unittest.TestCase):
 
 
 class Permissions(unittest.TestCase):
-    def test_system_power_is_known_and_last(self):
+    def test_system_power_is_known(self):
         self.assertEqual(errors(manifest(permissions=["ui", "system:power"])), [])
-        self.assertEqual(check.PERMISSIONS[-1], "system:power")
+        self.assertIn("system:power", check.PERMISSIONS)
         self.assertIn("system:power", check.RISKY)
+
+    def test_selection_read_is_known_and_last(self):
+        self.assertEqual(errors(manifest(permissions=["ui", "selection:read"])), [])
+        self.assertEqual(check.PERMISSIONS[-1], "selection:read")
+        self.assertIn("selection:read", check.RISKY)
