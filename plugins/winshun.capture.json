@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.27",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.27/winshun.capture-1.1.27.wsplugin",
-  "sha256": "35e685a820a9d3ee04c1699a0aff43d740ac0affe89d1875b405a995a3c05b19",
-  "size": 2934771,
+  "version": "1.1.28",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.28/winshun.capture-1.1.28.wsplugin",
+  "sha256": "7139f260e6e7e0c1643dd6d178b0ba96d6bb7ef8ab679dc1c82f59cd6d7b26ed",
+  "size": 2941006,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-19T04:36:55Z",
+  "releaseDate": "2026-11-19T08:09:40Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "很长很细的图片不再让程序退出：截图读字时，三万多像素宽、几十像素高这样的长条图原来要占几个 GB 内存，有的电脑上会直接退出；现在和普通截图占得差不多，在这种图里找二维码也不再出错。权限不变。",
-    "en": "Long thin pictures no longer end it: reading the words in a strip tens of thousands of pixels wide and a few dozen high took several GB, and some PCs quit; it now takes about what a screenshot does, and looking for a QR code in such a picture no longer fails. Permissions unchanged."
+    "zh": "截图设置窗口记住你拖出来的大小，下次打开、重启后都是这个大小，上次最大化的仍然最大化；双击窗口边框恢复默认大小。不想要可以在 Win顺 的 设置 › 外观 › 记住窗口大小 关掉（Win顺 0.40.0 起有这个开关）。权限不变。",
+    "en": "The Screenshot settings window keeps the size you leave it at, after a restart too, maximized if you left it so; a double click on its edge gives it the default size. Turn this off under WinShun's Settings › Appearance › Remember window sizes (WinShun 0.40.0 and later). Permissions unchanged."
   }
 }
