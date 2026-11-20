@@ -44,6 +44,7 @@ OFFICIAL_NATIVE = {
     "winshun.localsend": ("WinShunLocalSend.exe", (), "localsend-plugin"),
     "winshun.ocr-search": ("WinShunOcrSearch.exe", ("WinShunOcrSearchApp.dll",), "ocr-search-plugin"),
     "winshun.semantic": ("WinShunSemantic.exe", (), "semantic-plugin"),
+    "winshun.sync": ("WinShunSync.exe", (), "sync-plugin"),
     "winshun.translate": ("WinShunTranslate.exe", (), "translate-plugin"),
 }
 

@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.29",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.29/winshun.capture-1.1.29.wsplugin",
-  "sha256": "84b99737992a2c1301f5755f454f8124fbccc0f8f3c690fe1778378b1f2bbcd0",
-  "size": 2941340,
+  "version": "1.1.30",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.30/winshun.capture-1.1.30.wsplugin",
+  "sha256": "89d455edc6d7386e70403c9b02c69094fc80609d5673b6b6759e6a55ebd6d974",
+  "size": 2966958,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-19T13:08:18Z",
+  "releaseDate": "2026-11-20T07:24:33Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "修好了长截图之后屏幕上留下空框的问题：长截图结束后，“长图预览”原来的位置会留下一个只有边框和阴影的圆角空框，一直不消失。权限不变。",
-    "en": "Fixed an empty frame left on the screen after a long screenshot: where the long screenshot's preview had been, a rounded frame with only its edge and shadow stayed behind. Permissions unchanged."
+    "zh": "跨屏截图：选区可以从一块屏幕拖到另一块，滚轮滚过“整个屏幕”再滚一格就框住所有屏幕；截出来的图是每块屏幕自己的像素拼在一起，缩放不同也不糊（#409）。Windows 10 1809（LTSC 2019）上能录屏了，录屏出错时提示写明是哪一步失败。截图遮罩卡住时，诊断记录里多记下屏幕刷新和桌面合成是否也停了、显卡是否重置过（#325）。权限不变。",
+    "en": "Screenshots over several monitors: a selection can be drawn from one monitor onto another, and one wheel step past the whole screen outlines them all; the picture is each monitor's own pixels side by side, whatever its scaling (#409). Recording works on Windows 10 1809 (LTSC 2019), and recording errors name the step that failed. When the overlay stalls, the record now says whether the screen's refresh and the desktop's composition stopped too and whether the graphics were reset (#325). Permissions unchanged."
   }
 }
