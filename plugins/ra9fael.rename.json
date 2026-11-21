@@ -1,0 +1,43 @@
+{
+  "id": "ra9fael.rename",
+  "repo": "ra9fael/winshun-rename",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.5.2",
+  "url": "https://github.com/ra9fael/winshun-rename/releases/download/v0.5.2/ra9fael.rename-0.5.2.wsplugin",
+  "sha256": "177ebb2a43704697f5946754ff34f100b42ea8e33ab2a88e20b6d82d1b5fa05b",
+  "size": 3629738,
+  "name": {
+    "zh": "批量重命名",
+    "en": "Batch Rename"
+  },
+  "description": {
+    "zh": "批量重命名：按规则或文本方式预览并改名选中的项目；选中一个文件夹改的是这个文件夹本身。文件夹里的项目用“在此文件夹批量重命名”打开。单文件改名请用 Win顺 的 F2。",
+    "en": "Batch rename the selected items with rules or a text buffer; a selected folder is renamed itself. For a folder's contents, use Batch rename in this folder. Use WinShun F2 for a single file."
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-rename",
+  "keywords": [
+    "br",
+    "pl",
+    "rename",
+    "批量重命名"
+  ],
+  "permissions": [
+    "files:write",
+    "ui",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "rename.exe"
+  },
+  "minWinShun": "0.33.0",
+  "releaseDate": "2026-11-18T22:01:59Z",
+  "dateAdded": "2026-11-17T10:27:04Z",
+  "notes": {
+    "zh": "- 包内 README 跟上本版：安装链接指向当前 Release，源码一节写当前 tag，发布记录补上 0.5.1；代码与 0.5.1 相同。",
+    "en": "- 包内 README 跟上本版：安装链接指向当前 Release，源码一节写当前 tag，发布记录补上 0.5.1；代码与 0.5.1 相同。"
+  }
+}
