@@ -33,5 +33,9 @@
   },
   "minWinShun": "0.22.0",
   "releaseDate": "2026-11-08T00:56:08Z",
-  "dateAdded": "2026-11-08T00:48:43Z"
+  "dateAdded": "2026-11-08T00:48:43Z",
+  "notes": {
+    "zh": "- `tools/*.ps1` 存成带 BOM 的 UTF-8：插件库检查要求 PowerShell 脚本带\n  BOM，否则 Windows PowerShell 5.1 里中文会乱码。0.1.0 的包因此未被\n  收录，请用 0.1.1。",
+    "en": "- `tools/*.ps1` 存成带 BOM 的 UTF-8：插件库检查要求 PowerShell 脚本带\n  BOM，否则 Windows PowerShell 5.1 里中文会乱码。0.1.0 的包因此未被\n  收录，请用 0.1.1。"
+  }
 }

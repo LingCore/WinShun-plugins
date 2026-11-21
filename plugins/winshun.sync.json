@@ -1,0 +1,43 @@
+{
+  "id": "winshun.sync",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.sync-v1.0.0/winshun.sync-1.0.0.wsplugin",
+  "sha256": "53dbff654139258125e310fa3163f0a2d88c7fa9a4a6704310d10c7321c18877",
+  "size": 409207,
+  "name": {
+    "zh": "剪贴板同步",
+    "en": "Clipboard sync"
+  },
+  "description": {
+    "zh": "在自己的几台 Windows 电脑和 Mac（Mac顺）之间同步剪贴板：文字、图片、文件，端到端加密，不用账号",
+    "en": "Share the clipboard between your Windows PCs and Macs (Mac顺): text, pictures, files; end to end encrypted, no account"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "同步",
+    "sync"
+  ],
+  "permissions": [
+    "files:write",
+    "clipboard:read",
+    "clipboard:write",
+    "network",
+    "notifications",
+    "network:listen"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "WinShunSync.exe"
+  },
+  "minWinShun": "0.42.0",
+  "releaseDate": "2026-11-20T07:24:57Z",
+  "dateAdded": "2026-11-20T07:25:21Z",
+  "notes": {
+    "zh": "剪贴板同步（新插件）：在自己的几台 Windows 电脑和装了 Mac顺 的 Mac 之间同步剪贴板，这边复制，那边直接粘贴文字、图片、文件和文件夹。第一次在新的那台上打 `同步`，选“附近的「…」”请求加入，另一台显示同一串 6 位数字时同意就行；不在同一个网段时可以用邀请码。别的设备复制的文件先提示，按 Enter 接收并放进剪贴板，Ctrl+Enter 存到“下载”。端到端加密（X25519 + AES-256-GCM），不用账号，不经过任何服务器；密码管理器复制的内容不同步。需要 Win顺 0.42.0。权限：联网、在本机监听 TCP 37219 和 UDP 37220（让组里的设备连进来、找到附近的设备）、读写剪贴板、写文件（收到的文件）、通知。",
+    "en": "Clipboard sync (new plugin): copy on one of your Windows PCs or Macs running Mac顺, paste on another: text, pictures, files and folders. Pair once: on the new device, pick the other's \"… nearby\" row in `sync`, and agree on the other when both show the same six digits; an invite code works across networks. Files copied elsewhere are offered first: Enter receives them onto the clipboard, Ctrl+Enter into Downloads. End to end encrypted (X25519 + AES-256-GCM), no account, no server; password managers' copies are not synced. Needs WinShun 0.42.0. Permissions: network, listening on TCP 37219 and UDP 37220 on this PC (for the group's devices to connect and to find devices nearby), clipboard read and write, writing files (those received), notifications."
+  }
+}

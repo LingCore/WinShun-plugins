@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.17",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.17/winshun.capture-1.1.17.wsplugin",
-  "sha256": "7cc4ca53eb485834e146771407db83518021c50e489c947d72b6b8fb33e6f628",
-  "size": 2830415,
+  "version": "1.1.32",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.32/winshun.capture-1.1.32.wsplugin",
+  "sha256": "86efd6eb7c0eecfe5f3c98614be468d1b277a037976a7a70c15db4d26a82164f",
+  "size": 3011559,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,6 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-15T09:49:03Z",
-  "dateAdded": "2026-11-01T08:10:30Z"
+  "releaseDate": "2026-11-21T11:46:24Z",
+  "dateAdded": "2026-11-01T08:10:30Z",
+  "notes": {
+    "zh": "用 Win顺 0.44.0 的共用窗口代码重新编译：窗口重新创建后照样保持边框、阴影和深色标题栏，任务栏和 `Alt+Tab` 里显示应用自己的图标；列表滚动时滚动条会亮起来。权限不变。",
+    "en": "Rebuilt with WinShun 0.44.0's shared window code: windows keep their border, shadow and dark title bar when they are made anew, and show the app's own icon on the taskbar and in `Alt+Tab`; list scroll bars light up while scrolling. Permissions unchanged."
+  }
 }

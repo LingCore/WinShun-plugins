@@ -2,10 +2,10 @@
   "id": "winshun.explorer-tabs",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.2/winshun.explorer-tabs-1.1.2.wsplugin",
-  "sha256": "f5757a343d01558947e24386ffc454d4c1e1770fe3eedf16f2b1d855f8102809",
-  "size": 279937,
+  "version": "1.1.5",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.explorer-tabs-v1.1.5/winshun.explorer-tabs-1.1.5.wsplugin",
+  "sha256": "d5d057ae34f30795b94f4c858be44351984bd517e0d18af2526ee5e3be22befb",
+  "size": 284287,
   "name": {
     "en": "Explorer tabs",
     "zh": "资源管理器标签页"
@@ -29,7 +29,11 @@
     "mode": "resident",
     "program": "WinShunExplorerTabs.exe"
   },
-  "minWinShun": "0.31.0",
-  "releaseDate": "2026-11-15T07:32:51Z",
-  "dateAdded": "2026-11-04T03:02:24Z"
+  "minWinShun": "0.37.0",
+  "releaseDate": "2026-11-18T10:12:07Z",
+  "dateAdded": "2026-11-04T03:02:24Z",
+  "notes": {
+    "zh": "读不到资源管理器窗口时，在日志里记下加载进本插件的外来 DLL（安全软件、界面修改工具等），便于找出原因（#331）。需要 Win顺 0.37.0。权限不变。",
+    "en": "When File Explorer's windows cannot be read, the DLLs from elsewhere loaded into the plugin (security software, shell tweakers) are logged, to find the cause (#331). Needs WinShun 0.37.0. Permissions unchanged."
+  }
 }

@@ -3,10 +3,10 @@
   "repo": "ra9fael/winshun-volume",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.3",
-  "url": "https://github.com/ra9fael/winshun-volume/releases/download/v0.1.3/ra9fael.volume-0.1.3.wsplugin",
-  "sha256": "d03728aa3a2d0c1d9080ef06f497d886932cb3207c73b70d2bee0885937ee48e",
-  "size": 713732,
+  "version": "0.1.8",
+  "url": "https://github.com/ra9fael/winshun-volume/releases/download/v0.1.8/ra9fael.volume-0.1.8.wsplugin",
+  "sha256": "a47280451c6e78ca2247cad201c5a8a15cedef6b01eacdba08ebd1786ba5cfde",
+  "size": 819072,
   "name": {
     "zh": "任务栏音量",
     "en": "Taskbar volume"
@@ -30,6 +30,10 @@
     "program": "volume.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-10T17:59:33Z",
-  "dateAdded": "2026-11-07T09:20:07Z"
+  "releaseDate": "2026-11-16T14:42:55Z",
+  "dateAdded": "2026-11-07T09:20:07Z",
+  "notes": {
+    "zh": "- 右下角浮层贴住工作区底边和右边（0px），滚轮与消息两种模式统一为 340px\n  宽。系统托盘音量卡片最宽约 312px，现在被完整盖住，左侧不再露出白色\n  卡片；两种模式之间切换时面板也不再改变宽度。\n- 静音、无音频会话等状态提示改为两行：上方灰色显示设备名或应用名，下方\n  粗体显示状态；没有目标的错误仍单行居中。\n- 浮层可见期间每 30ms 重新申明置顶，系统气泡弹出时不会盖住面板。",
+    "en": "- 右下角浮层贴住工作区底边和右边（0px），滚轮与消息两种模式统一为 340px\n  宽。系统托盘音量卡片最宽约 312px，现在被完整盖住，左侧不再露出白色\n  卡片；两种模式之间切换时面板也不再改变宽度。\n- 静音、无音频会话等状态提示改为两行：上方灰色显示设备名或应用名，下方\n  粗体显示状态；没有目标的错误仍单行居中。\n- 浮层可见期间每 30ms 重新申明置顶，系统气泡弹出时不会盖住面板。"
+  }
 }

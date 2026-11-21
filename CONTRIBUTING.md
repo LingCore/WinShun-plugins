@@ -56,6 +56,7 @@
 
 - `id`、`repo`、`autoUpdate` 由你定。`autoUpdate: true`：以后你发的新版本，插件库自动跟上（见下面）。
 - 其余的字段（版本、网址、sha256、名字、权限……）都是工具从包里读出来的，不要手改，改了检查不会过。
+- `notes`（可以没有）是 Win顺 插件库里“更新内容”显示的文字，也是工具生成的，不要手写：取自这个版本的 Release 说明，按空行分段，每段按中文字多还是英文字母多归到中文或英文（`源码 · Source: …`、sha256 这样的行会去掉，每种语言最多 2000 个字符）。想让两种语言都有，Release 说明里先写一段中文，空一行，再写一段英文；只写了一种，两边显示同一段。`entry.py` 和自动更新会带上它。
 - `bundled`、`hosted` 只有维护者能改。
 
 ## 发新版本
@@ -127,6 +128,7 @@ wsbench --plugin 你的插件文件夹 --query "ip" --runs 5
 - 原生例外只接受上述仓库的真实 Release 下载地址，按 `tools/registry.py` 中的 id 对照表核对唯一入口 exe；capture 可额外包含 `WinShunCaptureApp.dll`，图片文字搜索可额外包含 `WinShunOcrSearchApp.dll`。其他 exe、DLL、脚本启动器和驱动仍拒绝。压缩包最多 64 MiB，解压最多 256 MiB，单文件最多 64 MiB；路径穿越、链接及重复条目检查仍适用。声明 `winshun.*` 或在 JSON 中填这个仓库名都不能获得例外。
 - 先离线检查实际包并跑 `python -I -m unittest discover -s tools -p test_native.py`；发布后用 `python tools/entry.py <包的网址> --no-bundled --no-auto-update` 联网重新核对附件、哈希、最低宿主版本和权限，再推送条目。不替换已发布同版本包；内容变动时必须升插件版本。Release 说明应记录主仓库源码提交及最低宿主版本。
 - `bundled`、`hosted` 这类只有维护者能改的字段，直接推到 main（`entry.py --bundled`、`--hosted`）。
+- 只刷新条目里的 `notes`（给老条目补，或者作者改了 Release 说明以后）：`python tools/notes.py [id ...]`，不下载包、不动别的字段；`--dry-run` 只看不写。发官方插件时，Release 说明写成“中文一段、空一行、英文一段”。
 - 每次生成 index.json 后，CI 会用 GitHub Environment `index-signing` 里的私钥（secret `INDEX_SIGNING_KEYS`）签名，把 `index.json.sig` 和 `index.json` 一起传到 `index` Release。私钥只在签名那一步能看到，仓库里只有公钥（`keys/*.pub`）。改 `tools/sign_index.py` 后跑 `python -I -m unittest discover -s tools -p test_sign.py`（要先 `pip install cryptography`）；换钥匙、丢钥匙、泄露怎么办，看 [keys/README.md](keys/README.md)。
 - 改了工具，想确认 index.json 没变：先下载已发布的（`gh release download index -p index.json`），再 `python tools/index.py --compare index.json`。没升版本的插件，每个字段都应该一模一样。
 

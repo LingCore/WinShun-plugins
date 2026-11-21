@@ -11,6 +11,8 @@
 不运行插件里的任何东西。
 
 已有的条目：id、repo、autoUpdate、bundled、hosted、dateAdded 照旧，别的都照包重新生成。
+条目里的 notes（Win顺 插件库里的“更新内容”）是 Release 的说明拆成的中文、英文各一份：不用手写，
+想要两种语言，就在 Release 说明里先写中文一段，空一行，再写英文一段。只刷新 notes 用 tools/notes.py。
 设了 GH_TOKEN 就用它调 GitHub 接口。只用标准库，Python 3.10+。
 """
 from __future__ import annotations
@@ -40,6 +42,7 @@ def make_entry(asset: check.Asset, old: dict | None, args: argparse.Namespace) -
         "bundled": kept("bundled", args.bundled, False),
         "hosted": kept("hosted", args.hosted, False),
         **asset.fields,
+        **({"notes": asset.notes} if asset.notes else {}),  # Release 的说明；没写就没有这个字段
         **review,
         "dateAdded": args.date_added or old.get("dateAdded") or registry.now(),
     })

@@ -2,10 +2,10 @@
   "id": "winshun.translate",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.2/winshun.translate-2.2.2.wsplugin",
-  "sha256": "f21f4c88d5bd1c5f61b68ba8531cb6e7aab11054de4e335aa7963ccff0b70230",
-  "size": 202560,
+  "version": "2.2.4",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.4/winshun.translate-2.2.4.wsplugin",
+  "sha256": "6f8efb96ac268bee18c86c74199e32c089d980bfadd6d0d64afcb03fb6667842",
+  "size": 202718,
   "name": {
     "zh": "翻译",
     "en": "Translate"
@@ -31,6 +31,10 @@
     "program": "WinShunTranslate.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-15T01:31:23Z",
-  "dateAdded": "2026-10-23T09:12:43Z"
+  "releaseDate": "2026-11-19T15:09:05Z",
+  "dateAdded": "2026-10-23T09:12:43Z",
+  "notes": {
+    "zh": "跟着 Win顺 0.41.0 的插件开发包重新构建，用起来没有变化。权限不变。",
+    "en": "Rebuilt with WinShun 0.41.0's plugin SDK; nothing changes in use. Permissions unchanged."
+  }
 }

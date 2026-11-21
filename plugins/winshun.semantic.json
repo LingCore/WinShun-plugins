@@ -2,10 +2,10 @@
   "id": "winshun.semantic",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.4",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.0.4/winshun.semantic-1.0.4.wsplugin",
-  "sha256": "571b921d51ae5871e666a919e18a273d0282ccdd7fb24fafb1c12d2919cd9da7",
-  "size": 294737,
+  "version": "1.0.5",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.0.5/winshun.semantic-1.0.5.wsplugin",
+  "sha256": "c2a407f2889b928366126efd880806359f3a3c03e51cf36ceb1e20c3adb57245",
+  "size": 294774,
   "name": {
     "zh": "按意思找",
     "en": "Search by meaning"
@@ -30,6 +30,10 @@
     "program": "WinShunSemantic.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-07T02:31:02Z",
-  "dateAdded": "2026-11-01T08:10:33Z"
+  "releaseDate": "2026-11-18T10:12:13Z",
+  "dateAdded": "2026-11-01T08:10:33Z",
+  "notes": {
+    "zh": "说明里的设置位置换成 Win顺 0.37.0 的新分类名称。权限不变。",
+    "en": "The settings places in its texts follow WinShun 0.37.0's new categories. Permissions unchanged."
+  }
 }

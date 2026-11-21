@@ -74,7 +74,9 @@ def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[st
         body += links + [""] + problems_lines(new) + ["", "作者修好以后再发一个更高的版本就行，插件库会自动跟上。"]
         return "检查没过，开 Issue", Finding("issue", pid, version, f"自动更新没通过检查：{pid} {version}", body), None
 
-    updated = registry.ordered({**entry, **new.fields, **({"review": "unreviewed-native"} if native else {})})  # id、repo、autoUpdate、bundled、hosted、dateAdded 照旧
+    kept = {k: v for k, v in entry.items() if k not in registry.OPTIONAL_KEYS}  # 说明跟着版本走：旧版本的不留到新版本上
+    updated = registry.ordered({**kept, **new.fields, **({"notes": new.notes} if new.notes else {}),
+                                **({"review": "unreviewed-native"} if native else {})})  # id、repo、autoUpdate、bundled、hosted、dateAdded 照旧
     old = check.check_asset(entry["url"], expected_id=pid, unreviewed_native=unreviewed)  # 现在收录的包，拿来比权限和文件
     # 插件由作者维护，插件库只做机器检查。Win顺 会问用户的就直接收录：未审核原生插件的
     # 每次安装和更新都要用户确认；多要的权限，更新前先问用户同意。Win顺 不会再问的
