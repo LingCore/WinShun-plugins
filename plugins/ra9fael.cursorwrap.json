@@ -3,10 +3,10 @@
   "repo": "ra9fael/winshun-cursorwrap",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.10.2",
-  "url": "https://github.com/ra9fael/winshun-cursorwrap/releases/download/v0.10.2/ra9fael.cursorwrap-0.10.2.wsplugin",
-  "sha256": "e97d869273b4c7ae5f2c84eec98b14fe8f3e392d7f3047bba8f70f1a9932ef68",
-  "size": 1725339,
+  "version": "1.2.0",
+  "url": "https://github.com/ra9fael/winshun-cursorwrap/releases/download/v1.2.0/ra9fael.cursorwrap-1.2.0.wsplugin",
+  "sha256": "9f5c335e985b075cf0b749828001bfb1f0225bf6945d77cda243193b808f588d",
+  "size": 3606039,
   "name": {
     "zh": "光标回绕",
     "en": "Cursor wrap"
@@ -31,6 +31,10 @@
     "program": "cursorwrap.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-15T07:27:03Z",
-  "dateAdded": "2026-11-15T07:28:32Z"
+  "releaseDate": "2026-11-19T12:54:14Z",
+  "dateAdded": "2026-11-15T07:28:32Z",
+  "notes": {
+    "zh": "- **连续在左右边缘穿越有概率不成功** 落点保护圈此前只在撞击门槛开启时按时间过期，\n  普通模式下会永远拦住压在落点边缘上的下一次推压；现在两种模式下都按 300ms 过期。\n  持续压边仍只回绕一次（推压 latch 不变）。\n- **远程桌面断开并解锁后，回绕边缘缩成内部矩形** 原 watcher 使用的\n  `HWND_MESSAGE` 窗口不会收到广播的 `WM_DISPLAYCHANGE`，且过渡期枚举可能是瞬态布局。\n  watcher 改为隐藏的顶层窗口，尝试响应显示、会话和电源变化通知；仅在连续两次非空枚举\n  一致时提交，超时则提交最新非空布局。Windows 是否发出相关通知仍取决于系统会话转换。\n- 数据窗口状态行现在显示前台窗口的进程与类名，便于定位\"前台应用限制了指针\"类问题。\n\n- **任务栏保护带宽**（`taskbarGuardPx`，默认 `0`）：水平回绕的到达点落在任务栏/appbar\n  区域时不回绕，数据窗口以 `taskbar` 单独计数；正值增加邻近保护距离，`-1` 关闭保护。\n  垂直回绕与落点钳入工作区的行为不变。查询命令 `taskbar <px>`，调参窗口新增对应设置行。",
+    "en": "- **连续在左右边缘穿越有概率不成功** 落点保护圈此前只在撞击门槛开启时按时间过期，\n  普通模式下会永远拦住压在落点边缘上的下一次推压；现在两种模式下都按 300ms 过期。\n  持续压边仍只回绕一次（推压 latch 不变）。\n- **远程桌面断开并解锁后，回绕边缘缩成内部矩形** 原 watcher 使用的\n  `HWND_MESSAGE` 窗口不会收到广播的 `WM_DISPLAYCHANGE`，且过渡期枚举可能是瞬态布局。\n  watcher 改为隐藏的顶层窗口，尝试响应显示、会话和电源变化通知；仅在连续两次非空枚举\n  一致时提交，超时则提交最新非空布局。Windows 是否发出相关通知仍取决于系统会话转换。\n- 数据窗口状态行现在显示前台窗口的进程与类名，便于定位\"前台应用限制了指针\"类问题。\n\n- **任务栏保护带宽**（`taskbarGuardPx`，默认 `0`）：水平回绕的到达点落在任务栏/appbar\n  区域时不回绕，数据窗口以 `taskbar` 单独计数；正值增加邻近保护距离，`-1` 关闭保护。\n  垂直回绕与落点钳入工作区的行为不变。查询命令 `taskbar <px>`，调参窗口新增对应设置行。"
+  }
 }
