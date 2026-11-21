@@ -25,5 +25,9 @@
   },
   "minWinShun": "0.25.0",
   "releaseDate": "2026-11-13T01:33:22Z",
-  "dateAdded": "2026-10-23T09:12:46Z"
+  "dateAdded": "2026-10-23T09:12:46Z",
+  "notes": {
+    "zh": "说明里补上：选中网站那一行按 Tab，关键词就补进搜索框（这是 Win顺 0.26.0 的功能）。插件本身没有变化。最低主程序版本为 0.25.0。",
+    "en": "Its guide now says that Tab on a site's row puts the keyword in the box (a feature of WinShun 0.26.0). The plugin itself is unchanged. Requires WinShun 0.25.0."
+  }
 }

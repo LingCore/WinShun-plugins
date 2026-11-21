@@ -3,10 +3,10 @@
   "repo": "iuuuuuuuu/winshun-screenshot-translate",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.4.10",
-  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.10/iuuuuuuuu.screenshot-translate-0.4.10.wsplugin",
-  "sha256": "07adc8d9c218536cd24cdecfc471379cb15936cdd21720ac73f491c66ae60b27",
-  "size": 7450207,
+  "version": "0.4.19",
+  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.19/iuuuuuuuu.screenshot-translate-0.4.19.wsplugin",
+  "sha256": "24f525636e5d954688cdd198460c660906f1ff925561b91f163145d3756daaa1",
+  "size": 7537957,
   "name": {
     "zh": "截图翻译",
     "en": "Screenshot Translate"
@@ -42,6 +42,10 @@
     "program": "ScreenshotTranslate.exe"
   },
   "minWinShun": "0.23.0",
-  "releaseDate": "2026-11-11T03:23:36Z",
-  "dateAdded": "2026-11-05T23:48:00Z"
+  "releaseDate": "2026-11-19T05:31:38Z",
+  "dateAdded": "2026-11-05T23:48:00Z",
+  "notes": {
+    "zh": "默认翻译渠道改为 ECDICT 并放在首位；已有的手动渠道选择不会覆盖。ECDICT 查不到普通句子时自动继续使用备用翻译渠道。包含长文分批和逐句翻译、OCR 识别优化、选词首读修复、冷却退避和渠道拖拽排序改进。安装包复用 WinShun 宿主 Qt 6.12，不捆绑 Qt 运行库。安装包不含 ECDICT 数据；提供单独词库附件和 SHA-256 校验文件。",
+    "en": "默认翻译渠道改为 ECDICT 并放在首位；已有的手动渠道选择不会覆盖。ECDICT 查不到普通句子时自动继续使用备用翻译渠道。包含长文分批和逐句翻译、OCR 识别优化、选词首读修复、冷却退避和渠道拖拽排序改进。安装包复用 WinShun 宿主 Qt 6.12，不捆绑 Qt 运行库。安装包不含 ECDICT 数据；提供单独词库附件和 SHA-256 校验文件。"
+  }
 }

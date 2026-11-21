@@ -2,10 +2,10 @@
   "id": "winshun.cloudbackup",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.cloudbackup-v1.0.0/winshun.cloudbackup-1.0.0.wsplugin",
-  "sha256": "183edb6b1a5d4003af32563d0a040ceb15ba9a5b6d999ee2814936825d696fb2",
-  "size": 257136,
+  "version": "1.0.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.cloudbackup-v1.0.1/winshun.cloudbackup-1.0.1.wsplugin",
+  "sha256": "2dfef7474047555950b6a43961fe5ca7700b7547d24f7b8e3b939848179d2e5c",
+  "size": 257299,
   "name": {
     "zh": "云备份",
     "en": "Cloud Backup"
@@ -31,6 +31,10 @@
     "program": "WinShunCloudBackup.exe"
   },
   "minWinShun": "0.26.0",
-  "releaseDate": "2026-11-13T01:32:35Z",
-  "dateAdded": "2026-11-13T01:34:30Z"
+  "releaseDate": "2026-11-18T10:12:18Z",
+  "dateAdded": "2026-11-13T01:34:30Z",
+  "notes": {
+    "zh": "说明里的设置位置换成 Win顺 0.37.0 的新分类名称。权限不变。",
+    "en": "The settings places in its README follow WinShun 0.37.0's new categories. Permissions unchanged."
+  }
 }

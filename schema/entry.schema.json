@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/LingCore/WinShun-plugins/main/schema/entry.schema.json",
   "title": "Win顺 插件库条目 plugins/<id>.json",
-  "description": "插件库里一个插件的条目。规则以 tools/check.py 为准；这份只用来在编辑器里提示。id、repo、autoUpdate 由作者定，bundled、hosted 只有维护者能改，其余字段由 tools/entry.py（或自动更新）从包里生成，不要手改。",
+  "description": "插件库里一个插件的条目。规则以 tools/check.py 为准；这份只用来在编辑器里提示。id、repo、autoUpdate 由作者定，bundled、hosted 只有维护者能改，其余字段由 tools/entry.py（或自动更新）从包和 Release 里生成，不要手改。",
   "type": "object",
   "required": ["id", "repo", "version", "url", "sha256", "size", "name", "description", "author", "license", "homepage",
                "keywords", "permissions", "runtime", "minWinShun", "releaseDate", "dateAdded"],
@@ -36,7 +36,14 @@
     },
     "minWinShun": {"description": "生成：要的最低 Win顺 版本（空的是不限）", "type": "string", "pattern": "^(\\d+(\\.\\d+)*([-+][0-9A-Za-z.-]+)?)?$"},
     "releaseDate": {"description": "生成：这个版本的 Release 发布的时间（UTC）", "$ref": "#/$defs/time"},
-    "dateAdded": {"description": "生成：第一次收录的时间（UTC），以后不变", "$ref": "#/$defs/time"}
+    "dateAdded": {"description": "生成：第一次收录的时间（UTC），以后不变", "$ref": "#/$defs/time"},
+    "notes": {
+      "description": "生成（可以没有）：这个版本的更新说明，从 url 指向的 Release 的说明拆成中文、英文各一份（Markdown，每份最多 2000 个字符）。作者不手写，在 Release 里写；用 tools/notes.py 刷新",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {"zh": {"type": "string", "minLength": 1, "maxLength": 2000}, "en": {"type": "string", "minLength": 1, "maxLength": 2000}}
+    }
   },
   "$defs": {
     "text": {
