@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.28",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.28/winshun.ocr-search-1.0.28.wsplugin",
-  "sha256": "0857b630ae9eea1d087c0829bd358b187be25cbc0e3f96906f19238a71901d66",
-  "size": 1354734,
+  "version": "1.0.29",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.29/winshun.ocr-search-1.0.29.wsplugin",
+  "sha256": "edf8d481d2cb4352fc468bdad760f427167f4322d34c6a6c7b419a45236de03b",
+  "size": 1363425,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.43.0",
-  "releaseDate": "2026-11-21T06:21:43Z",
+  "minWinShun": "0.44.0",
+  "releaseDate": "2026-11-21T11:46:37Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "图片文字搜索的窗口在 Windows 11 上恢复边框、阴影和圆角（#419）；用 Win顺 0.43.0 的共用代码重新编译。需要 Win顺 0.43.0。权限不变。",
-    "en": "The Picture text search window has its border, shadow and round corners back on Windows 11 (#419); rebuilt with WinShun 0.43.0's shared code. Needs WinShun 0.43.0. Permissions unchanged."
+    "zh": "用 Win顺 0.44.0 的共用窗口代码重新编译：窗口重新创建后照样保持边框和样式，任务栏里显示应用自己的图标；列表滚动时滚动条会亮起来。需要 Win顺 0.44.0。权限不变。",
+    "en": "Rebuilt with WinShun 0.44.0's shared window code: windows keep their frame and style when they are made anew and show the app's own icon on the taskbar; list scroll bars light up while scrolling. Needs WinShun 0.44.0. Permissions unchanged."
   }
 }

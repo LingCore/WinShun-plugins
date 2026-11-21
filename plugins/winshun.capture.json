@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.31",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.31/winshun.capture-1.1.31.wsplugin",
-  "sha256": "62c500b4f56bd96fe7591c4403143cf4df43225313880b429ef02a75b320d47a",
-  "size": 3002981,
+  "version": "1.1.32",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.32/winshun.capture-1.1.32.wsplugin",
+  "sha256": "86efd6eb7c0eecfe5f3c98614be468d1b277a037976a7a70c15db4d26a82164f",
+  "size": 3011559,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-21T06:21:34Z",
+  "releaseDate": "2026-11-21T11:46:24Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "贴图里的字可以直接选：贴图出来后在后台自动识别图里的字，鼠标移到字上按住拖动就选中，`Ctrl+C` 或 `T` 复制，`Ctrl+A` 全选；拖空白处或按住 `Alt` 拖仍是移动贴图（截图设置 › 贴图 › 贴图后自动识别文字，默认开）。贴图上按 `Shift+C` 或右键“复制全部文字”，复制图里所有的字（#423）。截图编辑时按 `Esc` 先放下工具、取消选中，再按才放弃标注或关闭；文字框在编辑时、文字工具开着时都能直接拖（#415）。文字识别气泡的标题、背景和关闭按钮和其他窗口一致。权限不变。",
-    "en": "Select the words in a pin: they are read in the background, so a drag over them selects and `Ctrl+C` or `T` copies, `Ctrl+A` selects all; dragging blank space or with `Alt` held still moves the pin (capture settings › Pin › 贴图后自动识别文字, on by default). `Shift+C` on a pin, or Copy all text in its menu, copies every word in it (#423). In the editor `Esc` puts a tool down and deselects first, and only then drops the annotations or closes; text boxes can be dragged while being edited and while the text tool is on (#415). The OCR bubble's heading, surface and close button match the other windows. Permissions unchanged."
+    "zh": "用 Win顺 0.44.0 的共用窗口代码重新编译：窗口重新创建后照样保持边框、阴影和深色标题栏，任务栏和 `Alt+Tab` 里显示应用自己的图标；列表滚动时滚动条会亮起来。权限不变。",
+    "en": "Rebuilt with WinShun 0.44.0's shared window code: windows keep their border, shadow and dark title bar when they are made anew, and show the app's own icon on the taskbar and in `Alt+Tab`; list scroll bars light up while scrolling. Permissions unchanged."
   }
 }
