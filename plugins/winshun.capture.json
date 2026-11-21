@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.22",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.22/winshun.capture-1.1.22.wsplugin",
-  "sha256": "d385b8123f34af213f3d538f27be1b4e7a8624e4dfb17a621defa0a5ac4fd1fe",
-  "size": 2898196,
+  "version": "1.1.32",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.32/winshun.capture-1.1.32.wsplugin",
+  "sha256": "86efd6eb7c0eecfe5f3c98614be468d1b277a037976a7a70c15db4d26a82164f",
+  "size": 3011559,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-17T08:43:51Z",
+  "releaseDate": "2026-11-21T11:46:24Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "较早的 Windows 10 上：1809 到 1909 录屏不再一开始就失败；截图直接用老办法截；2004 之前排除自己窗口不再变黑；深色标题栏生效。权限不变。",
-    "en": "On older Windows 10: recording no longer fails at once on 1809 to 1909; screenshots go straight to the older capture method; before 2004, leaving out WinShun's own windows no longer turns them black; dark title bars work. Permissions unchanged."
+    "zh": "用 Win顺 0.44.0 的共用窗口代码重新编译：窗口重新创建后照样保持边框、阴影和深色标题栏，任务栏和 `Alt+Tab` 里显示应用自己的图标；列表滚动时滚动条会亮起来。权限不变。",
+    "en": "Rebuilt with WinShun 0.44.0's shared window code: windows keep their border, shadow and dark title bar when they are made anew, and show the app's own icon on the taskbar and in `Alt+Tab`; list scroll bars light up while scrolling. Permissions unchanged."
   }
 }

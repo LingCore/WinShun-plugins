@@ -2,10 +2,10 @@
   "id": "winshun.translate",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.3",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.3/winshun.translate-2.2.3.wsplugin",
-  "sha256": "2aec88cbf54465e6454902fb6be6ceb583869fb80a5c38daee6b0a7d37953fa9",
-  "size": 202624,
+  "version": "2.2.4",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.4/winshun.translate-2.2.4.wsplugin",
+  "sha256": "6f8efb96ac268bee18c86c74199e32c089d980bfadd6d0d64afcb03fb6667842",
+  "size": 202718,
   "name": {
     "zh": "翻译",
     "en": "Translate"
@@ -31,10 +31,10 @@
     "program": "WinShunTranslate.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-16T09:18:14Z",
+  "releaseDate": "2026-11-19T15:09:05Z",
   "dateAdded": "2026-10-23T09:12:43Z",
   "notes": {
-    "zh": "在清单里声明自己能给截图翻译用（\"translate\": \"tr\"），Win顺 0.32.0 的截图翻译据此找到它；用法和权限不变。",
-    "en": "Declares itself a translator for screenshot translation (\"translate\": \"tr\"), which WinShun 0.32.0 looks for; usage and permissions unchanged."
+    "zh": "跟着 Win顺 0.41.0 的插件开发包重新构建，用起来没有变化。权限不变。",
+    "en": "Rebuilt with WinShun 0.41.0's plugin SDK; nothing changes in use. Permissions unchanged."
   }
 }

@@ -3,10 +3,10 @@
   "repo": "iuuuuuuuu/winshun-screenshot-translate",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.4.10",
-  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.10/iuuuuuuuu.screenshot-translate-0.4.10.wsplugin",
-  "sha256": "07adc8d9c218536cd24cdecfc471379cb15936cdd21720ac73f491c66ae60b27",
-  "size": 7450207,
+  "version": "0.4.19",
+  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.19/iuuuuuuuu.screenshot-translate-0.4.19.wsplugin",
+  "sha256": "24f525636e5d954688cdd198460c660906f1ff925561b91f163145d3756daaa1",
+  "size": 7537957,
   "name": {
     "zh": "截图翻译",
     "en": "Screenshot Translate"
@@ -42,10 +42,10 @@
     "program": "ScreenshotTranslate.exe"
   },
   "minWinShun": "0.23.0",
-  "releaseDate": "2026-11-11T03:23:36Z",
+  "releaseDate": "2026-11-19T05:31:38Z",
   "dateAdded": "2026-11-05T23:48:00Z",
   "notes": {
-    "zh": "本版包含自 0.4.7 以来的翻译面板、双向词典和 AI 渠道更新。\n\n### 翻译面板与双向查词\n\n- 输入 `jfy` / `翻译面板` 打开独立面板。自动、翻译、查词共用原文，切换视图保留已完成结果。\n- 中文短词自动进入汉英词典。例如“玩具”可查看多个英文候选及各自词性、释义，点击候选查详情，再返回原查询。\n- 英文单词显示音标、多词义和词形；同近义词按词性、含义分组，同根词和相关词条分开展示。\n- 英文句子可逐词查看，重复词合并标次数，点击词名定位原文。支持复制结果、即时查询开关和 Ctrl+Enter 提交。\n- 优先使用启用且已下载的 ECDICT；有道补充在线候选与相关词。在线失败保留离线释义，尊重渠道禁用与代理设置。\n\n### 多渠道、多模型 AI\n\n- AI 支持多个渠道，每个渠道多个模型，分别配置地址和密钥，可启停和调整顺序。\n- 复用渠道顺序、自动权重及失败冷却与恢复；测试结果包含各启用模型，密钥由 Windows 加密保存。\n- 已有 AI 配置兼容；截图、划词、剪贴板和鼠标指词翻译保留。\n\n### 安装与兼容\n\n- 下载 `iuuuuuuuu.screenshot-translate-0.4.10.wsplugin`，在 WinShun 的插件管理中安装或更新。\n- 需要 **WinShun 0.23.0 或更高版本**，复用宿主 Qt 6.12.x，无需 Python。\n- ECDICT 仍在设置中一键下载；已有词库无需重新下载。`.bin` 附件是可选离线词库，不是插件安装包。\n- 单次输入最多 10,000 字符；英文逐词查询最多展示 60 个不同词。候选数量以词典收录为准。\n\n### 验证\n\nGitHub 原生构建与兼容性回归均通过。下载 GitHub 构建产物后，已完成归档 SHA-256、68 个包内文件哈希和源码提交核对；该发布包通过隐藏桌面的原生核心、实际界面、官方 WinShunPluginHost、普通启动入口和真实有道查词验证。此前安装目录验证与 28 项兼容性回归也已通过。\n\n源码提交：`e0a3d6c1ee3ee782da7e7eda1332f2340a18493d`。附件提供 SHA-256 校验文件。\n\n安装包 SHA-256：`07adc8d9c218536cd24cdecfc471379cb15936cdd21720ac73f491c66ae60b27`。\n\n[查看 GitHub 构建记录](https://github.com/iuuuuuuuu/winshun-screenshot-translate/actions/runs/42943938255)",
-    "en": "本版包含自 0.4.7 以来的翻译面板、双向词典和 AI 渠道更新。\n\n### 翻译面板与双向查词\n\n- 输入 `jfy` / `翻译面板` 打开独立面板。自动、翻译、查词共用原文，切换视图保留已完成结果。\n- 中文短词自动进入汉英词典。例如“玩具”可查看多个英文候选及各自词性、释义，点击候选查详情，再返回原查询。\n- 英文单词显示音标、多词义和词形；同近义词按词性、含义分组，同根词和相关词条分开展示。\n- 英文句子可逐词查看，重复词合并标次数，点击词名定位原文。支持复制结果、即时查询开关和 Ctrl+Enter 提交。\n- 优先使用启用且已下载的 ECDICT；有道补充在线候选与相关词。在线失败保留离线释义，尊重渠道禁用与代理设置。\n\n### 多渠道、多模型 AI\n\n- AI 支持多个渠道，每个渠道多个模型，分别配置地址和密钥，可启停和调整顺序。\n- 复用渠道顺序、自动权重及失败冷却与恢复；测试结果包含各启用模型，密钥由 Windows 加密保存。\n- 已有 AI 配置兼容；截图、划词、剪贴板和鼠标指词翻译保留。\n\n### 安装与兼容\n\n- 下载 `iuuuuuuuu.screenshot-translate-0.4.10.wsplugin`，在 WinShun 的插件管理中安装或更新。\n- 需要 **WinShun 0.23.0 或更高版本**，复用宿主 Qt 6.12.x，无需 Python。\n- ECDICT 仍在设置中一键下载；已有词库无需重新下载。`.bin` 附件是可选离线词库，不是插件安装包。\n- 单次输入最多 10,000 字符；英文逐词查询最多展示 60 个不同词。候选数量以词典收录为准。\n\n### 验证\n\nGitHub 原生构建与兼容性回归均通过。下载 GitHub 构建产物后，已完成归档 SHA-256、68 个包内文件哈希和源码提交核对；该发布包通过隐藏桌面的原生核心、实际界面、官方 WinShunPluginHost、普通启动入口和真实有道查词验证。此前安装目录验证与 28 项兼容性回归也已通过。\n\n源码提交：`e0a3d6c1ee3ee782da7e7eda1332f2340a18493d`。附件提供 SHA-256 校验文件。\n\n安装包 SHA-256：`07adc8d9c218536cd24cdecfc471379cb15936cdd21720ac73f491c66ae60b27`。\n\n[查看 GitHub 构建记录](https://github.com/iuuuuuuuu/winshun-screenshot-translate/actions/runs/42943938255)"
+    "zh": "默认翻译渠道改为 ECDICT 并放在首位；已有的手动渠道选择不会覆盖。ECDICT 查不到普通句子时自动继续使用备用翻译渠道。包含长文分批和逐句翻译、OCR 识别优化、选词首读修复、冷却退避和渠道拖拽排序改进。安装包复用 WinShun 宿主 Qt 6.12，不捆绑 Qt 运行库。安装包不含 ECDICT 数据；提供单独词库附件和 SHA-256 校验文件。",
+    "en": "默认翻译渠道改为 ECDICT 并放在首位；已有的手动渠道选择不会覆盖。ECDICT 查不到普通句子时自动继续使用备用翻译渠道。包含长文分批和逐句翻译、OCR 识别优化、选词首读修复、冷却退避和渠道拖拽排序改进。安装包复用 WinShun 宿主 Qt 6.12，不捆绑 Qt 运行库。安装包不含 ECDICT 数据；提供单独词库附件和 SHA-256 校验文件。"
   }
 }

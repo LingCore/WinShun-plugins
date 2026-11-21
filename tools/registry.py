@@ -37,10 +37,14 @@ OFFICIAL_NATIVE = {
     "winshun.break": ("WinShunBreak.exe", (), "break-plugin"),
     "winshun.capture": ("WinShunCapture.exe", ("WinShunCaptureApp.dll",), "capture-plugin"),
     "winshun.cloudbackup": ("WinShunCloudBackup.exe", (), "cloudbackup-plugin"),
+    "winshun.devtools": ("WinShunDevTools.exe", ("WinShunDevToolsApp.dll",), "devtools-plugin"),
     "winshun.explorer-tabs": ("WinShunExplorerTabs.exe", (), "explorer-tabs-plugin"),
+    "winshun.expander": ("WinShunExpander.exe", (), "expander-plugin"),
+    "winshun.gestures": ("WinShunGestures.exe", ("WinShunGesturesEditor.dll",), "gestures-plugin"),
     "winshun.localsend": ("WinShunLocalSend.exe", (), "localsend-plugin"),
     "winshun.ocr-search": ("WinShunOcrSearch.exe", ("WinShunOcrSearchApp.dll",), "ocr-search-plugin"),
     "winshun.semantic": ("WinShunSemantic.exe", (), "semantic-plugin"),
+    "winshun.sync": ("WinShunSync.exe", (), "sync-plugin"),
     "winshun.translate": ("WinShunTranslate.exe", (), "translate-plugin"),
 }
 
