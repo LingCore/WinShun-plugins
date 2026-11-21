@@ -1,17 +1,20 @@
 {
   "id": "ra9fael.binarylab",
   "repo": "ra9fael/winshun-binarylab",
-  "autoUpdate": false,
+  "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.3.3",
-  "url": "https://github.com/ra9fael/winshun-binarylab/releases/download/gdi-v0.3.3/ra9fael.binarylab-0.3.3.wsplugin",
-  "sha256": "c4dd369ce6a664bf72eafd112ebd0aba8cddd78ab82b2a047dd3382c8384ee4e",
-  "size": 982868,
+  "version": "0.5.0",
+  "url": "https://github.com/ra9fael/winshun-binarylab/releases/download/qml-v0.5.0/ra9fael.binarylab-0.5.0.wsplugin",
+  "sha256": "d1cc39252992de5433d07c8de026d6dacf796187ed15f4504fc106800ec57560",
+  "size": 1776155,
   "name": {
-    "zh": "二进制工作台 · GDI",
-    "en": "Binary Lab · GDI"
+    "zh": "二进制工作台",
+    "en": "Binary Lab"
   },
-  "description": "纯内存计算的嵌入式二进制工具：位运算与进制转换、hex/bin/oct 字节流解码、C 风格结构体排布；可选交互式位编辑器窗口。",
+  "description": {
+    "zh": "嵌入式开发的二进制工作台：位运算、字节流与结构体布局，支持 hextract TOML 记录格式；QML 界面复用宿主 Qt，是唯一维护的版本。",
+    "en": "Binary workbench for embedded work: bit operations, byte streams and struct layout, plus hextract TOML record formats; the QML UI reuses the host Qt and is the only maintained edition."
+  },
   "author": "ra9fael",
   "license": "MIT",
   "homepage": "",
@@ -30,10 +33,10 @@
     "program": "binarylab.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T21:39:52Z",
+  "releaseDate": "2026-11-15T13:05:01Z",
   "dateAdded": "2026-11-08T22:02:44Z",
   "notes": {
-    "zh": "### 修复\n\n- 声明最低 Win顺 版本为 0.22.0，满足未审核原生插件的安装确认要求。\n- GDI 包名使用 `ra9fael.binarylab-<version>.wsplugin`，与清单 ID 一致；版本类型由 tag 区分。\n- 保持 GDI 版本无 Qt 依赖，发布入口仅为新版本 tag 和手动运行，并保留既有逻辑与打包测试。",
-    "en": "# Binary Lab GDI 0.3.3\n\n### Fixed\n\n- Require WinShun 0.22.0 for installation consent for unreviewed native plugins.\n- Name GDI packages `ra9fael.binarylab-<version>.wsplugin` to match the manifest ID; the tag identifies the edition.\n- Keep the GDI edition independent of Qt, with new-tag and manual release entry points and the existing logic and packaging tests."
+    "zh": "### 变更\n- QML 成为唯一维护版本；GDI 分支停在 0.3.3 并归档，不再发布更新。\n- 安装包改名为 `ra9fael.binarylab-<version>.wsplugin`（去掉 `-qml-`），插件库索引才接受；库条目改为指向本版，更新不会切回 GDI。\n- QML 发布不再标记 Pre-release，并作为仓库的 Latest release。\n- README、双语 CHANGELOG 和版本设计说明改为单版本描述，补充 GDI 升级与降级方式。\n\n### 说明\n- 插件 ID、设置、快捷键和历史文件格式不变；0.5.0 覆盖 GDI 0.3.3 是原地替换，数据保留。\n- 宿主低于 0.22.0 时 `minWinShun` 会阻止更新，继续使用 GDI 0.3.3，不会装到无法运行的新包。",
+    "en": "# Binary Lab 0.5.0\n\nQML 是唯一维护的版本；安装会替换旧版（含 GDI 0.3.3），设置和历史保留。\nQML is the only maintained edition. Installing this replaces the previous copy (including GDI 0.3.3); settings and history are kept.\n\n### Changed\n- QML is now the only maintained edition. The GDI line ends at 0.3.3 and its branch is archived.\n- The package is named `ra9fael.binarylab-<version>.wsplugin` (no `-qml-`) because the plugin-library index accepts only `<id>-<version>.wsplugin`; the library entry now points here, so updates stay on QML.\n- QML releases are no longer Pre-release and become the repository's Latest release.\n- README, both changelogs and the variant design notes describe the single maintained line, including the GDI upgrade and downgrade paths.\n\n### Notes\n- The plugin ID, settings, shortcuts and the `history.jsonl` format do not change. 0.5.0 replaces GDI 0.3.3 in place and keeps its data.\n- On hosts below 0.22.0 the manifest's `minWinShun` blocks the update, so they keep running GDI 0.3.3 instead of installing a package they cannot run."
   }
 }

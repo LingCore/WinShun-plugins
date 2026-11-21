@@ -1,15 +1,15 @@
 {
   "id": "ra9fael.envhosts",
   "repo": "ra9fael/winshun-envhosts",
-  "autoUpdate": false,
+  "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.7.5",
-  "url": "https://github.com/ra9fael/winshun-envhosts/releases/download/gdi/v0.7.5/ra9fael.envhosts-0.7.5.wsplugin",
-  "sha256": "4bfa05c2f0ae0602cc8627e977fb70350d7644943d0730acccb207f29f450560",
-  "size": 528971,
+  "version": "0.10.0",
+  "url": "https://github.com/ra9fael/winshun-envhosts/releases/download/qml%2Fv0.10.0/ra9fael.envhosts-0.10.0.wsplugin",
+  "sha256": "d33c43b658f398cab2f8878c55e1dce7f013c17918a759ccecdfe8112b3f5907",
+  "size": 715509,
   "name": {
-    "zh": "环境变量 / hosts 编辑（GDI）",
-    "en": "Env & hosts editor (GDI)"
+    "zh": "环境变量 / hosts 编辑",
+    "en": "Env & hosts editor"
   },
   "description": {
     "zh": "可视化编辑用户环境变量与 hosts 条目：交互窗口支持多选批量、分隔项编辑与中英文界面；改写前自动备份，系统级目标未提权时明确降级",
@@ -34,11 +34,11 @@
     "mode": "resident",
     "program": "envhosts.exe"
   },
-  "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-08T16:08:23Z",
+  "minWinShun": "0.23.0",
+  "releaseDate": "2026-11-18T08:16:46Z",
   "dateAdded": "2026-11-08T22:08:54Z",
   "notes": {
-    "zh": "# GDI 0.7.5\n\n同一个插件 ID；安装另一版会替换当前版，设置和备份保留，草稿按版本类型隔离。\nBoth editions share one plugin ID. Installing the other replaces this edition. Settings/backups are retained; drafts are stored separately per backend.\n\n下载 / Downloads: [GDI](https://github.com/ra9fael/winshun-envhosts/releases/latest) · [QML](https://github.com/ra9fael/winshun-envhosts/tree/qml#安装)\n\n插件库目前不区分后端；QML 请从 QML 发布页更新。\nThe plugin library does not track backends; update QML from its release page.\n\n### Added\n\n- Maintained GDI/QML branches and mutually exclusive packages sharing one plugin ID.\n- Backend/version verification before packaging, separate release tags and bilingual download choices.\n\n### Fixed\n\n- Isolate GDI drafts, route legacy drafts by format and archive original bytes without overwriting newer drafts.\n- Refuse incompatible QML multi-string/raw backups and preserve user/system scope boundaries when restoring shared snapshots.",
-    "en": "# GDI 0.7.5\n\n同一个插件 ID；安装另一版会替换当前版，设置和备份保留，草稿按版本类型隔离。\nBoth editions share one plugin ID. Installing the other replaces this edition. Settings/backups are retained; drafts are stored separately per backend.\n\n下载 / Downloads: [GDI](https://github.com/ra9fael/winshun-envhosts/releases/latest) · [QML](https://github.com/ra9fael/winshun-envhosts/tree/qml#安装)\n\n插件库目前不区分后端；QML 请从 QML 发布页更新。\nThe plugin library does not track backends; update QML from its release page.\n\n### Added\n\n- Maintained GDI/QML branches and mutually exclusive packages sharing one plugin ID.\n- Backend/version verification before packaging, separate release tags and bilingual download choices.\n\n### Fixed\n\n- Isolate GDI drafts, route legacy drafts by format and archive original bytes without overwriting newer drafts.\n- Refuse incompatible QML multi-string/raw backups and preserve user/system scope boundaries when restoring shared snapshots."
+    "zh": "# WinShun 0.10.0\n\nQML 版是唯一维护的版本；安装会替换旧版（含 GDI 0.7.5），设置和备份保留，草稿按版本类型隔离。\nQML is the only maintained edition. Installing this replaces the previous copy (including GDI 0.7.5); settings/backups are kept and drafts stay per backend.\n\n项目主页 / Home: https://github.com/ra9fael/winshun-envhosts/tree/qml\nRequires WinShun 0.23.0 or newer (shared host Qt 6.12).\n\n### Added\n\n- Per-row actions on the launcher list. Env rows: open the editor at that\n  variable (Enter), copy the raw value (Ctrl+Enter), copy the expanded value\n  (Shift+Enter, expandable rows), copy the name, copy `NAME=value`, quick-edit a\n  single-line value in place, delete. Hosts rows: enable / disable (Enter, named\n  after the outcome), edit and locate, copy the IP, hostname or whole line\n  (Ctrl+Enter), open the hosts file (Shift+Enter), delete the line.\n- Duplicate hosts entries (the same hostname on several lines) now have row\n  identities: the second and later occurrences get `-2`/`-3` id suffixes and\n  enable / disable / delete resolve that exact occurrence in file order, so\n  identical lines can be acted on independently.\n- A successful hosts enable / disable now keeps the launcher list open and\n  refreshes the same filter, instead of hiding the results.\n\n### Changed…",
+    "en": "# WinShun 0.10.0\n\nQML 版是唯一维护的版本；安装会替换旧版（含 GDI 0.7.5），设置和备份保留，草稿按版本类型隔离。\nQML is the only maintained edition. Installing this replaces the previous copy (including GDI 0.7.5); settings/backups are kept and drafts stay per backend.\n\n项目主页 / Home: https://github.com/ra9fael/winshun-envhosts/tree/qml\nRequires WinShun 0.23.0 or newer (shared host Qt 6.12).\n\n### Added\n\n- Per-row actions on the launcher list. Env rows: open the editor at that\n  variable (Enter), copy the raw value (Ctrl+Enter), copy the expanded value\n  (Shift+Enter, expandable rows), copy the name, copy `NAME=value`, quick-edit a\n  single-line value in place, delete. Hosts rows: enable / disable (Enter, named\n  after the outcome), edit and locate, copy the IP, hostname or whole line\n  (Ctrl+Enter), open the hosts file (Shift+Enter), delete the line.\n- Duplicate hosts entries (the same hostname on several lines) now have row\n  identities: the second and later occurrences get `-2`/`-3` id suffixes and\n  enable / disable / delete resolve that exact occurrence in file order, so\n  identical lines can be acted on independently.\n- A successful hosts enable / disable now keeps the launcher list open and\n  refreshes the same filter, instead of hiding the results.\n\n### Changed…"
   }
 }
