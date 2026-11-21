@@ -42,5 +42,9 @@
   },
   "minWinShun": "0.22.0",
   "releaseDate": "2026-11-15T06:57:52Z",
-  "dateAdded": "2026-11-15T06:58:19Z"
+  "dateAdded": "2026-11-15T06:58:19Z",
+  "notes": {
+    "zh": "# 软件包 0.4.13\n\n- **三个 PowerShell 脚本改为带 BOM 的 UTF-8**（`check-layout.ps1`、`run-dev.ps1`、`tools/capture_fixtures.ps1`）。它们会被打进发布包，而插件库要求 `.ps1` 使用带 BOM 的 UTF-8，否则 Windows PowerShell 5.1 里的中文会乱码；此前收录检查因此失败。脚本内容未变。\n\n文件：`ra9fael.packages-0.4.13.wsplugin`",
+    "en": "# 软件包 0.4.13\n\n- **三个 PowerShell 脚本改为带 BOM 的 UTF-8**（`check-layout.ps1`、`run-dev.ps1`、`tools/capture_fixtures.ps1`）。它们会被打进发布包，而插件库要求 `.ps1` 使用带 BOM 的 UTF-8，否则 Windows PowerShell 5.1 里的中文会乱码；此前收录检查因此失败。脚本内容未变。\n\n文件：`ra9fael.packages-0.4.13.wsplugin`"
+  }
 }
