@@ -39,10 +39,10 @@ MANIFEST_VERSION = 1
 PERMISSIONS = [
     "files:write", "processes", "clipboard:read", "clipboard:write", "ui", "network",
     "winshun:search", "winshun:open", "winshun:history", "winshun:content", "files:read",
-    "notifications", "network:listen", "system:settings", "elevated", "winshun:backup",
+    "notifications", "network:listen", "system:settings", "elevated", "winshun:backup", "system:power", "selection:read",
 ]
 # 审核者要多看一眼的
-RISKY = {"elevated", "winshun:backup", "network", "network:listen", "system:settings", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
+RISKY = {"elevated", "winshun:backup", "network", "network:listen", "system:settings", "system:power", "selection:read", "files:write", "processes", "ui", "winshun:content", "clipboard:read", "clipboard:write"}
 
 ALLOWED_PROGRAMS = {"python", "pwsh", "powershell", "node"}  # 社区条目；官方原生包另按仓库、id 和文件名逐一检查
 FORBIDDEN_EXT = {".exe", ".dll", ".sys", ".com", ".scr", ".msi", ".bat", ".cmd", ".vbs", ".jar", ".pyc"}
@@ -52,7 +52,8 @@ ICON_EXT = {".png", ".jpg", ".jpeg", ".ico"}
 ICON_SCHEMES = ("ext:", "file:", "app:", "glyph:", "color:", "data:", "site:")
 KNOWN_TOP = {"$schema", "manifest", "id", "name", "version", "description", "author", "homepage", "license",
              "icon", "minWinShun", "runtime", "permissions", "commands", "settings", "ai",
-             "trayMenu", "pictures", "settingsWindow", "systemSwitches", "webSearch"}
+             "trayMenu", "pictures", "settingsWindow", "systemSwitches", "webSearch", "translate"}
+SUGGEST_KINDS = ("files", "folders", "paths")  # run.suggest：命令的 args 里 %s 要补什么
 
 VERSION_RE = re.compile(r"\d+(\.\d+)*([-+][0-9A-Za-z.-]+)?")  # Manifest.cpp kVersion
 SEMVER_RE = re.compile(r"\d+\.\d+\.\d+([-+][0-9A-Za-z.-]+)?")  # 本仓库：至少 x.y.z
@@ -238,12 +239,21 @@ def read_permissions(v, e: Errors) -> list[str]:
     return sorted(found, key=PERMISSIONS.index)
 
 
+# Win顺 compiles triggers with QRegularExpression (PCRE2), which takes an inline
+# flag group such as (?i) anywhere, applying to the rest of its group; Python's
+# re takes one only at the start. Flags change what matches, not whether the
+# pattern is valid, so a second try leaves such groups out.
+INLINE_FLAGS_RE = re.compile(r"(?<!\\)\(\?[imsxn-]+\)")
+
+
 def regex_ok(pattern: str) -> bool:
-    try:
-        re.compile(pattern)
-        return True
-    except re.error:
-        return False
+    for candidate in (pattern, INLINE_FLAGS_RE.sub("", pattern)):
+        try:
+            re.compile(candidate)
+            return True
+        except re.error:
+            pass
+    return False
 
 
 def read_trigger(v, where: str, e: Errors) -> None:
@@ -314,10 +324,15 @@ def read_run(v, where: str, e: Errors) -> str:
     if "program" in v:
         kinds.append("program")
         program = string_field(v, "program", where, e)
-        string_field(v, "args", where, e)
+        args = string_field(v, "args", where, e)
         string_field(v, "cwd", where, e)
         if not program:
             e.fail(f"{where}.program 不能为空")
+        if v.get("suggest") is not None:
+            if not (isinstance(v["suggest"], str) and v["suggest"] in SUGGEST_KINDS):
+                e.fail(f"{where}.suggest 要是 files、folders 或 paths")
+            elif "%s" not in args:
+                e.fail(f"{where}.suggest 要 args 里有 %s，选中的路径填在那里")
     if "folder" in v:
         kinds.append("folder")
         if not string_field(v, "folder", where, e):
@@ -355,7 +370,7 @@ def read_run(v, where: str, e: Errors) -> str:
 
 def read_command(v, index: int, has_runtime: bool, e: Errors) -> dict:
     where = f"commands[{index}]"
-    info = {"id": "", "keywords": [], "icon": ""}
+    info = {"id": "", "keywords": [], "icon": "", "run": ""}  # run：零代码的种类，没有 run 是 ""
     if not isinstance(v, dict):
         e.fail(f"{where} 要是对象")
         return info
@@ -409,6 +424,7 @@ def read_command(v, index: int, has_runtime: bool, e: Errors) -> dict:
                 if not aid:
                     e.fail(f"{aw}.id 不能为空")
     run_kind = read_run(v.get("run"), f"{where}.run", e)
+    info["run"] = run_kind
     if not run_kind and not has_runtime:
         e.fail(f"{where} 没有 run，插件也没有 runtime：不知道怎么执行")
     if "cache" in v:
@@ -434,6 +450,37 @@ def read_setting(v, index: int, e: Errors) -> None:
     read_text(v.get("hint"), f"{where}.hint", e)
     if "options" in v and not isinstance(v["options"], list):
         e.fail(f"{where}.options 要是数组")
+    # 多行文字（Win顺 0.41.0 起）和只由插件自己的设置窗口改的设置（0.41.0 起），照 Manifest.cpp
+    if "multiline" in v:
+        if not isinstance(v["multiline"], bool):
+            e.fail(f"{where}.multiline 要是 true 或 false")
+        elif v["multiline"] and kind != "text":
+            e.fail(f"{where}.multiline 只用于 text")
+    if "hidden" in v:
+        if not isinstance(v["hidden"], bool):
+            e.fail(f"{where}.hidden 要是 true 或 false")
+        elif v["hidden"] and kind not in ("text", "number", "bool", "choice"):
+            e.fail(f"{where}.hidden 只用于 text、number、bool、choice")
+    if kind == "number":  # 范围、步长和单位（Win顺 0.33.0 起，LingCore/WinShun#359），照 Manifest.cpp
+        def number(name: str):
+            x = v.get(name)
+            if x is None:
+                return None
+            if not is_num(x):
+                e.fail(f"{where}.{name} 要是数字")
+                return None
+            return float(x)
+        lo, hi, step = number("min"), number("max"), number("step")
+        read_text(v.get("unit"), f"{where}.unit", e)
+        if lo is not None and hi is not None and not lo < hi:
+            e.fail(f"{where}.min 要小于 max")
+        if step is not None and not step > 0:
+            e.fail(f"{where}.step 要大于 0")
+        if lo is not None and hi is not None and (1.0 if step is None else step) > hi - lo:
+            e.fail(f"{where}.step 不能大于 max − min（不写 step 时是 1）")
+        if (lo is not None or hi is not None or step is not None) \
+                and v.get("default") is not None and not is_num(v.get("default")):
+            e.fail(f"{where}.default 要是数字")
 
 
 def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
@@ -519,6 +566,13 @@ def validate_manifest(o, e: Errors, native_program: str | None = None) -> dict:
             seen.add(c["id"])
     if web_search and commands:
         e.fail("webSearch 的网站由插件设置管理，commands 应为空")
+    if o.get("translate") is not None:  # 翻译用的命令：照 Manifest.cpp，要是插件自己的程序回答的那种
+        target = o["translate"]
+        command = next((c for c in info["commands"] if c["id"] == target), None) if isinstance(target, str) and target else None
+        if command is None:
+            e.fail("translate 要写 commands 里一个命令的 id")
+        elif command["run"]:
+            e.fail("translate 的命令要由插件自己的程序回答，不能是零代码命令")
     if "settings" in o:
         settings = o["settings"]
         if not isinstance(settings, list):
@@ -854,6 +908,7 @@ class Asset:
         self.release: dict | None = None
         self.package: Package | None = None
         self.fields: dict = {}  # 生成的字段（dateAdded 除外）；检查没过是空的
+        self.notes: dict | None = None  # Release 的说明拆成的 {zh, en}；不在 fields 里：说明后来改了，条目不算错
         self.unreviewed_native = False  # 按未审核原生插件检查的：条目标了，或者 auto_native 时包里有 exe/dll
 
 
@@ -875,6 +930,7 @@ def check_asset(url: str, expected_id: str | None = None, release: dict | None =
     except registry.FetchError as ex:
         a.errors.append(f"{url}：{ex}")
         return a
+    a.notes = registry.notes_of(a.release)
     if auto_native and not unreviewed_native and not registry.official_native(parts.repo, parts.id) and looks_native(data):
         unreviewed_native = True
     a.unreviewed_native = unreviewed_native
@@ -1044,6 +1100,11 @@ def check_entry_fields(r: Report, obj, root: Path) -> None:
     for key in ("releaseDate", "dateAdded"):
         if key in obj and registry.parse_time(obj[key]) is None:
             r.error(f"{key} 要像 2026-10-28T12:00:00Z 这样（UTC）")
+    notes = obj.get("notes")
+    if "notes" in obj and not (isinstance(notes, dict) and notes and set(notes) <= {"zh", "en"}
+                               and all(isinstance(t, str) and t.strip() and len(t) <= registry.NOTES_MAX for t in notes.values())):
+        r.error(f'notes 要是 {{"zh": …, "en": …}}，每种语言一段 Markdown，最多 {registry.NOTES_MAX} 个字符；'
+                f"它是从 Release 的说明生成的，不要手写（python tools/notes.py {r.id} 重新生成）")
     legacy = root / "legacy" / r.id
     if obj.get("hosted"):
         if not (legacy / "plugin.json").is_file():
@@ -1077,6 +1138,8 @@ def check_entry_online(r: Report) -> Asset | None:
             r.error(f"{k} 和包里的不一样（条目里是 {brief(obj.get(k))}，包里是 {brief(a.fields[k])}）")
         if wrong:
             r.error(f"用 python tools/entry.py {url} 重新生成这个文件，生成的字段不要手改")
+        if not registry.same(obj.get("notes"), a.notes):  # 只提醒：作者改了 Release 的说明，不该让条目过不了检查
+            r.warn(f"notes 和 Release 现在的说明不一样（python tools/notes.py {r.id} 重新生成；说明不用手写，在 Release 里写）")
     return a
 
 

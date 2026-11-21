@@ -31,5 +31,9 @@
   },
   "minWinShun": "0.22.0",
   "releaseDate": "2026-11-08T21:39:52Z",
-  "dateAdded": "2026-11-08T22:02:44Z"
+  "dateAdded": "2026-11-08T22:02:44Z",
+  "notes": {
+    "zh": "### 修复\n\n- 声明最低 Win顺 版本为 0.22.0，满足未审核原生插件的安装确认要求。\n- GDI 包名使用 `ra9fael.binarylab-<version>.wsplugin`，与清单 ID 一致；版本类型由 tag 区分。\n- 保持 GDI 版本无 Qt 依赖，发布入口仅为新版本 tag 和手动运行，并保留既有逻辑与打包测试。",
+    "en": "# Binary Lab GDI 0.3.3\n\n### Fixed\n\n- Require WinShun 0.22.0 for installation consent for unreviewed native plugins.\n- Name GDI packages `ra9fael.binarylab-<version>.wsplugin` to match the manifest ID; the tag identifies the edition.\n- Keep the GDI edition independent of Qt, with new-tag and manual release entry points and the existing logic and packaging tests."
+  }
 }

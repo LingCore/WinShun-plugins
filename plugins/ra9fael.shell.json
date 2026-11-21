@@ -38,5 +38,9 @@
   },
   "minWinShun": "0.22.0",
   "releaseDate": "2026-11-08T00:31:15Z",
-  "dateAdded": "2026-11-08T00:26:42Z"
+  "dateAdded": "2026-11-08T00:26:42Z",
+  "notes": {
+    "zh": "- 清单对齐收录要求：`description` 改双语对象、补 `homepage`；README 的\n  「分发与版本」写明 Release 由 CI 在 tag 提交上构建、条目哈希的来源。",
+    "en": "- 清单对齐收录要求：`description` 改双语对象、补 `homepage`；README 的\n  「分发与版本」写明 Release 由 CI 在 tag 提交上构建、条目哈希的来源。"
+  }
 }

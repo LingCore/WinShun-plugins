@@ -1,0 +1,40 @@
+{
+  "id": "winshun.devtools",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "version": "1.0.4",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.devtools-v1.0.4/winshun.devtools-1.0.4.wsplugin",
+  "sha256": "7987d78b3b67c31a0b21049af76951daa12f42675d3e86434223c24f8f161616",
+  "size": 1063142,
+  "name": {
+    "en": "Developer tools",
+    "zh": "开发工具"
+  },
+  "description": {
+    "en": "Small tools for development, starting with JSON: format, minify, escape, a tree to browse and search names and values. Finds JSON inside log lines, escaped JSON and one-per-line JSON. Type json and a space for the JSON on the clipboard, or paste JSON straight into the search box; right-click a .json file for View in JSON tool.",
+    "zh": "给开发的小工具，先有 JSON：格式化、压缩、转义，树形查看，搜索键名和值。日志里夹着的、转义过的、一行一段的 JSON 都能认出来。搜索框输入 json 加空格看剪贴板里的 JSON，也可以直接把 JSON 粘贴进搜索框；.json 文件右键「用 JSON 工具查看」。"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "json"
+  ],
+  "permissions": [
+    "clipboard:read",
+    "clipboard:write",
+    "ui",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "WinShunDevTools.exe"
+  },
+  "minWinShun": "0.44.0",
+  "releaseDate": "2026-11-21T11:46:32Z",
+  "dateAdded": "2026-11-18T10:12:26Z",
+  "notes": {
+    "zh": "用 Win顺 0.44.0 的共用窗口代码重新编译：窗口重新创建后照样保持边框和样式，任务栏里显示应用自己的图标。需要 Win顺 0.44.0。权限不变。",
+    "en": "Rebuilt with WinShun 0.44.0's shared window code: windows keep their frame and style when they are made anew and show the app's own icon on the taskbar. Needs WinShun 0.44.0. Permissions unchanged."
+  }
+}
