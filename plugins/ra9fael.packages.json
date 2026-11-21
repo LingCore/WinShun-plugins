@@ -1,0 +1,50 @@
+{
+  "id": "ra9fael.packages",
+  "repo": "ra9fael/winshun-packages",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "0.4.13",
+  "url": "https://github.com/ra9fael/winshun-packages/releases/download/v0.4.13/ra9fael.packages-0.4.13.wsplugin",
+  "sha256": "ebf0b5ad9cd5bbeaceb0cb89da0faf271ea6eea420d12dc271d2762d7e3987c0",
+  "size": 4941755,
+  "name": {
+    "zh": "软件包",
+    "en": "Packages"
+  },
+  "description": {
+    "zh": "一站式查看、安装、卸载、升级 Scoop 与 WinGet 软件包：先查询，选中精确身份后再审阅计划并确认；不自动同意协议、不自行提权、不自动安装包管理器",
+    "en": "Query, install, uninstall and upgrade Scoop and WinGet packages in one window: query first, then review a plan for the exact identity you selected; never auto-accepts agreements, never elevates on its own, never installs a package manager"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "https://github.com/ra9fael/winshun-packages",
+  "keywords": [
+    "pkgs",
+    "软件包",
+    "packages",
+    "包管理",
+    "pkgs-only",
+    "包只读",
+    "pkgs-refresh",
+    "包刷新"
+  ],
+  "permissions": [
+    "files:write",
+    "processes",
+    "clipboard:write",
+    "ui",
+    "network",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "packages.exe"
+  },
+  "minWinShun": "0.22.0",
+  "releaseDate": "2026-11-15T06:57:52Z",
+  "dateAdded": "2026-11-15T06:58:19Z",
+  "notes": {
+    "zh": "# 软件包 0.4.13\n\n- **三个 PowerShell 脚本改为带 BOM 的 UTF-8**（`check-layout.ps1`、`run-dev.ps1`、`tools/capture_fixtures.ps1`）。它们会被打进发布包，而插件库要求 `.ps1` 使用带 BOM 的 UTF-8，否则 Windows PowerShell 5.1 里的中文会乱码；此前收录检查因此失败。脚本内容未变。\n\n文件：`ra9fael.packages-0.4.13.wsplugin`",
+    "en": "# 软件包 0.4.13\n\n- **三个 PowerShell 脚本改为带 BOM 的 UTF-8**（`check-layout.ps1`、`run-dev.ps1`、`tools/capture_fixtures.ps1`）。它们会被打进发布包，而插件库要求 `.ps1` 使用带 BOM 的 UTF-8，否则 Windows PowerShell 5.1 里的中文会乱码；此前收录检查因此失败。脚本内容未变。\n\n文件：`ra9fael.packages-0.4.13.wsplugin`"
+  }
+}
