@@ -2,10 +2,10 @@
   "id": "winshun.gestures",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.1.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.1.0/winshun.gestures-2.1.0.wsplugin",
-  "sha256": "273d725809fdbc93efa5b5b251a7c3ce866b47f7be86034d1ff8c73992caec40",
-  "size": 1433193,
+  "version": "2.1.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.1.1/winshun.gestures-2.1.1.wsplugin",
+  "sha256": "e8527bc86cdd795ab1437b648d5332b86c931549eb79cebcf7cce67913719ee6",
+  "size": 1438958,
   "name": {
     "zh": "鼠标手势",
     "en": "Mouse gestures"
@@ -34,10 +34,10 @@
     "program": "WinShunGestures.exe"
   },
   "minWinShun": "0.41.0",
-  "releaseDate": "2026-11-20T07:24:43Z",
+  "releaseDate": "2026-11-21T06:21:39Z",
   "dateAdded": "2026-11-18T02:57:12Z",
   "notes": {
-    "zh": "选中文字后按快捷键：在设置窗口“选中文字时”一页下面录一个快捷键（比如 Ctrl+Alt+T），选中文字按它就翻译，动作也可以改成复制、网页搜索等；浏览器、VS Code、微信里也能用（Win顺 替你按一下 Ctrl+C，读完马上把剪贴板放回去，Win顺 自己的剪贴板历史里不会多一条；在浏览器里用要 Win顺 0.42.0）。修好了在浏览器里按住右键滚滚轮切标签页时，第二下起不再切换的问题。权限不变。",
-    "en": "A shortcut for selected text: record one at the bottom of the 选中文字时 page of the settings window (e.g. Ctrl+Alt+T); select text and press it to translate, or have it copy, search the web and so on. It works in browsers, VS Code and WeChat too (WinShun presses Ctrl+C for you and puts the clipboard back at once, with no new entry in its own clipboard history; browsers need WinShun 0.42.0). Fixed: with the right button held over a browser, the wheel switched the tab only on its first notch. Permissions unchanged."
+    "zh": "选中文字快捷键带 `Alt`、`Win`、`Shift` 时，松开后浏览器不再把焦点跳到“…”按钮，程序不再打开菜单栏，`Win` 不再打开开始菜单，`Shift` 不再切换输入法。手势设置窗口在 Windows 11 上恢复边框、阴影和圆角（#419）。读到的选中是空的（比如 QQ 里选了聊天消息、焦点还在输入框）时也替你按 `Ctrl+C` 读，这部分在 Win顺 0.43.0 里。权限不变。",
+    "en": "A selected-text shortcut with `Alt`, `Win` or `Shift` no longer moves a browser's focus to its \"…\" button, opens a program's menu bar, opens Start or switches the input method when let go. The gestures' settings window has its border, shadow and round corners back on Windows 11 (#419). Where the selection reads empty (QQ with a message selected and the focus in the input box), `Ctrl+C` is pressed for you as elsewhere; that part comes with WinShun 0.43.0. Permissions unchanged."
   }
 }
