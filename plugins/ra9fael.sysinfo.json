@@ -1,0 +1,41 @@
+{
+  "id": "ra9fael.sysinfo",
+  "repo": "ra9fael/ra9fael.sysinfo",
+  "autoUpdate": true,
+  "review": "unreviewed-native",
+  "version": "1.6.5",
+  "url": "https://github.com/ra9fael/ra9fael.sysinfo/releases/download/1.6.5/ra9fael.sysinfo-1.6.5.wsplugin",
+  "sha256": "8fc1ee85218fcc52d28620c9fbffefd0efa0f50710532728df923ea991d5f6e2",
+  "size": 1064437,
+  "name": {
+    "zh": "系统信息",
+    "en": "System Information"
+  },
+  "description": {
+    "zh": "可调网格、字体、液态玻璃与动态波形的桌面资源监视窗",
+    "en": "A configurable desktop resource monitor with an adaptive grid, typography, liquid glass and dynamic sparklines"
+  },
+  "author": "ra9fael",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "sys",
+    "系统信息",
+    "监视窗"
+  ],
+  "permissions": [
+    "clipboard:write",
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "sysinfo.exe"
+  },
+  "minWinShun": "0.30.0",
+  "releaseDate": "2026-11-22T00:06:57Z",
+  "dateAdded": "2026-11-21T20:15:30Z",
+  "notes": {
+    "zh": "### 1.6.5 更新\n\n修复远程桌面（RDP）断开重连后液态玻璃背景只保留部分旧采样的问题：重连时重建图形设备与桌面复制，并按当前显示器几何重新采样。锁屏解锁、显示器变化后的背景恢复也已加固。\n\n桌面资源监视窗：CPU、内存、GPU、磁盘与网络的实时数值和动态波形，液态玻璃、磨砂与方角三种材质，可调网格、字号与缩放；`sys` 关键字显示状态并开关监视窗。\n\n- 权限：`ui`（桌面悬浮窗、主题与语言、设置窗口）、`clipboard:write`（复制读数）。\n- 最低宿主 WinShun 0.30.0；原生 C++（Qt 6.12，随宿主共享 Qt）。\n- 由 GitHub Actions 从 `1.6.5` 标签构建并发布。",
+    "en": "### What's new in 1.6.5\n\nFix the liquid-glass backdrop keeping a partial stale capture after an RDP disconnect and reconnect: the graphics device and desktop duplication are recreated on reconnect, and sampling follows the current monitor geometry. Backdrop recovery after screen lock/unlock and display changes is also hardened.\n\nA desktop resource monitor with live CPU, memory, GPU, disk and network readings and sparklines, liquid glass, frosted and square materials, and configurable grid, type and scale; the `sys` keyword reports status and toggles the monitor.\n\n- Permissions: `ui` (desktop overlay, theme and language, settings window), `clipboard:write` (copy readings).\n- Minimum host WinShun 0.30.0; native C++ on Qt 6.12 sharing the host Qt.\n- Built and published by GitHub Actions from the `1.6.5` tag."
+  }
+}
