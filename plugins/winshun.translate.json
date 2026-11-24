@@ -2,10 +2,10 @@
   "id": "winshun.translate",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.4",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.4/winshun.translate-2.2.4.wsplugin",
-  "sha256": "6f8efb96ac268bee18c86c74199e32c089d980bfadd6d0d64afcb03fb6667842",
-  "size": 202718,
+  "version": "2.2.5",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.5/winshun.translate-2.2.5.wsplugin",
+  "sha256": "0b12c418354befe2314ada6bfb79e76a7c859d888be94976cd878a83e29f609b",
+  "size": 204652,
   "name": {
     "zh": "翻译",
     "en": "Translate"
@@ -31,10 +31,10 @@
     "program": "WinShunTranslate.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-19T15:09:05Z",
+  "releaseDate": "2026-11-24T13:05:24Z",
   "dateAdded": "2026-10-23T09:12:43Z",
   "notes": {
-    "zh": "跟着 Win顺 0.41.0 的插件开发包重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.41.0's plugin SDK; nothing changes in use. Permissions unchanged."
+    "zh": "翻译服务返回 401、403 时显示“翻译服务的密钥不对或没有权限”，按 Enter 打开插件设置；402、429 和服务器出错时也直说是怎么回事（#444）。权限不变。",
+    "en": "On 401 or 403 the translation says the key is wrong or lacks permission, and Enter opens the plugin's settings; 402, 429 and server errors are named plainly too (#444). Permissions unchanged."
   }
 }

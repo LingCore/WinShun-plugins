@@ -2,10 +2,10 @@
   "id": "winshun.localsend",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.8",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.localsend-v1.0.8/winshun.localsend-1.0.8.wsplugin",
-  "sha256": "8c3aee433d16d81decbdfa37d2b4e2a103c3eb4e715eb9b4bdd51bc70f22eb48",
-  "size": 465323,
+  "version": "1.0.9",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.localsend-v1.0.9/winshun.localsend-1.0.9.wsplugin",
+  "sha256": "130b2dcb28d974e03cb2b23d78af3a72e4f6f64c8ea5403c0bc8c4c3a4160e37",
+  "size": 465959,
   "name": {
     "zh": "局域网传输",
     "en": "LAN transfer"
@@ -33,10 +33,10 @@
     "program": "WinShunLocalSend.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-19T15:08:49Z",
+  "releaseDate": "2026-11-24T13:05:32Z",
   "dateAdded": "2026-11-01T08:10:31Z",
   "notes": {
-    "zh": "跟着 Win顺 0.41.0 的插件开发包重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.41.0's plugin SDK; nothing changes in use. Permissions unchanged."
+    "zh": "剪贴板里有读不到的文件或文字时在日志里写明原因；配合 Win顺 0.45.0，Windows 10 上能发刚复制的文件了（#435）。权限不变。",
+    "en": "Logs it when the clipboard lists files or words it cannot read; with WinShun 0.45.0 it sends files just copied on Windows 10 again (#435). Permissions unchanged."
   }
 }

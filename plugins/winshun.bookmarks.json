@@ -2,10 +2,10 @@
   "id": "winshun.bookmarks",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.2.0/winshun.bookmarks-2.2.0.wsplugin",
-  "sha256": "c09b693287943072e21d70848e7414274df99eae59b2fa03a3aa2c07fa1cfa62",
-  "size": 259109,
+  "version": "2.2.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.2.1/winshun.bookmarks-2.2.1.wsplugin",
+  "sha256": "ebc2335556ee8a78d3d7ebee37042cfc9ab415940b06f7802bf7c77db968027f",
+  "size": 259101,
   "name": {
     "zh": "浏览器书签",
     "en": "Browser bookmarks"
@@ -20,8 +20,7 @@
   "keywords": [
     "bm",
     "sq",
-    "bh",
-    "ls"
+    "bh"
   ],
   "permissions": [
     "files:read"
@@ -31,10 +30,10 @@
     "program": "WinShunBookmarks.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-18T02:56:36Z",
+  "releaseDate": "2026-11-24T13:05:46Z",
   "dateAdded": "2026-10-23T09:12:34Z",
   "notes": {
-    "zh": "能搜 Firefox 的书签和历史记录：每个 Firefox 配置文件（安装版和应用商店版）都读，书签按 Firefox 里的文件夹排列；LibreWolf、Zen 之类在设置里指定 places.sqlite 即可。新增读取 Firefox 书签文件的权限，更新时会请你确认。",
-    "en": "Firefox bookmarks and history: every Firefox profile (installer and Store builds) is read, bookmarks under Firefox's own folders; LibreWolf, Zen and the like work by naming their places.sqlite in the settings. It now asks to read Firefox's bookmark files, so the update asks you to confirm."
+    "zh": "浏览历史只用 bh，ls 留给局域网传输：两个插件都装着时，以前 ls 哪个都打不开。权限不变。",
+    "en": "The browsing history answers to bh only, leaving ls to LAN transfer: with both installed, ls used to open neither. Permissions unchanged."
   }
 }
