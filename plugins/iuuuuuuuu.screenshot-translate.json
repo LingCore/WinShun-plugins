@@ -3,10 +3,10 @@
   "repo": "iuuuuuuuu/winshun-screenshot-translate",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.4.20",
-  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.20/iuuuuuuuu.screenshot-translate-0.4.20.wsplugin",
-  "sha256": "cf3a9ce58ef66dcbc385395cec660c744f84578ada5d2fa452061cecaaeb3058",
-  "size": 7548071,
+  "version": "0.4.23",
+  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.23/iuuuuuuuu.screenshot-translate-0.4.23.wsplugin",
+  "sha256": "beeb2ec8de57db5718a3e883dce6c3eaea56e8ae0166d26b5773349f1d747488",
+  "size": 7585554,
   "name": {
     "zh": "截图翻译",
     "en": "Screenshot Translate"
@@ -42,10 +42,10 @@
     "program": "ScreenshotTranslate.exe"
   },
   "minWinShun": "0.23.0",
-  "releaseDate": "2026-11-23T14:59:58Z",
+  "releaseDate": "2026-11-25T08:15:45Z",
   "dateAdded": "2026-11-05T23:48:00Z",
   "notes": {
-    "zh": "本版修复临时故障后翻译长期不可用，以及自动降级先等待故障渠道的问题。\n\n- 自动权重优先使用最近成功的备用渠道；ECDICT 仍保持默认首位。\n- 全部备用失败时，临时故障允许一次恢复检查，并按 1、2、4、5 分钟逐步退避；认证失败和限流仍保持长冷却。\n- 冷却期间仍可返回已缓存的译文，设置页显示失败原因和恢复检查状态。\n- 多段截图降级到逐条请求的服务时，按请求数量安排时间；MyMemory 分块使用有上限的并发。\n- 区分 MyMemory 的临时服务故障与额度耗尽；Google 优先使用 gtx 入口。\n\n验证：原生核心回归、安装包独立桌面界面测试、实际网络自动降级及安装后的入口测试通过。保留渠道禁用、排序、长文进度、取消与多模型降级行为。此次网络实测，短句约 1.5–1.9 秒，12 段文字约 4.3 秒；耗时会随网络和服务状态变化。\n\n安装 `.wsplugin`；已有词库无需重新下载。继续复用 WinShun 的 Qt 6.12，不需要 Python。附件为本地编译并完成上述验证的安装包。Google 限流及 Edge 认证失败属于服务端状态，仍会跳过；本版不保证所有免费服务随时可用。\n\nWinShun 可能在更新后要求重新确认管理员权限；普通权限翻译不受此限制。",
-    "en": "本版修复临时故障后翻译长期不可用，以及自动降级先等待故障渠道的问题。\n\n- 自动权重优先使用最近成功的备用渠道；ECDICT 仍保持默认首位。\n- 全部备用失败时，临时故障允许一次恢复检查，并按 1、2、4、5 分钟逐步退避；认证失败和限流仍保持长冷却。\n- 冷却期间仍可返回已缓存的译文，设置页显示失败原因和恢复检查状态。\n- 多段截图降级到逐条请求的服务时，按请求数量安排时间；MyMemory 分块使用有上限的并发。\n- 区分 MyMemory 的临时服务故障与额度耗尽；Google 优先使用 gtx 入口。\n\n验证：原生核心回归、安装包独立桌面界面测试、实际网络自动降级及安装后的入口测试通过。保留渠道禁用、排序、长文进度、取消与多模型降级行为。此次网络实测，短句约 1.5–1.9 秒，12 段文字约 4.3 秒；耗时会随网络和服务状态变化。\n\n安装 `.wsplugin`；已有词库无需重新下载。继续复用 WinShun 的 Qt 6.12，不需要 Python。附件为本地编译并完成上述验证的安装包。Google 限流及 Edge 认证失败属于服务端状态，仍会跳过；本版不保证所有免费服务随时可用。\n\nWinShun 可能在更新后要求重新确认管理员权限；普通权限翻译不受此限制。"
+    "zh": "划词小图标现在显示在松开鼠标的位置旁。\n\n- 正向、反向和跨行选择都按鼠标松开位置定位，不再固定贴在文字末尾。\n- 读取过程中鼠标继续移动，不会带跑图标。\n- 保留主屏/副屏缩放换算与屏幕边缘避让。\n- 包含 0.4.22 的弹窗黑线修复、Firefox 首次选区预备读取和热键读取排队修复。\n\n运行时复用 WinShun Qt 6.12，无需 Python。已有配置与词典保留。",
+    "en": "划词小图标现在显示在松开鼠标的位置旁。\n\n- 正向、反向和跨行选择都按鼠标松开位置定位，不再固定贴在文字末尾。\n- 读取过程中鼠标继续移动，不会带跑图标。\n- 保留主屏/副屏缩放换算与屏幕边缘避让。\n- 包含 0.4.22 的弹窗黑线修复、Firefox 首次选区预备读取和热键读取排队修复。\n\n运行时复用 WinShun Qt 6.12，无需 Python。已有配置与词典保留。"
   }
 }
