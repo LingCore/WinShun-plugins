@@ -53,6 +53,15 @@ def problems_lines(asset: check.Asset) -> list[str]:
     return [f"- 错误：{t}" for t in asset.errors] + [f"- 警告：{t}" for t in asset.warnings]
 
 
+def moved_repo(repo: str, now: str) -> str | None:
+    """条目里的仓库 repo 和 GitHub 现在给的地址里的仓库 now 比：没变是 None，作者自己改了仓库名是
+    "renamed"，换了作者（仓库转给了别人）是 "transferred"。GitHub 对改名和转移都会跳转，
+    列 Release 拿到的是新名字下的地址。"""
+    if repo.lower() == now.lower():
+        return None
+    return "renamed" if repo.split("/")[0].lower() == now.split("/")[0].lower() else "transferred"
+
+
 def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[str, Finding | None, dict | None]:
     """检查一个新版本。返回 (摘要里的结果, 要人看的一项, 能直接收录的新条目)。"""
     pid, repo = entry["id"], entry["repo"]
@@ -63,10 +72,13 @@ def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[st
     native = new.unreviewed_native
     parts = registry.asset_url(url)
     old_parts = registry.asset_url(entry["url"])
+    # 仓库改了名：条目的 repo 跟着改，不然 url 和 repo 对不上，check.py 不过，整个工作流停下，
+    # 别的插件也收录不了（2026-11 ra9fael/winshun-bosskey → ra9fael/ra9fael.bosskey）。
+    moved = moved_repo(repo, parts.repo) if parts else None
     links = [f"- 插件仓库：https://github.com/{repo}"]
     if parts:
         links.append(f"- 这个版本的代码：{registry.tree_url(parts.repo, parts.tag)}")
-        if old_parts and old_parts.repo.lower() == parts.repo.lower():
+        if old_parts and (old_parts.repo.lower() == parts.repo.lower() or moved == "renamed"):
             links.append(f"- 和上一版对比：{registry.compare_url(parts.repo, old_parts.tag, parts.tag)}")
     if new.errors or not new.fields:
         body = [f"## 自动更新没通过检查：`{pid}` {version}", "",
@@ -75,14 +87,17 @@ def look(entry: dict, version: str, release: dict, asset_info: dict) -> tuple[st
         return "检查没过，开 Issue", Finding("issue", pid, version, f"自动更新没通过检查：{pid} {version}", body), None
 
     kept = {k: v for k, v in entry.items() if k not in registry.OPTIONAL_KEYS}  # 说明跟着版本走：旧版本的不留到新版本上
-    updated = registry.ordered({**kept, **new.fields, **({"notes": new.notes} if new.notes else {}),
-                                **({"review": "unreviewed-native"} if native else {})})  # id、repo、autoUpdate、bundled、hosted、dateAdded 照旧
+    updated = registry.ordered({**kept, **({"repo": parts.repo} if moved else {}), **new.fields,
+                                **({"notes": new.notes} if new.notes else {}),
+                                **({"review": "unreviewed-native"} if native else {})})  # id、autoUpdate、bundled、hosted、dateAdded 照旧
     old = check.check_asset(entry["url"], expected_id=pid, unreviewed_native=unreviewed)  # 现在收录的包，拿来比权限和文件
     # 插件由作者维护，插件库只做机器检查。Win顺 会问用户的就直接收录：未审核原生插件的
     # 每次安装和更新都要用户确认；多要的权限，更新前先问用户同意。Win顺 不会再问的
     # 改动（脚本插件的权限范围、运行方式变了），才开 PR 给维护者看。
     reasons: list[str] = []
     diff_lines: list[str] = []
+    if moved == "transferred":  # 换了作者：是不是同一个人，要维护者看
+        reasons.append(f"仓库从 {repo} 转到了 {parts.repo}")
     if old.package is None or old.package.manifest is None:
         if not native:
             reasons.append("现在收录的包下载或检查不了，没法比较")
@@ -132,6 +147,16 @@ def run_update(root: Path, only: set[str], write: bool) -> tuple[list[str], list
             continue
         version, release, asset_info = best
         state, finding, entry = look(e, version, release, asset_info)
+        if entry:
+            # 写之前先过 check.py 的同一套字段检查：写进去的条目不过，后面的 check.py 会让整个工作流停下，
+            # 别的插件的更新也推不上去。不过的这一个不收录，开 Issue。
+            fields = check.Report(r.id)
+            check.check_entry_fields(fields, entry, root)
+            if fields.errors:
+                body = [f"## 自动更新没通过检查：`{r.id}` {version}", "",
+                        f"{e['repo']} 的 Release 上有新版本 {version}，但生成的条目没通过检查，插件库还停在 {e['version']}。", ""]
+                body += [f"- 错误：{t}" for t in fields.errors] + ["", "维护者修好条目（python tools/entry.py <包的网址>）就行。"]
+                state, finding, entry = "条目没通过检查，开 Issue", Finding("issue", r.id, version, f"自动更新没通过检查：{r.id} {version}", body), None
         rows.append(f"| `{r.id}` | {e['version']} | {version} | {state} |")
         if finding:
             findings.append(finding)
