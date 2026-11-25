@@ -45,6 +45,7 @@ OFFICIAL_NATIVE = {
     "winshun.ocr-search": ("WinShunOcrSearch.exe", ("WinShunOcrSearchApp.dll",), "ocr-search-plugin"),
     "winshun.semantic": ("WinShunSemantic.exe", (), "semantic-plugin"),
     "winshun.sync": ("WinShunSync.exe", (), "sync-plugin"),
+    "winshun.topmost": ("WinShunTopmost.exe", (), "topmost-plugin"),
     "winshun.translate": ("WinShunTranslate.exe", (), "translate-plugin"),
 }
 

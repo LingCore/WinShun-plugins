@@ -2,10 +2,10 @@
   "id": "winshun.bookmarks",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.1",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.2.1/winshun.bookmarks-2.2.1.wsplugin",
-  "sha256": "ebc2335556ee8a78d3d7ebee37042cfc9ab415940b06f7802bf7c77db968027f",
-  "size": 259101,
+  "version": "2.2.2",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.bookmarks-v2.2.2/winshun.bookmarks-2.2.2.wsplugin",
+  "sha256": "a59db0c0eb27c0a9616ca86b04e2ce1ba31615ea6967fd2f51165c258e9e8e1b",
+  "size": 259093,
   "name": {
     "zh": "浏览器书签",
     "en": "Browser bookmarks"
@@ -30,10 +30,10 @@
     "program": "WinShunBookmarks.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-24T13:05:46Z",
+  "releaseDate": "2026-11-25T06:07:36Z",
   "dateAdded": "2026-10-23T09:12:34Z",
   "notes": {
-    "zh": "浏览历史只用 bh，ls 留给局域网传输：两个插件都装着时，以前 ls 哪个都打不开。权限不变。",
-    "en": "The browsing history answers to bh only, leaving ls to LAN transfer: with both installed, ls used to open neither. Permissions unchanged."
+    "zh": "跟着 Win顺 0.46.0 的插件开发包重新构建，用起来没有变化。权限不变。",
+    "en": "Rebuilt with WinShun 0.46.0's plugin SDK; nothing changes in use. Permissions unchanged."
   }
 }

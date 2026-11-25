@@ -2,10 +2,10 @@
   "id": "winshun.break",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.break-v1.1.2/winshun.break-1.1.2.wsplugin",
-  "sha256": "fd3d9ea526863073b155e0b328d83e3cdd8f4fe4b229ed76be9445d3b61cafaf",
-  "size": 242224,
+  "version": "1.1.3",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.break-v1.1.3/winshun.break-1.1.3.wsplugin",
+  "sha256": "20f59c22948d61730afb92c3e67cf7a6a0f13a3b075c077cc436d77383725fd6",
+  "size": 242324,
   "name": {
     "zh": "休息提醒",
     "en": "Break reminder"
@@ -29,10 +29,10 @@
     "program": "WinShunBreak.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-19T15:08:57Z",
+  "releaseDate": "2026-11-25T06:05:43Z",
   "dateAdded": "2026-11-01T08:10:28Z",
   "notes": {
-    "zh": "跟着 Win顺 0.41.0 的插件开发包重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.41.0's plugin SDK; nothing changes in use. Permissions unchanged."
+    "zh": "跟着 Win顺 0.46.0 的插件开发包重新构建，用起来没有变化。权限不变。",
+    "en": "Rebuilt with WinShun 0.46.0's plugin SDK; nothing changes in use. Permissions unchanged."
   }
 }

@@ -2,10 +2,10 @@
   "id": "winshun.expander",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": true,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.expander-v1.0.0/winshun.expander-1.0.0.wsplugin",
-  "sha256": "c0485d29810ba42f7a84465ef7de83634e30d36f6c59ba78caf80332d78f9e20",
-  "size": 202582,
+  "version": "1.0.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.expander-v1.0.1/winshun.expander-1.0.1.wsplugin",
+  "sha256": "99c0e95c41fc54e43565deddd9571833dd683a395a88416c571e77473b93679f",
+  "size": 202650,
   "name": {
     "zh": "缩写展开",
     "en": "Text expander"
@@ -29,10 +29,10 @@
     "program": "WinShunExpander.exe"
   },
   "minWinShun": "0.41.0",
-  "releaseDate": "2026-11-19T15:08:42Z",
+  "releaseDate": "2026-11-25T06:06:56Z",
   "dateAdded": "2026-11-19T15:08:45Z",
   "notes": {
-    "zh": "新插件：缩写展开。在任何地方打 `cmd` 再按空格、回车、Tab 或标点，就换成 `command`；缩写和内容在插件卡片上自己写，一行一条，内容可以有好几行；紧接着按退格撤回。输入法在打中文时、Win顺 自己的窗口里、以管理员身份运行的窗口里不展开，也可以列出不用的程序。在 Win顺 里输入 `缩写` 列出、暂停。需要 Win顺 0.41.0。",
-    "en": "New plugin: text expander. Type `cmd` and a space, Enter, Tab or a punctuation mark anywhere and it becomes `command`; the abbreviations are yours, written on the plugin's card one per line, and may run over several lines; Backspace right after takes it back. Not while the input method composes Chinese, in WinShun's own windows or in windows run as administrator, nor in programs you list. Type `expander` in WinShun to list and pause them. Needs WinShun 0.41.0."
+    "zh": "跟着 Win顺 0.46.0 的插件开发包重新构建，用起来没有变化。权限不变。",
+    "en": "Rebuilt with WinShun 0.46.0's plugin SDK; nothing changes in use. Permissions unchanged."
   }
 }

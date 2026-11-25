@@ -2,10 +2,10 @@
   "id": "winshun.devtools",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.5",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.devtools-v1.0.5/winshun.devtools-1.0.5.wsplugin",
-  "sha256": "c333225d24a39aba6341aa6fe2bf9fb709ff40c70c9ade79a87c9001f176aa3d",
-  "size": 1066175,
+  "version": "1.0.6",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.devtools-v1.0.6/winshun.devtools-1.0.6.wsplugin",
+  "sha256": "42d3174eb5bfec32c8743c17407042b9ddff16137a79f49fcd520841e2ea1ee4",
+  "size": 1066792,
   "name": {
     "en": "Developer tools",
     "zh": "开发工具"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunDevTools.exe"
   },
-  "minWinShun": "0.45.0",
-  "releaseDate": "2026-11-24T13:05:54Z",
+  "minWinShun": "0.46.0",
+  "releaseDate": "2026-11-25T06:06:26Z",
   "dateAdded": "2026-11-18T10:12:26Z",
   "notes": {
-    "zh": "用 Win顺 0.45.0 的共用窗口、主题和搜索代码重新编译。权限不变。",
-    "en": "Rebuilt with WinShun 0.45.0's shared window, theme and search code. Permissions unchanged."
+    "zh": "空闲时为快速打开预留的内存最多 64 MB（#459），用 Win顺 0.46.0 的共用代码重新编译。权限不变。",
+    "en": "At most 64 MB kept in memory for a quick opening at rest (#459); rebuilt with WinShun 0.46.0's shared code. Permissions unchanged."
   }
 }

@@ -1,0 +1,38 @@
+{
+  "id": "winshun.topmost",
+  "repo": "LingCore/WinShun-plugins",
+  "autoUpdate": false,
+  "version": "1.0.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.topmost-v1.0.0/winshun.topmost-1.0.0.wsplugin",
+  "sha256": "a7ea5b3f2e95a4f5d226269124b65f672ace99e7f53453e9118254e94f593b9c",
+  "size": 196204,
+  "name": {
+    "zh": "窗口置顶",
+    "en": "Always on top"
+  },
+  "description": {
+    "zh": "按一下快捷键，当前窗口就一直显示在其他窗口上面，再按一下取消；也可以在搜索框里输入“置顶”挑一个窗口。管理员身份运行的窗口改不了",
+    "en": "One shortcut keeps the window in front above the others, and takes it off again; or type “top” in the search box and pick a window. Not for windows run as administrator"
+  },
+  "author": "LingCore",
+  "license": "MIT",
+  "homepage": "https://github.com/LingCore/WinShun",
+  "keywords": [
+    "置顶",
+    "top"
+  ],
+  "permissions": [
+    "ui"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "WinShunTopmost.exe"
+  },
+  "minWinShun": "0.45.0",
+  "releaseDate": "2026-11-25T06:06:08Z",
+  "dateAdded": "2026-11-25T06:06:10Z",
+  "notes": {
+    "zh": "新插件：Win+Ctrl+T 把当前窗口放在所有窗口最前，再按一次取消（快捷键可改，由 Win顺 注册）；输入“置顶”或 top 列出打开的窗口，已置顶的在前，Enter 切换。窗口顶部会短暂显示结果，做不到时（管理员窗口、没有响应、已关闭）说明原因。插件停止时取消它置顶过的窗口。",
+    "en": "New plugin: Win+Ctrl+T keeps the current window above all others and a second press takes it off (the key can be changed and is registered by WinShun); 置顶 or top lists the open windows, those on top first, Enter switches one. A note at the window's top says what happened, or why it could not (an administrator's window, not responding, closed). Windows it put on top come off when the plugin stops."
+  }
+}

@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.30",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.30/winshun.ocr-search-1.0.30.wsplugin",
-  "sha256": "8fb3cf3989e8a7563812ad8185618456f9ebec7da48d2d0400000efcb4cc5c67",
-  "size": 1365217,
+  "version": "1.0.31",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.31/winshun.ocr-search-1.0.31.wsplugin",
+  "sha256": "524a18ad9c0b0f9942da13ac7d45a5914fb0f3b6dce1ff8582b456265a6a8f96",
+  "size": 1367601,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.45.0",
-  "releaseDate": "2026-11-24T13:06:04Z",
+  "minWinShun": "0.46.0",
+  "releaseDate": "2026-11-25T06:06:17Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "用 Win顺 0.45.0 的共用窗口、主题和搜索代码重新编译。权限不变。",
-    "en": "Rebuilt with WinShun 0.45.0's shared window, theme and search code. Permissions unchanged."
+    "zh": "空闲时为快速打开预留的内存最多 64 MB（#459），用 Win顺 0.46.0 的共用代码重新编译。权限不变。",
+    "en": "At most 64 MB kept in memory for a quick opening at rest (#459); rebuilt with WinShun 0.46.0's shared code. Permissions unchanged."
   }
 }
