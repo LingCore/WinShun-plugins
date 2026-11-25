@@ -1,0 +1,48 @@
+{
+  "id": "learning-kai.obsidian-todo",
+  "repo": "learning-kai/winshun-obsidian-todo",
+  "autoUpdate": true,
+  "version": "1.3.1",
+  "url": "https://github.com/learning-kai/winshun-obsidian-todo/releases/download/v1.3.1/learning-kai.obsidian-todo-1.3.1.wsplugin",
+  "sha256": "54ddfd442831b2b66d4fd3c89c6c09539ad9de5cbb77728999667f5c0d4fbd58",
+  "size": 888077,
+  "name": {
+    "zh": "Obsidian 待办便签",
+    "en": "Obsidian Todo Sticky"
+  },
+  "description": {
+    "zh": "暖纸极简风 Obsidian 桌面待办便签（与 Tasks.md 实时双向同步），内置桌面倒计时磁贴（搜「倒计时 分钟数」即开即用）。",
+    "en": "Warm-paper minimalist Obsidian desktop todo sticky tile synced with Tasks.md, plus a floating desktop countdown tile."
+  },
+  "author": "learning-kai",
+  "license": "MIT",
+  "homepage": "https://github.com/learning-kai/winshun-obsidian-todo",
+  "keywords": [
+    "otodo",
+    "bq",
+    "td",
+    "便签",
+    "清单",
+    "待办便签",
+    "倒计时",
+    "djs",
+    "timer"
+  ],
+  "permissions": [
+    "files:write",
+    "ui",
+    "winshun:open",
+    "files:read"
+  ],
+  "runtime": {
+    "mode": "resident",
+    "program": "python"
+  },
+  "minWinShun": "",
+  "releaseDate": "2026-11-25T05:09:03Z",
+  "dateAdded": "2026-11-25T05:10:03Z",
+  "notes": {
+    "zh": "首个公开发布版本：暖纸极简风 Obsidian 桌面待办便签（与 Tasks.md 实时无损双向同步，兼容 888bik.obsidian-quicknote 格式），支持圆角复选框、8 方向缩放、行内编辑、删除撤销、置顶与不透明度调节；内置独立桌面倒计时磁贴（方形水彩卡 / 圆形渐变表盘 / 极简胶囊条三形态切换、滚轮 ±1 分钟微调、真每像素透明投影与定制柔润风铃提示音）。",
+    "en": "Initial public release: warm-paper minimalist Obsidian desktop todo sticky tile with real-time lossless two-way Tasks.md sync (compatible with 888bik.obsidian-quicknote), featuring rounded checkboxes, 8-way resize, inline editing, undo delete, pin & opacity controls; plus a standalone layered floating countdown tile (Square Watercolor / Circular Gradient Dial / Minimal Pill shapes, ±1 min scroll adjustment, true per-pixel alpha shadow, and custom gentle chime)."
+  }
+}
