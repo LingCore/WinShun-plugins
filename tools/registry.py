@@ -33,6 +33,7 @@ NOTES_MAX = 2000                  # 条目里 notes 每种语言最多这么多�
 # Native binaries are accepted only from these official release assets.
 # A manifest, entry flag or an author's choice of id cannot grant this exception.
 OFFICIAL_NATIVE = {
+    "winshun.archive": ("WinShunArchive.exe", (), "archive-plugin"),
     "winshun.bookmarks": ("WinShunBookmarks.exe", (), "bookmarks-plugin"),
     "winshun.break": ("WinShunBreak.exe", (), "break-plugin"),
     "winshun.capture": ("WinShunCapture.exe", ("WinShunCaptureApp.dll",), "capture-plugin"),

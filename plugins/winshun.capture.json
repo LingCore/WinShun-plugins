@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.36",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.36/winshun.capture-1.1.36.wsplugin",
-  "sha256": "9b2f201a76da82fde4ea4f1b224f6a3614f43e8973d2fec3de5d8cbee6fe9ec5",
-  "size": 3207430,
+  "version": "1.1.37",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.37/winshun.capture-1.1.37.wsplugin",
+  "sha256": "7c85bf0a10a83287d1e0882576a8b235ceddb1f7ac8740a9da1ab73f4ff67fec",
+  "size": 3211280,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-25T06:52:58Z",
+  "releaseDate": "2026-11-25T08:58:41Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "Win顺 0.46.0 装着索引服务时，截图能直接盖在全屏的商店应用（媒体播放器的视频等）上，播放器不再先退出全屏，复制、保存、取消后也不闪出控制条和任务栏；要弹出新窗口的操作（另存为、贴图、识别文字、二维码、长截图、录屏等）才先退出全屏。便携版、更早的 Win顺 或没有索引服务时照旧按 1.1.35 的办法。这条新路径未在真实全屏播放器上实测。长截图（Ctrl+L）和录屏（Ctrl+R）的键可以改，截图中的键能设成单个字母（#455）；收在屏幕顶边的贴图能沿顶边拖动（#456）；上一次截图点过“保存”后，下一次按 Enter 又是复制了。录屏同时给出量化参数，AMD 显卡改按明确的码率录，日志写明编码器实际的设置。空闲时为快速打开预留的内存最多 64 MB（#459）。权限不变。",
-    "en": "With WinShun 0.46.0 and its index service, the capture shows right over a Store app in full screen (a Media Player video and the like) without taking it out of full screen, and copying, saving or cancelling no longer flashes its controls or the taskbar; actions that open windows of their own (Save As, pin, text recognition, QR codes, long screenshots, recording and the like) leave full screen first. Portable, older WinShun or no index service: as in 1.1.35. The new path has not been run on a real full-screen player. The long screenshot (Ctrl+L) and recording (Ctrl+R) keys can be changed, and capture keys may be a single letter (#455); a pin tucked at the screen's top edge can be dragged along it (#456); after Save was clicked in one capture, Enter copies again in the next. Recording gives the encoder the quantizer too, AMD cards record at an explicit bitrate, and the log says what the encoder holds. At most 64 MB is kept in memory for a quick opening at rest (#459). Permissions unchanged."
+    "zh": "画笔、荧光笔在图上点一下就留一个圆点，不用拖（#461）；截图和编辑图片时，鼠标指针显示成笔尖的大小和颜色。标注工具栏最前面多了“选择”按钮（箭头），点它放下正在用的工具，回到选择和移动。权限不变。",
+    "en": "A click with the pen or the highlighter leaves a dot (#461), and while capturing or editing a picture the pointer shows the brush tip's size and colour. A Select button (an arrow) first on the annotation toolbar puts the current tool down. Permissions unchanged."
   }
 }

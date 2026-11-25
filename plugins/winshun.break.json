@@ -2,10 +2,10 @@
   "id": "winshun.break",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.3",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.break-v1.1.3/winshun.break-1.1.3.wsplugin",
-  "sha256": "20f59c22948d61730afb92c3e67cf7a6a0f13a3b075c077cc436d77383725fd6",
-  "size": 242324,
+  "version": "1.1.4",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.break-v1.1.4/winshun.break-1.1.4.wsplugin",
+  "sha256": "4bb646cb2df9bf31c5ed0e1e775e3295e0aa3e5611d2b6923d83b9b93cd53900",
+  "size": 242389,
   "name": {
     "zh": "休息提醒",
     "en": "Break reminder"
@@ -29,10 +29,10 @@
     "program": "WinShunBreak.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-25T06:05:43Z",
+  "releaseDate": "2026-11-25T08:59:35Z",
   "dateAdded": "2026-11-01T08:10:28Z",
   "notes": {
-    "zh": "跟着 Win顺 0.46.0 的插件开发包重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.46.0's plugin SDK; nothing changes in use. Permissions unchanged."
+    "zh": "“提前多少秒提醒”设成 0 时，到点直接休息，不再先闪一下提示条。权限不变。",
+    "en": "With the notice set to 0 seconds, a break starts when due without the notice bar flashing first. Permissions unchanged."
   }
 }
