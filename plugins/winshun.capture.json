@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.34",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.34/winshun.capture-1.1.34.wsplugin",
-  "sha256": "27e8bd70ca69e07ccbeaa0a85fa490d89d70d44c7b05e0cbacb83ea26437f3ab",
-  "size": 3167494,
+  "version": "1.1.35",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.35/winshun.capture-1.1.35.wsplugin",
+  "sha256": "62995ef224e484fa8f3600abdaecc379e283b18f81c5a6c623138ac25e62d209",
+  "size": 3170989,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-25T00:17:48Z",
+  "releaseDate": "2026-11-25T01:45:33Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "修复 1.1.33 截图工具条按钮错乱：点“贴图”会直接退出截图，点“识别文字”会弹出保存，现在都恢复正常。1.1.33 的新内容——录屏：画质分小体积、标准、高清、超清四档，超清把不超过 1920×1080 的区域按两倍大小录，彩色文字更清楚；MP4 帧率可选 15 / 30 / 60；可加“鼠标拖尾”；选项排成两列；GIF 可以放弃本次录制。贴图：可以分组（#451），新的“截图并直接贴图”快捷键（#450），连按贴图键找回之前的截图和关掉的贴图（#446），从文件打开的图片按 Ctrl+S 存回原文件（#427），几张一起贴时错开排列，提示浮在贴图外面。截图：新的聚光灯工具（G），长截图连续自动滚动、拼接更稳，识别文字窗口可以合并换行、Ctrl+Enter 复制并关闭，序号工具多了 A B C、Ⅰ Ⅱ Ⅲ、① ② ③ 等写法；翻译服务的密钥不对时直接说明（#444）。插件的日志写进 plugins.log；菜单圆角外不再有方形阴影。权限不变。",
-    "en": "Fixes the screenshot toolbar in 1.1.33: 贴图 (Pin) closed the capture and 识别文字 (Read text) opened Save; both work again. New in 1.1.33 — Recording: four qualities, Ultra recording a region up to 1920×1080 at twice its size for sharp coloured text; MP4 at 15, 30 or 60 frames a second; an optional cursor trail; options in two columns; a GIF can be thrown away. Pins: groups (#451), a capture-and-pin shortcut (#450), the pin key brings back earlier screenshots and closed pins (#446), Ctrl+S saves a picture opened from a file back to it (#427), pins asked for together are set off one another, hints float outside the pin. Screenshot: a Spotlight tool (G), long screenshots scroll by themselves with steadier stitching, the text window joins broken lines and Ctrl+Enter copies and closes, more number styles; a refused translation key is named as such (#444). The plugin's log reaches plugins.log; menus lose the square shadow round their rounded corners. Permissions unchanged."
+    "zh": "全屏播放视频时也能截图了：系统自带的“媒体播放器”等商店应用全屏时，以前截图框被压在视频下面看不见，按 Esc 也只会让播放器退出全屏、截图却退不出来；现在按截图键，截图框照常盖上来，截的就是全屏画面，Esc 正常退出；复制、保存或取消后，播放器自动回到全屏（贴图、识别文字、录屏后保持窗口模式，方便看到结果）。万一系统不让切换，会结束这次截图并弹通知说明原因。权限不变。",
+    "en": "Screenshots over a full-screen video: when Windows' Media Player or another Store app was in full screen, the capture overlay stayed hidden under the video and Esc only took the player out of full screen, leaving the capture stuck. Now the capture key brings the overlay over it with the full-screen picture, and Esc works; after copying, saving or cancelling, the player goes back into full screen (after a pin, read text or a recording it stays in a window so the result can be seen). If Windows refuses the switch, the capture ends with a notification saying why. Permissions unchanged."
   }
 }
