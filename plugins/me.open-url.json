@@ -3,17 +3,17 @@
   "repo": "888bik/winshun-open-url",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "1.1.0",
-  "url": "https://github.com/888bik/winshun-open-url/releases/download/v1.1.0/me.open-url-1.1.0.wsplugin",
-  "sha256": "347de33568b4b9b06b570e24d7e88cd42d38a9a0ce1c3ede21433ba63137ad75",
-  "size": 862882,
+  "version": "1.2.1",
+  "url": "https://github.com/888bik/winshun-open-url/releases/download/v1.2.1/me.open-url-1.2.1.wsplugin",
+  "sha256": "26af63515323cc5634ffcf64a391ba0aeb3b86120a17f99a5f96b1b05e0a1dde",
+  "size": 2022489,
   "name": {
     "zh": "打开网址",
     "en": "Open URL"
   },
   "description": {
-    "zh": "原生 EXE 版网址识别，无需安装 Python；输入网址即可在默认浏览器打开。",
-    "en": "Native executable URL detection. No Python installation required."
+    "zh": "原生 EXE 版网址识别，无需安装 Python；支持从整段文字中提取多个网址，输入网址即可在默认浏览器打开。",
+    "en": "Native executable URL detection. No Python installation required. Extracts multiple URLs from pasted text."
   },
   "author": "888bik",
   "license": "MIT",
@@ -27,10 +27,10 @@
     "program": "open-url.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-13T14:40:06Z",
+  "releaseDate": "2026-11-24T15:01:07Z",
   "dateAdded": "2026-11-10T13:27:37Z",
   "notes": {
-    "zh": "## 1.1.0\n\n- 由 Python 脚本改为独立 Windows x64 EXE，用户不再需要安装 Python。\n- 保留插件 ID、网址自动识别、url 关键字、裸域名设置和原有安全校验。\n- 防抖调整为 120ms，普通文件名（如 main.py、readme.md）不再触发插件。\n- 单次执行内存预算 64 MiB、超时 1200ms。\n- 不申请权限，不联网，不访问文件或剪贴板。\n\n安装：原生 EXE 插件安装时会弹一次确认，点确认即可。",
-    "en": "## 1.1.0\n\n- 由 Python 脚本改为独立 Windows x64 EXE，用户不再需要安装 Python。\n- 保留插件 ID、网址自动识别、url 关键字、裸域名设置和原有安全校验。\n- 防抖调整为 120ms，普通文件名（如 main.py、readme.md）不再触发插件。\n- 单次执行内存预算 64 MiB、超时 1200ms。\n- 不申请权限，不联网，不访问文件或剪贴板。\n\n安装：原生 EXE 插件安装时会弹一次确认，点确认即可。"
+    "zh": "## 1.2.1\n- 结果图标换成网站自己的 favicon：每条网址结果的 Icon 写为 `site:` + 归一化后的完整网址，Win顺 向该网站取一次图标并本地缓存一个月，没取到之前显示默认图标（localhost、IP、内网地址回落为默认图标，属预期行为）。\n- 插件仍不联网、不下载 favicon、不写缓存文件、不申请权限，只负责把 Icon 字段写对；keyword 模式的 hint 提示行保持地球 glyph 不变。\n- 补测试：触发正则增加\"纯文字今天天气不错不触发\"断言；新增图标字段测试（单条、多条各对各、hint 行保持 glyph）。",
+    "en": "## 1.2.1\n- 结果图标换成网站自己的 favicon：每条网址结果的 Icon 写为 `site:` + 归一化后的完整网址，Win顺 向该网站取一次图标并本地缓存一个月，没取到之前显示默认图标（localhost、IP、内网地址回落为默认图标，属预期行为）。\n- 插件仍不联网、不下载 favicon、不写缓存文件、不申请权限，只负责把 Icon 字段写对；keyword 模式的 hint 提示行保持地球 glyph 不变。\n- 补测试：触发正则增加\"纯文字今天天气不错不触发\"断言；新增图标字段测试（单条、多条各对各、hint 行保持 glyph）。"
   }
 }

@@ -3,10 +3,10 @@
   "repo": "iuuuuuuuu/winshun-screenshot-translate",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.4.19",
-  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.19/iuuuuuuuu.screenshot-translate-0.4.19.wsplugin",
-  "sha256": "24f525636e5d954688cdd198460c660906f1ff925561b91f163145d3756daaa1",
-  "size": 7537957,
+  "version": "0.4.20",
+  "url": "https://github.com/iuuuuuuuu/winshun-screenshot-translate/releases/download/v0.4.20/iuuuuuuuu.screenshot-translate-0.4.20.wsplugin",
+  "sha256": "cf3a9ce58ef66dcbc385395cec660c744f84578ada5d2fa452061cecaaeb3058",
+  "size": 7548071,
   "name": {
     "zh": "截图翻译",
     "en": "Screenshot Translate"
@@ -42,10 +42,10 @@
     "program": "ScreenshotTranslate.exe"
   },
   "minWinShun": "0.23.0",
-  "releaseDate": "2026-11-19T05:31:38Z",
+  "releaseDate": "2026-11-23T14:59:58Z",
   "dateAdded": "2026-11-05T23:48:00Z",
   "notes": {
-    "zh": "默认翻译渠道改为 ECDICT 并放在首位；已有的手动渠道选择不会覆盖。ECDICT 查不到普通句子时自动继续使用备用翻译渠道。包含长文分批和逐句翻译、OCR 识别优化、选词首读修复、冷却退避和渠道拖拽排序改进。安装包复用 WinShun 宿主 Qt 6.12，不捆绑 Qt 运行库。安装包不含 ECDICT 数据；提供单独词库附件和 SHA-256 校验文件。",
-    "en": "默认翻译渠道改为 ECDICT 并放在首位；已有的手动渠道选择不会覆盖。ECDICT 查不到普通句子时自动继续使用备用翻译渠道。包含长文分批和逐句翻译、OCR 识别优化、选词首读修复、冷却退避和渠道拖拽排序改进。安装包复用 WinShun 宿主 Qt 6.12，不捆绑 Qt 运行库。安装包不含 ECDICT 数据；提供单独词库附件和 SHA-256 校验文件。"
+    "zh": "本版修复临时故障后翻译长期不可用，以及自动降级先等待故障渠道的问题。\n\n- 自动权重优先使用最近成功的备用渠道；ECDICT 仍保持默认首位。\n- 全部备用失败时，临时故障允许一次恢复检查，并按 1、2、4、5 分钟逐步退避；认证失败和限流仍保持长冷却。\n- 冷却期间仍可返回已缓存的译文，设置页显示失败原因和恢复检查状态。\n- 多段截图降级到逐条请求的服务时，按请求数量安排时间；MyMemory 分块使用有上限的并发。\n- 区分 MyMemory 的临时服务故障与额度耗尽；Google 优先使用 gtx 入口。\n\n验证：原生核心回归、安装包独立桌面界面测试、实际网络自动降级及安装后的入口测试通过。保留渠道禁用、排序、长文进度、取消与多模型降级行为。此次网络实测，短句约 1.5–1.9 秒，12 段文字约 4.3 秒；耗时会随网络和服务状态变化。\n\n安装 `.wsplugin`；已有词库无需重新下载。继续复用 WinShun 的 Qt 6.12，不需要 Python。附件为本地编译并完成上述验证的安装包。Google 限流及 Edge 认证失败属于服务端状态，仍会跳过；本版不保证所有免费服务随时可用。\n\nWinShun 可能在更新后要求重新确认管理员权限；普通权限翻译不受此限制。",
+    "en": "本版修复临时故障后翻译长期不可用，以及自动降级先等待故障渠道的问题。\n\n- 自动权重优先使用最近成功的备用渠道；ECDICT 仍保持默认首位。\n- 全部备用失败时，临时故障允许一次恢复检查，并按 1、2、4、5 分钟逐步退避；认证失败和限流仍保持长冷却。\n- 冷却期间仍可返回已缓存的译文，设置页显示失败原因和恢复检查状态。\n- 多段截图降级到逐条请求的服务时，按请求数量安排时间；MyMemory 分块使用有上限的并发。\n- 区分 MyMemory 的临时服务故障与额度耗尽；Google 优先使用 gtx 入口。\n\n验证：原生核心回归、安装包独立桌面界面测试、实际网络自动降级及安装后的入口测试通过。保留渠道禁用、排序、长文进度、取消与多模型降级行为。此次网络实测，短句约 1.5–1.9 秒，12 段文字约 4.3 秒；耗时会随网络和服务状态变化。\n\n安装 `.wsplugin`；已有词库无需重新下载。继续复用 WinShun 的 Qt 6.12，不需要 Python。附件为本地编译并完成上述验证的安装包。Google 限流及 Edge 认证失败属于服务端状态，仍会跳过；本版不保证所有免费服务随时可用。\n\nWinShun 可能在更新后要求重新确认管理员权限；普通权限翻译不受此限制。"
   }
 }

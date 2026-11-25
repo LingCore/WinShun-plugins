@@ -1,17 +1,17 @@
 {
   "id": "ra9fael.bosskey",
-  "repo": "ra9fael/winshun-bosskey",
+  "repo": "ra9fael/ra9fael.bosskey",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.0",
-  "url": "https://github.com/ra9fael/winshun-bosskey/releases/download/v0.1.0/ra9fael.bosskey-0.1.0.wsplugin",
-  "sha256": "5a79ab5b778fd3ee2f0388262b5c4347bc3f9926effca91e443fd394efad449d",
-  "size": 570521,
+  "version": "0.1.4",
+  "url": "https://github.com/ra9fael/ra9fael.bosskey/releases/download/v0.1.4/ra9fael.bosskey-0.1.4.wsplugin",
+  "sha256": "9a13e676a6f5ca61e987194f849af2a5e134510462c3b331b001154a11cc3a1a",
+  "size": 2550108,
   "name": {
     "zh": "老板键",
     "en": "Boss Key"
   },
-  "description": "boss 来了：一键全屏伪装成蓝屏 / Windows 更新 / gcc 编译现场；退出按键序列与自动消失时间可配置。",
+  "description": "boss 来了：一键全屏伪装成蓝屏 / Windows 更新 / gcc 编译现场 / 黑客帝国代码雨 / 黑洞；退出按键序列与自动消失时间可配置。",
   "author": "ra9fael",
   "license": "MIT",
   "homepage": "",
@@ -20,6 +20,7 @@
     "摸鱼"
   ],
   "permissions": [
+    "processes",
     "ui"
   ],
   "runtime": {
@@ -27,10 +28,10 @@
     "program": "bosskey.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-07T09:34:51Z",
+  "releaseDate": "2026-11-23T21:16:06Z",
   "dateAdded": "2026-11-07T09:35:28Z",
   "notes": {
-    "zh": "### Added\n\n- First release of the boss key cover. `boss b` / `boss u` / `boss t` (Enter) turn the screen into a fullscreen fake bluescreen, Windows Update, or a streaming gcc build; `boss ` with no argument lists the three scenes. The top-level keyword also answers to the Chinese alias `摸鱼`.\n- The exit key sequence (default `deadbeef`, case-insensitive, letters and digits only) is typed directly on the cover; every other keystroke is swallowed and never shown.\n- Settings: sub-trigger map (e.g. `b=bsod,u=update,t=gcc`), exit key sequence, auto-dismiss seconds (0 = manual), the gcc scene's project name, and display coverage (the mouse's screen or all displays).\n- The cover windows are precreated hidden at startup, so showing one is showFullScreen + raise — up before the boss crosses the room.\n- The covers render through Qt's software rasterizer (set `BOSSKEY_RENDERER=d3d11` for the GPU): they are solid colors and text, and the raster path keeps the process at ~33 MB commit with a fullscreen window per screen (measured with two 2560×1440 displays), against ~210 MB for D3D11 swapchains plus texture atlases. Zero GPU usage also makes the \"the machine is busy\" story more convincing.\n- The bluescreen and the update screen climb with a piecewise pacing (fast, a stall at the classic 87%, a slow crawl); the gcc scene streams a deterministic, realistic `gcc -Wall -O2` log with real-format warnings.\n- The blue screen's QR code is a real one: `qrcode.h` encodes `https://www.windows.com/stopcode` — the URL printed right below it — as a Version 3, level L QR code, so scanning the cover opens that page. `tools/verify/qr_check.py` decodes the matrix with OpenCV, and the rendered cover's screenshot decodes too.\n- Pure-logic tests for the scene map, the sequence matcher, the percent pacing, the gcc log, and the QR module layout (`ctest`); scene previews with screenshots and an exit-sequence check under `tools/verify/`.…",
-    "en": "### Added\n\n- First release of the boss key cover. `boss b` / `boss u` / `boss t` (Enter) turn the screen into a fullscreen fake bluescreen, Windows Update, or a streaming gcc build; `boss ` with no argument lists the three scenes. The top-level keyword also answers to the Chinese alias `摸鱼`.\n- The exit key sequence (default `deadbeef`, case-insensitive, letters and digits only) is typed directly on the cover; every other keystroke is swallowed and never shown.\n- Settings: sub-trigger map (e.g. `b=bsod,u=update,t=gcc`), exit key sequence, auto-dismiss seconds (0 = manual), the gcc scene's project name, and display coverage (the mouse's screen or all displays).\n- The cover windows are precreated hidden at startup, so showing one is showFullScreen + raise — up before the boss crosses the room.\n- The covers render through Qt's software rasterizer (set `BOSSKEY_RENDERER=d3d11` for the GPU): they are solid colors and text, and the raster path keeps the process at ~33 MB commit with a fullscreen window per screen (measured with two 2560×1440 displays), against ~210 MB for D3D11 swapchains plus texture atlases. Zero GPU usage also makes the \"the machine is busy\" story more convincing.\n- The bluescreen and the update screen climb with a piecewise pacing (fast, a stall at the classic 87%, a slow crawl); the gcc scene streams a deterministic, realistic `gcc -Wall -O2` log with real-format warnings.\n- The blue screen's QR code is a real one: `qrcode.h` encodes `https://www.windows.com/stopcode` — the URL printed right below it — as a Version 3, level L QR code, so scanning the cover opens that page. `tools/verify/qr_check.py` decodes the matrix with OpenCV, and the rendered cover's screenshot decodes too.\n- Pure-logic tests for the scene map, the sequence matcher, the percent pacing, the gcc log, and the QR module layout (`ctest`); scene previews with screenshots and an exit-sequence check under `tools/verify/`.…"
+    "zh": "### Fixed\n\n- Hide the system pointer while a cover is visible, restore the window's normal cursor on hide, and activate the cover input target as it becomes visible so typing the exit sequence works without an initial click.\n- Verify the pointer, startup foreground and no-click focused exit in the 480×270 windowed acceptance path.",
+    "en": "### Fixed\n\n- Hide the system pointer while a cover is visible, restore the window's normal cursor on hide, and activate the cover input target as it becomes visible so typing the exit sequence works without an initial click.\n- Verify the pointer, startup foreground and no-click focused exit in the 480×270 windowed acceptance path."
   }
 }

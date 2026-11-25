@@ -2,10 +2,10 @@
   "id": "me.todo",
   "repo": "888bik/me.todo",
   "autoUpdate": true,
-  "version": "3.6.1",
-  "url": "https://github.com/888bik/me.todo/releases/download/v3.6.1/me.todo-3.6.1.wsplugin",
-  "sha256": "225342e23a24969f397916a883664aa12960ac59bbef6a131329fe8da450e94a",
-  "size": 581438,
+  "version": "3.6.2",
+  "url": "https://github.com/888bik/me.todo/releases/download/v3.6.2/me.todo-3.6.2.wsplugin",
+  "sha256": "6838a43f8c4b24d6291120a2888f3df8a49f80915baf7f4a41bb3d4f1e901842",
+  "size": 588585,
   "name": {
     "zh": "待办",
     "en": "Todo"
@@ -30,10 +30,10 @@
     "program": "python"
   },
   "minWinShun": "",
-  "releaseDate": "2026-11-15T13:03:56Z",
+  "releaseDate": "2026-11-20T12:03:35Z",
   "dateAdded": "2026-11-12T04:41:27Z",
   "notes": {
-    "zh": "待办（me.todo）3.6.1\n\n修补版，只修一个问题。\n\n修复\n- 标题栏图标不显示：icon.ico 的 16/24/32/48 小尺寸帧是 PNG 压缩的，Tk 8.6 的 iconbitmap 认不出来，静默失败留了个通用页面图标。现在改用 LoadImageW + WM_SETICON 直接给 16px 和 32px 两个槽位设图标，绕过 Tk，标题栏正常显示蓝色对勾图标\n\n安装\n- 从 Release 下载 me.todo-3.6.1.wsplugin，在 WinShun 设置 → 插件库里安装\n- 3.4.5 起插件库 autoUpdate 会自动跟版",
-    "en": "待办（me.todo）3.6.1\n\n修补版，只修一个问题。\n\n修复\n- 标题栏图标不显示：icon.ico 的 16/24/32/48 小尺寸帧是 PNG 压缩的，Tk 8.6 的 iconbitmap 认不出来，静默失败留了个通用页面图标。现在改用 LoadImageW + WM_SETICON 直接给 16px 和 32px 两个槽位设图标，绕过 Tk，标题栏正常显示蓝色对勾图标\n\n安装\n- 从 Release 下载 me.todo-3.6.1.wsplugin，在 WinShun 设置 → 插件库里安装\n- 3.4.5 起插件库 autoUpdate 会自动跟版"
+    "zh": "## 3.6.2\n- Sticky window visibility now persists in config.json as sticky_visible (default true for old/new configs). Startup shows the note only when show_sticky is true and the persisted state is visible; X/hide records false, show records true. Tray/hotkey manual show/hide still works, and apply_settings no longer forces the note open when the setting is re-enabled.\n- Reminder toast click now uses winshun.hide() instead of winshun.set_query(\"db \"): clicking only dismisses the toast, no search jump. Reminder scheduling, merged batch toast, title/body and sound are unchanged.\n- Version 3.6.2; no data format, permissions, defaults, UI style or other behavior changes.",
+    "en": "## 3.6.2\n- Sticky window visibility now persists in config.json as sticky_visible (default true for old/new configs). Startup shows the note only when show_sticky is true and the persisted state is visible; X/hide records false, show records true. Tray/hotkey manual show/hide still works, and apply_settings no longer forces the note open when the setting is re-enabled.\n- Reminder toast click now uses winshun.hide() instead of winshun.set_query(\"db \"): clicking only dismisses the toast, no search jump. Reminder scheduling, merged batch toast, title/body and sound are unchanged.\n- Version 3.6.2; no data format, permissions, defaults, UI style or other behavior changes."
   }
 }
