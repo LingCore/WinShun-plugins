@@ -3,15 +3,15 @@
   "repo": "ra9fael/ra9fael.bosskey",
   "autoUpdate": true,
   "review": "unreviewed-native",
-  "version": "0.1.4",
-  "url": "https://github.com/ra9fael/ra9fael.bosskey/releases/download/v0.1.4/ra9fael.bosskey-0.1.4.wsplugin",
-  "sha256": "9a13e676a6f5ca61e987194f849af2a5e134510462c3b331b001154a11cc3a1a",
-  "size": 2550108,
+  "version": "0.1.6",
+  "url": "https://github.com/ra9fael/ra9fael.bosskey/releases/download/v0.1.6/ra9fael.bosskey-0.1.6.wsplugin",
+  "sha256": "390a4bcd966f82b0e6705e39b4fca1a8529ac2db5b0e6941409b8fc050e16580",
+  "size": 2870293,
   "name": {
     "zh": "老板键",
     "en": "Boss Key"
   },
-  "description": "boss 来了：一键全屏伪装成蓝屏 / Windows 更新 / gcc 编译现场 / 黑客帝国代码雨 / 黑洞；退出按键序列与自动消失时间可配置。",
+  "description": "boss 老板：一键全屏伪装：Windows 蓝屏 / Windows 更新 / gcc 编译现场 / 黑客帝国代码雨 / 黑洞吸积盘 / ASCII 水族馆；退出按键序列与自动消失时间可配置。",
   "author": "ra9fael",
   "license": "MIT",
   "homepage": "",
@@ -28,10 +28,10 @@
     "program": "bosskey.exe"
   },
   "minWinShun": "0.22.0",
-  "releaseDate": "2026-11-23T21:16:06Z",
+  "releaseDate": "2026-11-25T16:29:46Z",
   "dateAdded": "2026-11-07T09:35:28Z",
   "notes": {
-    "zh": "### Fixed\n\n- Hide the system pointer while a cover is visible, restore the window's normal cursor on hide, and activate the cover input target as it becomes visible so typing the exit sequence works without an initial click.\n- Verify the pointer, startup foreground and no-click focused exit in the 480×270 windowed acceptance path.",
-    "en": "### Fixed\n\n- Hide the system pointer while a cover is visible, restore the window's normal cursor on hide, and activate the cover input target as it becomes visible so typing the exit sequence works without an initial click.\n- Verify the pointer, startup foreground and no-click focused exit in the 480×270 windowed acceptance path."
+    "zh": "### Added\n\n- Add folded scene thumbnail links to the Chinese and English README files without committing image assets.\n\n### Changed\n\n- Use short English and pinyin trigger aliases in the default scene map.",
+    "en": "### Added\n\n- Add folded scene thumbnail links to the Chinese and English README files without committing image assets.\n\n### Changed\n\n- Use short English and pinyin trigger aliases in the default scene map."
   }
 }
