@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.32",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.32/winshun.ocr-search-1.0.32.wsplugin",
-  "sha256": "3b30152ae14b1710869731a938917201a7c99f44bf7fb39ba869f0e8c02a07fc",
-  "size": 1367600,
+  "version": "1.0.33",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.33/winshun.ocr-search-1.0.33.wsplugin",
+  "sha256": "3e8070b06d2aae6f16a29f7b105395cc82fa8bab4b93c67abc2ef1566aac5283",
+  "size": 1370103,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.47.0",
-  "releaseDate": "2026-11-25T09:00:20Z",
+  "minWinShun": "0.48.0",
+  "releaseDate": "2026-11-25T11:45:36Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "跟着 Win顺 0.47.0 的剪贴板代码重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.47.0's clipboard code; nothing changes in use. Permissions unchanged."
+    "zh": "装了增强文字识别的较大模型或自己的模型（Win顺 0.48.0，设置 › 剪贴板）时用它识别，能读日文；已经索引过的图片不会自动重读。图标按容器排版。权限不变。",
+    "en": "Reads with the larger or your own enhanced OCR model when one is installed (WinShun 0.48.0, Settings › Clipboard), Japanese included; pictures already indexed are not read again by themselves. Icons are laid out by their container. Permissions unchanged."
   }
 }

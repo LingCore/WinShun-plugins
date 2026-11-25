@@ -2,10 +2,10 @@
   "id": "winshun.gestures",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.1.5",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.1.5/winshun.gestures-2.1.5.wsplugin",
-  "sha256": "9c4deec4ff4fa3743119459f0c26ecb4990baea523f4b9f2746e05d24073e1d5",
-  "size": 1495019,
+  "version": "2.1.6",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.1.6/winshun.gestures-2.1.6.wsplugin",
+  "sha256": "008988026e5efaa4c0b9422f3c717af98d514e96f5be1487d8962e9b7b76cbbc",
+  "size": 1495067,
   "name": {
     "zh": "鼠标手势",
     "en": "Mouse gestures"
@@ -34,10 +34,10 @@
     "program": "WinShunGestures.exe"
   },
   "minWinShun": "0.41.0",
-  "releaseDate": "2026-11-25T09:00:03Z",
+  "releaseDate": "2026-11-25T11:45:31Z",
   "dateAdded": "2026-11-18T02:57:12Z",
   "notes": {
-    "zh": "跟着 Win顺 0.47.0 的剪贴板代码重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.47.0's clipboard code; nothing changes in use. Permissions unchanged."
+    "zh": "设置窗口的图标按容器排版，间距统一；跟着 Win顺 0.48.0 的界面代码重新构建。权限不变。",
+    "en": "The settings window's icons are laid out by their container, with consistent gaps; rebuilt with WinShun 0.48.0's interface code. Permissions unchanged."
   }
 }

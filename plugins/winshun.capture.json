@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.37",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.37/winshun.capture-1.1.37.wsplugin",
-  "sha256": "7c85bf0a10a83287d1e0882576a8b235ceddb1f7ac8740a9da1ab73f4ff67fec",
-  "size": 3211280,
+  "version": "1.1.38",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.38/winshun.capture-1.1.38.wsplugin",
+  "sha256": "a149b2d5293747209b599918698ae1abe4c3522249c6113ba8db1e4c408467ae",
+  "size": 3218320,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-25T08:58:41Z",
+  "releaseDate": "2026-11-25T11:45:22Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "画笔、荧光笔在图上点一下就留一个圆点，不用拖（#461）；截图和编辑图片时，鼠标指针显示成笔尖的大小和颜色。标注工具栏最前面多了“选择”按钮（箭头），点它放下正在用的工具，回到选择和移动。权限不变。",
-    "en": "A click with the pen or the highlighter leaves a dot (#461), and while capturing or editing a picture the pointer shows the brush tip's size and colour. A Select button (an arrow) first on the annotation toolbar puts the current tool down. Permissions unchanged."
+    "zh": "录屏控制条按住任何空白处（边距、文字、按钮之间的空隙）都能拖，不再只认左端的手柄；截图设置里多了“录屏保存文件夹”，默认是“视频”里的 WinShun，可一键恢复默认。装了增强文字识别的较大模型或自己的模型（Win顺 0.48.0）时，截图识别文字也用它，能读日文。图标按容器排版，间距统一。权限不变。",
+    "en": "The recording bar moves from any empty place (margins, words, the gaps between buttons), not only its grip; the screenshot settings have a Recording folder row (WinShun in Videos by default, one click back to it). With the larger or your own enhanced OCR model installed (WinShun 0.48.0), recognizing text in a capture uses it and reads Japanese. Icons are laid out by their container, with consistent gaps. Permissions unchanged."
   }
 }
