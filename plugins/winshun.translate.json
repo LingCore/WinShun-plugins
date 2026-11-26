@@ -2,17 +2,17 @@
   "id": "winshun.translate",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.6",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.2.6/winshun.translate-2.2.6.wsplugin",
-  "sha256": "d953ff646909469ce572ac223055db53fab2de0d121339e576ea0a8b8b62a6d3",
-  "size": 204769,
+  "version": "2.3.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.3.0/winshun.translate-2.3.0.wsplugin",
+  "sha256": "fc17881c66b253bbb211e57f501062adf556ee6ba69443e33ccf2e42ff9f5948",
+  "size": 227367,
   "name": {
     "zh": "翻译",
     "en": "Translate"
   },
   "description": {
-    "zh": "tr 翻译、dict AI 词典，支持 DeepL、微软翻译及 OpenAI 兼容模型服务；使用自己的密钥",
-    "en": "tr translation and dict AI dictionary with your own DeepL, Microsoft Translator or OpenAI-compatible service key"
+    "zh": "tr 翻译、dict AI 词典：用本机的本地模型离线翻译，或用自己密钥的 DeepL、微软翻译及 OpenAI 兼容模型服务",
+    "en": "tr translation and dict AI dictionary: offline with a local model on this computer, or with your own DeepL, Microsoft Translator or OpenAI-compatible service key"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -31,10 +31,10 @@
     "program": "WinShunTranslate.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-25T06:07:48Z",
+  "releaseDate": "2026-11-26T06:50:39Z",
   "dateAdded": "2026-10-23T09:12:43Z",
   "notes": {
-    "zh": "跟着 Win顺 0.46.0 的插件开发包重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.46.0's plugin SDK; nothing changes in use. Permissions unchanged."
+    "zh": "新增服务“本地模型（离线）”：装了“本地模型”插件后，翻译在这台电脑上完成，不用密钥；没装、没下载模型或模型停了时，结果行会说明，回车打开它的卡片。Ollama、LM Studio 这类本机服务选“OpenAI 兼容”、地址填 127.0.0.1 即可，不走系统代理。在搜索框里用模型服务翻译时，结果边出边显示。权限不变。",
+    "en": "New service Local model (offline): with the Local models plugin installed, translation happens on this PC with no key; when it is missing, has no model or has stopped, the row says so and Enter opens its card. Ollama, LM Studio and the like work as OpenAI-compatible on 127.0.0.1, never through the system proxy. In the search box a model service shows the translation as it comes. Permissions unchanged."
   }
 }

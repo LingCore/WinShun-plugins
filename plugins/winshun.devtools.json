@@ -2,10 +2,10 @@
   "id": "winshun.devtools",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.8",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.devtools-v1.0.8/winshun.devtools-1.0.8.wsplugin",
-  "sha256": "a192bcf11144068eb62bf5485a8aecdb04080d18491aa854cae2135e44935c9b",
-  "size": 1066791,
+  "version": "1.0.9",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.devtools-v1.0.9/winshun.devtools-1.0.9.wsplugin",
+  "sha256": "0419c80e4ad6797f9f2839eed437650354b0b0e250d2b29a2146beea391b4fa6",
+  "size": 1066441,
   "name": {
     "en": "Developer tools",
     "zh": "开发工具"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunDevTools.exe"
   },
-  "minWinShun": "0.48.0",
-  "releaseDate": "2026-11-25T11:45:26Z",
+  "minWinShun": "0.49.0",
+  "releaseDate": "2026-11-26T06:51:10Z",
   "dateAdded": "2026-11-18T10:12:26Z",
   "notes": {
-    "zh": "图标按容器排版，间距统一；跟着 Win顺 0.48.0 的界面代码重新构建。权限不变。",
-    "en": "Icons are laid out by their container, with consistent gaps; rebuilt with WinShun 0.48.0's interface code. Permissions unchanged."
+    "zh": "随 Win顺 0.49.0 的共用代码重新构建（空闲时归还内存、窗口效果、图标绘制）。功能和权限不变。",
+    "en": "Rebuilt with WinShun 0.49.0's shared code (idle memory, window effects, icon drawing). No change in features or permissions."
   }
 }

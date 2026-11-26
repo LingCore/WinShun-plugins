@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.38",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.38/winshun.capture-1.1.38.wsplugin",
-  "sha256": "a149b2d5293747209b599918698ae1abe4c3522249c6113ba8db1e4c408467ae",
-  "size": 3218320,
+  "version": "1.1.39",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.39/winshun.capture-1.1.39.wsplugin",
+  "sha256": "fa4f20f288878233045e4143e4c6eebda97ca2349ef2afec155b30e0e2a07be0",
+  "size": 10400424,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-25T11:45:22Z",
+  "releaseDate": "2026-11-26T06:50:57Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "录屏控制条按住任何空白处（边距、文字、按钮之间的空隙）都能拖，不再只认左端的手柄；截图设置里多了“录屏保存文件夹”，默认是“视频”里的 WinShun，可一键恢复默认。装了增强文字识别的较大模型或自己的模型（Win顺 0.48.0）时，截图识别文字也用它，能读日文。图标按容器排版，间距统一。权限不变。",
-    "en": "The recording bar moves from any empty place (margins, words, the gaps between buttons), not only its grip; the screenshot settings have a Recording folder row (WinShun in Videos by default, one click back to it). With the larger or your own enhanced OCR model installed (WinShun 0.48.0), recognizing text in a capture uses it and reads Japanese. Icons are laid out by their container, with consistent gaps. Permissions unchanged."
+    "zh": "“复制为表格”认得合并单元格：粘进 Excel、WPS 表格或 Word，合并的单元格照样合并，一格里几行字的还在一格，表格上面的标题和下面的备注各占一行，前面带 0 的编号、很长的数字不变样；有框线的表格按画出来的线分格，没有框线的用随插件自带的表格模型（PaddleOCR 的 SLANet_plus，7 MB，在本机算）。选着标注工具时，在空白处双击同样完成截图，右键、中键、侧键设的动作也照常执行。复制整屏截图时少占内存，图里的字只读一遍（#467）。权限不变。",
+    "en": "Copy as a table knows merged cells: pasted into Excel, WPS or Word, merged cells arrive merged, a cell of several lines stays one cell, a title above and a note below get rows of their own, and codes with a leading zero or long numbers stay as they are; a ruled table is read from its drawn lines, one without by the table model that now comes with the plugin (PaddleOCR's SLANet_plus, 7 MB, on this PC). With an annotation tool on, a double click on the bare picture finishes the capture and the actions set for the right, middle and side buttons run. Copying a full-screen capture takes less memory and its words are read once (#467). Permissions unchanged."
   }
 }

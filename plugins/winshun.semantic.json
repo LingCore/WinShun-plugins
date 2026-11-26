@@ -2,17 +2,17 @@
   "id": "winshun.semantic",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.6",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.0.6/winshun.semantic-1.0.6.wsplugin",
-  "sha256": "2b6bd0aa1fee6bf801947e7fa6d9bdfdb9c57bf8f61b455ca221adc775300442",
-  "size": 307062,
+  "version": "1.1.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.1.0/winshun.semantic-1.1.0.wsplugin",
+  "sha256": "b69e737f68467327a470f92572b2e38e88af5be28adf07bdf38312fa4bb28d6e",
+  "size": 311563,
   "name": {
     "zh": "按意思找",
     "en": "Search by meaning"
   },
   "description": {
-    "zh": "? 一句话：按文档讲的是什么来找，不用记得原词。用你选的模型（本机的 Ollama，或云服务的密钥）",
-    "en": "? a sentence: finds documents by what they are about, not by their words. Uses the model you pick (Ollama on this PC, or a cloud service's key)"
+    "zh": "? 一句话：按文档讲的是什么来找，不用记得原词。用你选的模型（“本地模型”插件或 Ollama，都在本机、不上传；或云服务的密钥）",
+    "en": "? a sentence: finds documents by what they are about, not by their words. Uses the model you pick (the Local models plugin or Ollama, on this PC with nothing uploaded; or a cloud service's key)"
   },
   "author": "LingCore",
   "license": "MIT",
@@ -30,10 +30,10 @@
     "program": "WinShunSemantic.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-25T06:06:00Z",
+  "releaseDate": "2026-11-26T06:50:46Z",
   "dateAdded": "2026-11-01T08:10:33Z",
   "notes": {
-    "zh": "在 设置 › 插件 的卡片上显示索引进度：已处理多少文件、还要多久，可以暂停、继续（重启后也记得），等你确认时有“开始”按钮；卡片上的进度要 Win顺 0.46.0，更早的版本照旧用搜索框里的那一行（#458）。权限不变。",
-    "en": "The index's progress on its card under Settings › Plugins: files done, time left, pause and resume (kept across restarts), and a Start button while it waits for your yes; the card needs WinShun 0.46.0, older versions keep the row in the search box (#458). Permissions unchanged."
+    "zh": "模型服务新增“本地模型（离线）”：装了“本地模型”插件并下载嵌入模型后，建索引和查找都在这台电脑上算，文档的文字不上传；还没装或没下载时，提示行回车打开“本地模型”的卡片。发往本机的请求不走系统代理。权限不变。",
+    "en": "New service Local model (offline): with the Local models plugin and its embedding model, indexing and searching are computed on this PC and no document text is uploaded; when it is missing, Enter on the hint row opens the Local models card. Requests to this computer never go through the system proxy. Permissions unchanged."
   }
 }
