@@ -2,10 +2,10 @@
   "id": "winshun.gestures",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.1.7",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.1.7/winshun.gestures-2.1.7.wsplugin",
-  "sha256": "64867a8bedefdc194686f39e0bfec65a527164c62a81924e1039c61114334dcd",
-  "size": 1494547,
+  "version": "2.2.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.2.0/winshun.gestures-2.2.0.wsplugin",
+  "sha256": "f010e150fa5936c9ed2112d728a8b3220cabec3f2e51c3fee19fb23cd64570d9",
+  "size": 1506673,
   "name": {
     "zh": "鼠标手势",
     "en": "Mouse gestures"
@@ -34,10 +34,10 @@
     "program": "WinShunGestures.exe"
   },
   "minWinShun": "0.41.0",
-  "releaseDate": "2026-11-26T06:51:17Z",
+  "releaseDate": "2026-11-26T14:36:46Z",
   "dateAdded": "2026-11-18T02:57:12Z",
   "notes": {
-    "zh": "随 Win顺 0.49.0 的共用代码重新构建（空闲时归还内存、窗口效果、图标绘制）。功能和权限不变。",
-    "en": "Rebuilt with WinShun 0.49.0's shared code (idle memory, window effects, icon drawing). No change in features or permissions."
+    "zh": "按住 `Ctrl`、`Alt` 或 `Shift` 画的手势可以设成另外的动作（#472），没设的地方 `Shift`+右键菜单、`Ctrl`+右键拖动照旧；设了组合手势的键按住不动多久都等第二个键，不再提前当成单击放过去（#436）；系统内存紧张时闲着不主动归还内存（#471）。权限不变。",
+    "en": "A gesture drawn with `Ctrl`, `Alt` or `Shift` held can do something of its own (#472), while where none is set `Shift` + right click's menu and `Ctrl` + right drag stay as they were; a button with a chord set waits for the second one however long it is held (#436); idle memory is kept while Windows is short of it (#471). Permissions unchanged."
   }
 }

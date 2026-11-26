@@ -2,10 +2,10 @@
   "id": "winshun.archive",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.archive-v1.0.0/winshun.archive-1.0.0.wsplugin",
-  "sha256": "366ec49fa20230e69353e155f17b4afe231878df7d36eb5a74b47d9c4817c95d",
-  "size": 572993,
+  "version": "1.0.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.archive-v1.0.1/winshun.archive-1.0.1.wsplugin",
+  "sha256": "8497a11be80a0840f34309806873946ec0c434cad82b528db1a989f75c6e0586",
+  "size": 573288,
   "name": {
     "en": "Archive search",
     "zh": "压缩包搜索"
@@ -29,11 +29,11 @@
     "mode": "resident",
     "program": "WinShunArchive.exe"
   },
-  "minWinShun": "0.47.0",
-  "releaseDate": "2026-11-25T09:00:37Z",
+  "minWinShun": "0.50.0",
+  "releaseDate": "2026-11-26T14:36:57Z",
   "dateAdded": "2026-11-25T09:00:45Z",
   "notes": {
-    "zh": "新插件：按文件名找 zip、7z、rar、tar.gz 等压缩包里的文件，不用解压。直接搜，或输入 `zip 名字` 只看压缩包里的；Enter 打开压缩包，Ctrl+Enter 解压并打开这一个文件，Shift+Enter 打开所在文件夹。后台用最低的磁盘优先级只读文件列表，进度在插件卡片上，可以暂停。要 Win顺 0.47.0。权限：winshun:search（从 Win顺 的索引里拿到压缩包的列表）、读取文件（读压缩包的文件列表）。",
-    "en": "New plugin: finds files by name inside zip, 7z, rar, tar.gz and other archives, without unpacking. Just search, or type `zip name` for those alone; Enter opens the archive, Ctrl+Enter unpacks that one file and opens it, Shift+Enter shows its folder. Only the lists of files are read, in the background at the lowest disk priority; progress is on the plugin's card and can be paused. Needs WinShun 0.47.0. Permissions: winshun:search (the list of archives from WinShun's index), reading files (the archives' lists of files)."
+    "zh": "在 Windows 10 上闲着也会归还内存（#478）；系统内存紧张时先不归还（#471）。权限不变。",
+    "en": "Idle memory is given back on Windows 10 too (#478), and kept while Windows is short of it (#471). Permissions unchanged."
   }
 }

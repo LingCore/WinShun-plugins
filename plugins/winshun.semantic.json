@@ -2,10 +2,10 @@
   "id": "winshun.semantic",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.1.0/winshun.semantic-1.1.0.wsplugin",
-  "sha256": "b69e737f68467327a470f92572b2e38e88af5be28adf07bdf38312fa4bb28d6e",
-  "size": 311563,
+  "version": "1.1.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.1.1/winshun.semantic-1.1.1.wsplugin",
+  "sha256": "6fc9a882513a483133b8a57677763dafbd4f0fcf405965e02accb7813b85d9c9",
+  "size": 316434,
   "name": {
     "zh": "按意思找",
     "en": "Search by meaning"
@@ -30,10 +30,10 @@
     "program": "WinShunSemantic.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-26T06:50:46Z",
+  "releaseDate": "2026-11-26T14:36:51Z",
   "dateAdded": "2026-11-01T08:10:33Z",
   "notes": {
-    "zh": "模型服务新增“本地模型（离线）”：装了“本地模型”插件并下载嵌入模型后，建索引和查找都在这台电脑上算，文档的文字不上传；还没装或没下载时，提示行回车打开“本地模型”的卡片。发往本机的请求不走系统代理。权限不变。",
-    "en": "New service Local model (offline): with the Local models plugin and its embedding model, indexing and searching are computed on this PC and no document text is uploaded; when it is missing, Enter on the hint row opens the Local models card. Requests to this computer never go through the system proxy. Permissions unchanged."
+    "zh": "Win顺 更新后还在核对文件时，不再把已经建好的索引藏起来，也不再丢掉还没核对到的文件（#458）；在 Windows 10 上闲着也会归还内存，系统内存紧张时先不归还（#478、#471）。权限不变。",
+    "en": "While WinShun is still checking its files after an update, the index already built is no longer hidden and the files not checked yet are no longer dropped (#458); idle memory is given back on Windows 10 too, and kept while Windows is short of it (#478, #471). Permissions unchanged."
   }
 }
