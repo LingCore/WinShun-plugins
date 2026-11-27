@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.40",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.40/winshun.capture-1.1.40.wsplugin",
-  "sha256": "d4f07a8101f0c3fcaf15194c22c7c018b3e6f29dfc0860f86cfc56995317330f",
-  "size": 11339022,
+  "version": "1.1.41",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.41/winshun.capture-1.1.41.wsplugin",
+  "sha256": "339a7d9efc54454c59d5538e398e8b454e188e3983face2c83eb32025db51349",
+  "size": 11344157,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-26T14:36:41Z",
+  "releaseDate": "2026-11-27T09:49:33Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "新增“公式识别”：选好区域后按 `Shift+F` 或点工具条上的“公式”（贴图上按 `Shift+F` 或右键“识别公式”，编辑窗口里点“公式”），把图里的公式转成 LaTeX，可以改，按 LaTeX、Markdown、Word 公式或 Typst 复制，也能导出成图片、PNG、SVG；识别模型约 115 MB，第一次用时下载，在本机识别（要 Win顺 0.50.0，更早的版本会提示先更新 Win顺）。截图和贴图的按键提示改用菜单的字号；贴图快捷键可以设成和“贴到屏幕”同一个键（#469）；选中的行和卡片更醒目（#474）；系统内存紧张时闲着不主动归还内存（#471）。权限不变。",
-    "en": "Formula recognition: `Shift+F` or Formula on the toolbar after selecting an area (`Shift+F` or 识别公式 on a pin, Formula in the editor) reads the formula as LaTeX to edit and copy as LaTeX, Markdown, a Word equation or Typst, or to export as a picture, PNG or SVG; the model, about 115 MB, is downloaded the first time and runs on this PC (WinShun 0.50.0; earlier versions are asked to update first). The key hints of captures and pins take a menu's type size; the 贴图 hotkey may be the 贴到屏幕 key (#469); selected rows and cards stand out more (#474); idle memory is kept while Windows is short of it (#471). Permissions unchanged."
+    "zh": "演示时从桌面直接打开的黑板是黑色的，不再是白色（#485）；`Shift+C` 识别文字并复制后，选区旁的小卡片写明复制了什么，点“编辑”可以改（#489）；打码时点一行字稍微滑了几个像素也算点中，选了别的样式再点已经盖住的一行会换成新样式（#499）；公式识别窗口的关闭按钮又有图标了；为避开睡眠唤醒后闲着时偶发的崩溃，界面一次回收内存，不再分步回收（#490）。权限不变。",
+    "en": "The black board opened straight from the desktop while presenting is black, not white (#485); after `Shift+C` copies the text read, the card beside the selection shows what was copied, with 编辑 (#489); a click on a line of text that slipped a few pixels still hides it, and a hidden line clicked with another style takes that style (#499); the formula window's close button has its icon again; QML collects garbage at once rather than in steps, against a rare crash while idle after sleep (#490). Permissions unchanged."
   }
 }

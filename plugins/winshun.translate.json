@@ -2,10 +2,10 @@
   "id": "winshun.translate",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.3.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.3.0/winshun.translate-2.3.0.wsplugin",
-  "sha256": "fc17881c66b253bbb211e57f501062adf556ee6ba69443e33ccf2e42ff9f5948",
-  "size": 227367,
+  "version": "2.4.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.4.0/winshun.translate-2.4.0.wsplugin",
+  "sha256": "9057f51bc097582eaa7a08c31fcaf3ff26322d3a30c904a92c5a614470fbbe6a",
+  "size": 233811,
   "name": {
     "zh": "翻译",
     "en": "Translate"
@@ -31,10 +31,10 @@
     "program": "WinShunTranslate.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-26T06:50:39Z",
+  "releaseDate": "2026-11-27T09:49:42Z",
   "dateAdded": "2026-10-23T09:12:43Z",
   "notes": {
-    "zh": "新增服务“本地模型（离线）”：装了“本地模型”插件后，翻译在这台电脑上完成，不用密钥；没装、没下载模型或模型停了时，结果行会说明，回车打开它的卡片。Ollama、LM Studio 这类本机服务选“OpenAI 兼容”、地址填 127.0.0.1 即可，不走系统代理。在搜索框里用模型服务翻译时，结果边出边显示。权限不变。",
-    "en": "New service Local model (offline): with the Local models plugin installed, translation happens on this PC with no key; when it is missing, has no model or has stopped, the row says so and Enter opens its card. Ollama, LM Studio and the like work as OpenAI-compatible on 127.0.0.1, never through the system proxy. In the search box a model service shows the translation as it comes. Permissions unchanged."
+    "zh": "卡片上新增“测试连接”按钮（#495，要 Win顺 0.46.0 或更新）：选好服务、填好密钥后点一下，把一个单词 hello 发给所选服务翻译，连上了显示“连接正常”和用时，连不上显示服务给出的原因（密钥不对、模型不存在、本机的模型服务没启动等）。权限不变。",
+    "en": "A Test connection button on the card (#495, WinShun 0.46.0 or later): with a service and key set, it sends the single word hello to be translated and shows 连接正常 and how long it took, or the reason the service gave (a wrong key, no such model, the local model server not running). Permissions unchanged."
   }
 }

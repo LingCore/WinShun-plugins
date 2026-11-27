@@ -2,10 +2,10 @@
   "id": "winshun.semantic",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.1",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.1.1/winshun.semantic-1.1.1.wsplugin",
-  "sha256": "6fc9a882513a483133b8a57677763dafbd4f0fcf405965e02accb7813b85d9c9",
-  "size": 316434,
+  "version": "1.2.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.2.0/winshun.semantic-1.2.0.wsplugin",
+  "sha256": "1fd86c48f6708727a83cb0a7d873352b0ea8631e08454107ded598acd47b220e",
+  "size": 320180,
   "name": {
     "zh": "按意思找",
     "en": "Search by meaning"
@@ -30,10 +30,10 @@
     "program": "WinShunSemantic.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-26T14:36:51Z",
+  "releaseDate": "2026-11-27T09:49:50Z",
   "dateAdded": "2026-11-01T08:10:33Z",
   "notes": {
-    "zh": "Win顺 更新后还在核对文件时，不再把已经建好的索引藏起来，也不再丢掉还没核对到的文件（#458）；在 Windows 10 上闲着也会归还内存，系统内存紧张时先不归还（#478、#471）。权限不变。",
-    "en": "While WinShun is still checking its files after an update, the index already built is no longer hidden and the files not checked yet are no longer dropped (#458); idle memory is given back on Windows 10 too, and kept while Windows is short of it (#478, #471). Permissions unchanged."
+    "zh": "卡片的状态行旁新增“测试连接”按钮（#495）：发一小段文字给所选的模型服务，连上了写“连接正常”和用时，连不上写明原因（密钥不对、模型没下载、服务没启动）；正在建索引时不显示，因为那时本来就在用它。权限不变。",
+    "en": "A Test connection button beside the card's status line (#495): it sends one short text to the chosen model service and says 连接正常 and how long it took, or why it failed (a wrong key, a model not downloaded, the service not running); hidden while the index is being built, which uses the service anyway. Permissions unchanged."
   }
 }

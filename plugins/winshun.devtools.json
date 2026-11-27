@@ -2,10 +2,10 @@
   "id": "winshun.devtools",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.10",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.devtools-v1.0.10/winshun.devtools-1.0.10.wsplugin",
-  "sha256": "75e954ad7c7a4bc354384125e14f162cd5807970a4683169c00423c8f591b2a7",
-  "size": 1068320,
+  "version": "1.0.11",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.devtools-v1.0.11/winshun.devtools-1.0.11.wsplugin",
+  "sha256": "fdd534a4cf32cbc2a94d38d0243baf85116e30cc20754bb6b821bba802a754b5",
+  "size": 1068399,
   "name": {
     "en": "Developer tools",
     "zh": "开发工具"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunDevTools.exe"
   },
-  "minWinShun": "0.50.0",
-  "releaseDate": "2026-11-26T14:37:01Z",
+  "minWinShun": "0.51.0",
+  "releaseDate": "2026-11-27T09:50:13Z",
   "dateAdded": "2026-11-18T10:12:26Z",
   "notes": {
-    "zh": "随 Win顺 0.50.0 的共用代码重新构建（空闲时的内存、窗口外框、主题颜色）。功能和权限不变。",
-    "en": "Rebuilt with WinShun 0.50.0's shared code (idle memory, window frame, theme colours). No change in features or permissions."
+    "zh": "随 Win顺 0.51.0 的共用代码重新构建（界面一次回收内存，避开睡眠唤醒后闲着时偶发的崩溃，#490）。功能和权限不变。",
+    "en": "Rebuilt with WinShun 0.51.0's shared code (garbage collected at once, against a rare crash while idle after sleep, #490). No change in features or permissions."
   }
 }

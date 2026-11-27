@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.35",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.35/winshun.ocr-search-1.0.35.wsplugin",
-  "sha256": "2afed4979d4570444ef3cdabd3a3b33ff40090c7153b4ad323a58ebc158254a9",
-  "size": 1372903,
+  "version": "1.0.36",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.36/winshun.ocr-search-1.0.36.wsplugin",
+  "sha256": "17220871db38da4a8281bce58908f21a40c25ef53dde30f027f4c512a1331d81",
+  "size": 1375409,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.50.0",
-  "releaseDate": "2026-11-26T14:37:07Z",
+  "minWinShun": "0.51.0",
+  "releaseDate": "2026-11-27T09:50:20Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "随 Win顺 0.50.0 的共用代码重新构建（空闲时的内存、识别运行库、窗口外框、主题颜色）。功能和权限不变。",
-    "en": "Rebuilt with WinShun 0.50.0's shared code (idle memory, the recognition runtime, window frame, theme colours). No change in features or permissions."
+    "zh": "随 Win顺 0.51.0 的共用代码重新构建（界面一次回收内存，避开睡眠唤醒后闲着时偶发的崩溃，#490）。功能和权限不变。",
+    "en": "Rebuilt with WinShun 0.51.0's shared code (garbage collected at once, against a rare crash while idle after sleep, #490). No change in features or permissions."
   }
 }

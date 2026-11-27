@@ -2,10 +2,10 @@
   "id": "winshun.cloudbackup",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.cloudbackup-v1.0.2/winshun.cloudbackup-1.0.2.wsplugin",
-  "sha256": "daefd71e2e5aa45697a10deae4015726c492da1820ddae5c6ad2e2e1c57b9788",
-  "size": 257390,
+  "version": "1.1.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.cloudbackup-v1.1.0/winshun.cloudbackup-1.1.0.wsplugin",
+  "sha256": "04ebd39e5c2e11934968e95106a9656c3ac1f516db28524730f63fb37e3068f2",
+  "size": 262992,
   "name": {
     "zh": "云备份",
     "en": "Cloud Backup"
@@ -31,10 +31,10 @@
     "program": "WinShunCloudBackup.exe"
   },
   "minWinShun": "0.26.0",
-  "releaseDate": "2026-11-25T06:07:25Z",
+  "releaseDate": "2026-11-27T09:49:57Z",
   "dateAdded": "2026-11-13T01:34:30Z",
   "notes": {
-    "zh": "跟着 Win顺 0.46.0 的插件开发包重新构建，用起来没有变化。权限不变。",
-    "en": "Rebuilt with WinShun 0.46.0's plugin SDK; nothing changes in use. Permissions unchanged."
+    "zh": "填好 WebDAV 或 GitHub 后，卡片上有一行状态和“测试连接”按钮（#495，要 Win顺 0.46.0 或更新）：点一下只读取云端的备份列表、不上传，连上了显示“连接正常”，连不上直接写明原因（地址不对、密码错、仓库不是私有等）。权限不变。",
+    "en": "Once WebDAV or GitHub is filled in, the card has a status line and a Test connection button (#495, WinShun 0.46.0 or later): it only lists the backups in the cloud, uploading nothing, and says 连接正常 or why it failed (a wrong address or password, a repository that is not private). Permissions unchanged."
   }
 }
