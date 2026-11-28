@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.41",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.41/winshun.capture-1.1.41.wsplugin",
-  "sha256": "339a7d9efc54454c59d5538e398e8b454e188e3983face2c83eb32025db51349",
-  "size": 11344157,
+  "version": "1.1.42",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.42/winshun.capture-1.1.42.wsplugin",
+  "sha256": "894b81c40fb19578ebf3b0712844fb30252c22c5d21eb6190737f8fd7786e22d",
+  "size": 11354783,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-27T09:49:33Z",
+  "releaseDate": "2026-11-28T04:30:30Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "演示时从桌面直接打开的黑板是黑色的，不再是白色（#485）；`Shift+C` 识别文字并复制后，选区旁的小卡片写明复制了什么，点“编辑”可以改（#489）；打码时点一行字稍微滑了几个像素也算点中，选了别的样式再点已经盖住的一行会换成新样式（#499）；公式识别窗口的关闭按钮又有图标了；为避开睡眠唤醒后闲着时偶发的崩溃，界面一次回收内存，不再分步回收（#490）。权限不变。",
-    "en": "The black board opened straight from the desktop while presenting is black, not white (#485); after `Shift+C` copies the text read, the card beside the selection shows what was copied, with 编辑 (#489); a click on a line of text that slipped a few pixels still hides it, and a hidden line clicked with another style takes that style (#499); the formula window's close button has its icon again; QML collects garbage at once rather than in steps, against a rare crash while idle after sleep (#490). Permissions unchanged."
+    "zh": "截图插件闲着时，Windows 内存用到 70% 以上也让出内存，只留常用的部分；以前到 80% 就一点都不还，开着大型软件时几百 MB 的图片一直占着（#500）。截图设置等窗口用上了 Win顺 0.52.0 更省内存的界面零件（一个图标从五个对象变成一个，平时看不到的部分要用时才做出来），输入框的光标对齐到整像素（#501）。权限不变。",
+    "en": "While idle with 70 % or more of the memory in use, the screenshot plugin gives memory back, keeping only its hot pages; from 80 % it used to give nothing back and kept hundreds of MB of pictures while a large program ran (#500). Its windows use the lighter controls of WinShun 0.52.0 (an icon is one object instead of five, parts hardly ever shown made when wanted), and the caret of its text fields sits on a whole pixel (#501). Permissions unchanged."
   }
 }

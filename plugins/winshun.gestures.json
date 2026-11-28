@@ -2,10 +2,10 @@
   "id": "winshun.gestures",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.1",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.2.1/winshun.gestures-2.2.1.wsplugin",
-  "sha256": "ac92771b33bf6401902367f003333536c83dea5c96339b26b2d5c609e8858eb6",
-  "size": 1508072,
+  "version": "2.2.2",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.2.2/winshun.gestures-2.2.2.wsplugin",
+  "sha256": "f5a3e91a698bd16374afd372c888af6501901ca3daff15feb3a074d70034c501",
+  "size": 1516514,
   "name": {
     "zh": "鼠标手势",
     "en": "Mouse gestures"
@@ -34,10 +34,10 @@
     "program": "WinShunGestures.exe"
   },
   "minWinShun": "0.41.0",
-  "releaseDate": "2026-11-27T09:50:05Z",
+  "releaseDate": "2026-11-28T04:30:39Z",
   "dateAdded": "2026-11-18T02:57:12Z",
   "notes": {
-    "zh": "为避开睡眠唤醒后闲着时偶发的崩溃，手势设置窗口一次回收内存，不再分步回收（#490）；随 Win顺 0.51.0 的共用代码重新构建。功能和权限不变。",
-    "en": "The settings window collects garbage at once rather than in steps, against a rare crash while idle after sleep (#490); rebuilt with WinShun 0.51.0's shared code. No change in features or permissions."
+    "zh": "窗口用上了 Win顺 0.52.0 更省内存的界面零件：一个图标从五个对象变成一个，焦点框、开关的光晕、按钮尾巴上的图标这些平时看不到的部分第一次要用时才做出来；输入框的光标对齐到整像素，125% 缩放下不再看不见（#501）。Windows 内存用到 70% 以上时，闲着时照样把内存让出来；以前到 80% 就一点都不还（#500）。权限不变。",
+    "en": "Its windows use the lighter controls of WinShun 0.52.0: an icon is one object instead of five, and parts hardly ever shown (focus rings, a switch's glow, a button's trailing icon) are made the first time they are wanted; the caret of its text fields sits on a whole pixel, so it shows at 125 % (#501). With 70 % or more of the memory in use it gives its memory back while idle all the same; from 80 % it used to give nothing back (#500). Permissions unchanged."
   }
 }

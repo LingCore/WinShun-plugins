@@ -2,10 +2,10 @@
   "id": "winshun.archive",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.1",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.archive-v1.0.1/winshun.archive-1.0.1.wsplugin",
-  "sha256": "8497a11be80a0840f34309806873946ec0c434cad82b528db1a989f75c6e0586",
-  "size": 573288,
+  "version": "1.0.2",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.archive-v1.0.2/winshun.archive-1.0.2.wsplugin",
+  "sha256": "8ddfbbfc3e0e11e67914298643156f74b164c192ccd4a35f66750245d697e2db",
+  "size": 573225,
   "name": {
     "en": "Archive search",
     "zh": "压缩包搜索"
@@ -29,11 +29,11 @@
     "mode": "resident",
     "program": "WinShunArchive.exe"
   },
-  "minWinShun": "0.50.0",
-  "releaseDate": "2026-11-26T14:36:57Z",
+  "minWinShun": "0.52.0",
+  "releaseDate": "2026-11-28T04:31:07Z",
   "dateAdded": "2026-11-25T09:00:45Z",
   "notes": {
-    "zh": "在 Windows 10 上闲着也会归还内存（#478）；系统内存紧张时先不归还（#471）。权限不变。",
-    "en": "Idle memory is given back on Windows 10 too (#478), and kept while Windows is short of it (#471). Permissions unchanged."
+    "zh": "闲着时 Windows 内存用到 70% 以上，只留下一小部分（比上次让出后多出 32 MB 以内，够每次查询读的索引用），其余让出；以前到 80% 就一点都不还，几百 MB 的数据会在内存最紧的时候一直占着（#500）。权限不变。",
+    "en": "While idle with 70 % or more of the memory in use, it keeps only a small working set (up to 32 MB over what stayed after the last time, enough for the index every query reads) and gives the rest back; from 80 % it used to give nothing back, holding hundreds of MB just when the memory was wanted (#500). Permissions unchanged."
   }
 }

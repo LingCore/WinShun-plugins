@@ -2,10 +2,10 @@
   "id": "winshun.ocr-search",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.36",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.36/winshun.ocr-search-1.0.36.wsplugin",
-  "sha256": "17220871db38da4a8281bce58908f21a40c25ef53dde30f027f4c512a1331d81",
-  "size": 1375409,
+  "version": "1.0.37",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.ocr-search-v1.0.37/winshun.ocr-search-1.0.37.wsplugin",
+  "sha256": "bedb3bb59c0269d6da283de6d91ca9df376b9ca0c434dbc9a5ba65076fc96fa3",
+  "size": 1381357,
   "name": {
     "en": "Image text search",
     "zh": "图片文字搜索"
@@ -30,11 +30,11 @@
     "mode": "resident",
     "program": "WinShunOcrSearch.exe"
   },
-  "minWinShun": "0.51.0",
-  "releaseDate": "2026-11-27T09:50:20Z",
+  "minWinShun": "0.52.0",
+  "releaseDate": "2026-11-28T04:30:53Z",
   "dateAdded": "2026-11-03T03:09:38Z",
   "notes": {
-    "zh": "随 Win顺 0.51.0 的共用代码重新构建（界面一次回收内存，避开睡眠唤醒后闲着时偶发的崩溃，#490）。功能和权限不变。",
-    "en": "Rebuilt with WinShun 0.51.0's shared code (garbage collected at once, against a rare crash while idle after sleep, #490). No change in features or permissions."
+    "zh": "窗口用上了 Win顺 0.52.0 更省内存的界面零件：一个图标从五个对象变成一个，焦点框、开关的光晕、按钮尾巴上的图标这些平时看不到的部分第一次要用时才做出来；输入框的光标对齐到整像素，125% 缩放下不再看不见（#501）。Windows 内存用到 70% 以上时，闲着时照样把内存让出来；以前到 80% 就一点都不还（#500）。权限不变。",
+    "en": "Its windows use the lighter controls of WinShun 0.52.0: an icon is one object instead of five, and parts hardly ever shown (focus rings, a switch's glow, a button's trailing icon) are made the first time they are wanted; the caret of its text fields sits on a whole pixel, so it shows at 125 % (#501). With 70 % or more of the memory in use it gives its memory back while idle all the same; from 80 % it used to give nothing back (#500). Permissions unchanged."
   }
 }
