@@ -2,10 +2,10 @@
   "id": "winshun.semantic",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.2.1",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.2.1/winshun.semantic-1.2.1.wsplugin",
-  "sha256": "63e2a609e8e88dd058e612d1ab7d2637425bc16e3f5bc1bf8a02333a7d078abb",
-  "size": 320104,
+  "version": "1.2.2",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.semantic-v1.2.2/winshun.semantic-1.2.2.wsplugin",
+  "sha256": "bbc40ace5947be8d4e9aa8d4111dd896b3a909b8d245aa8ee96c9b0a69e71534",
+  "size": 321872,
   "name": {
     "zh": "按意思找",
     "en": "Search by meaning"
@@ -30,10 +30,10 @@
     "program": "WinShunSemantic.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-28T04:31:00Z",
+  "releaseDate": "2026-11-28T10:10:29Z",
   "dateAdded": "2026-11-01T08:10:33Z",
   "notes": {
-    "zh": "闲着时 Windows 内存用到 70% 以上，只留下一小部分（比上次让出后多出 32 MB 以内，够每次查询读的索引用），其余让出；以前到 80% 就一点都不还，几百 MB 的数据会在内存最紧的时候一直占着（#500）。权限不变。",
-    "en": "While idle with 70 % or more of the memory in use, it keeps only a small working set (up to 32 MB over what stayed after the last time, enough for the index every query reads) and gives the rest back; from 80 % it used to give nothing back, holding hundreds of MB just when the memory was wanted (#500). Permissions unchanged."
+    "zh": "每种模型服务只用卡片上为它列出的几项，各家云服务各存各的密钥（硅基流动、阿里云百炼、OpenAI、自定义；原来那个共用的密钥在没单独填时照样用），切换服务不会把这家的密钥发给那家。本地模型不再读共用的接口地址：以前留着别家的地址时请求会发到那里、报 401，现在总是连本机；它用的模型由本地模型插件决定。Win顺 0.53.0 起卡片只显示所选服务要填的几项，旧版本照旧全部显示。权限不变。",
+    "en": "Each model service reads only the fields its card lists, and each cloud service keeps its own key (SiliconFlow, Bailian, OpenAI, custom; the shared key still serves one without its own), so switching never sends one service's key to another. The local model no longer reads the shared endpoint: an address left there from another service sent its requests there (401); it now always stays on this PC, with the model the Local models plugin gives. From WinShun 0.53.0 the card shows only what the chosen service needs; older versions show every field as before. Permissions unchanged."
   }
 }

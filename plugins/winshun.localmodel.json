@@ -2,10 +2,10 @@
   "id": "winshun.localmodel",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.0.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.localmodel-v1.0.0/winshun.localmodel-1.0.0.wsplugin",
-  "sha256": "6509a560f8dd2c7efec7d427b5ea96f7a9aaa5a8de681b1583eba92497330ca7",
-  "size": 33519473,
+  "version": "1.0.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.localmodel-v1.0.1/winshun.localmodel-1.0.1.wsplugin",
+  "sha256": "a3b4d36ae813aae647917546be9f9fa56e0179c4e59b0f07f0fc73048a739c18",
+  "size": 33519560,
   "name": {
     "zh": "本地模型",
     "en": "Local models"
@@ -32,10 +32,10 @@
     "program": "WinShunLocalModel.exe"
   },
   "minWinShun": "0.49.0",
-  "releaseDate": "2026-11-26T06:49:27Z",
+  "releaseDate": "2026-11-28T10:10:42Z",
   "dateAdded": "2026-11-26T06:50:21Z",
   "notes": {
-    "zh": "新插件：在这台电脑上运行 AI 模型，断网也能用。在卡片上一键下载推荐的模型（Qwen3.5 2B，或只做翻译的 HY-MT1.5 1.8B；从 ModelScope 下载，可续传，下完核对 SHA-256），也可以选自己的 .gguf 文件。“翻译”和“按意思找”把服务选成“本地模型（离线）”就在本机完成，内容不出电脑；按意思找另需下载嵌入模型（Qwen3-Embedding 0.6B）。有显卡用显卡（Vulkan），没有用 CPU；5 分钟不用自动释放内存。需要 Win顺 0.49.0。权限：启动程序、联网（下载模型）、只在本机监听 TCP 39281、读取你选的模型文件。",
-    "en": "New plugin: runs an AI model on this computer, with no network needed. Download a recommended model on its card (Qwen3.5 2B, or the translation-only HY-MT1.5 1.8B; from ModelScope, resumable, SHA-256 checked) or pick a .gguf file of your own. Set the service of Translate or Search by meaning to Local model (offline) and the work is done on this PC; Search by meaning also needs the embedding model (Qwen3-Embedding 0.6B). The GPU when there is one (Vulkan), else the CPU; the memory is freed after 5 minutes unused. Needs WinShun 0.49.0. Permissions: starting programs, network (model downloads), listening on TCP 39281 for this computer only, reading the model files you choose."
+    "zh": "“本机接口端口”的说明写明：翻译和按意思找只连默认的 39281，改了端口它们就用不上本地模型。程序没有变化，权限不变。",
+    "en": "The Local API port's hint now says that Translate and Search by meaning use only the default 39281, so another port leaves them without the local model. The program is unchanged; permissions unchanged."
   }
 }

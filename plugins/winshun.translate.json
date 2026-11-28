@@ -2,10 +2,10 @@
   "id": "winshun.translate",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.4.0",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.4.0/winshun.translate-2.4.0.wsplugin",
-  "sha256": "9057f51bc097582eaa7a08c31fcaf3ff26322d3a30c904a92c5a614470fbbe6a",
-  "size": 233811,
+  "version": "2.4.1",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.translate-v2.4.1/winshun.translate-2.4.1.wsplugin",
+  "sha256": "3fc9bdf1cf68c45806ac33b988f6931a832c09476ac71297caf902879fcd3c5e",
+  "size": 234098,
   "name": {
     "zh": "翻译",
     "en": "Translate"
@@ -31,10 +31,10 @@
     "program": "WinShunTranslate.exe"
   },
   "minWinShun": "0.17.0",
-  "releaseDate": "2026-11-27T09:49:42Z",
+  "releaseDate": "2026-11-28T10:10:22Z",
   "dateAdded": "2026-10-23T09:12:43Z",
   "notes": {
-    "zh": "卡片上新增“测试连接”按钮（#495，要 Win顺 0.46.0 或更新）：选好服务、填好密钥后点一下，把一个单词 hello 发给所选服务翻译，连上了显示“连接正常”和用时，连不上显示服务给出的原因（密钥不对、模型不存在、本机的模型服务没启动等）。权限不变。",
-    "en": "A Test connection button on the card (#495, WinShun 0.46.0 or later): with a service and key set, it sends the single word hello to be translated and shows 连接正常 and how long it took, or the reason the service gave (a wrong key, no such model, the local model server not running). Permissions unchanged."
+    "zh": "每种翻译服务只用卡片上为它列出的几项：接口地址只给“OpenAI 兼容”用（预设的几家和微软用官方地址），模型只给大模型服务，区域只给微软；本地模型不发密钥。以前所有服务共用一个接口地址，留着别家的地址时选“本地模型”，请求会发到那里、报 401，现在本地模型总是连本机 127.0.0.1:39281。Win顺 0.53.0 起卡片只显示所选服务要填的几项，旧版本照旧全部显示。权限不变。",
+    "en": "Each service reads only the fields its card lists: the endpoint is OpenAI-compatible's alone (the presets and Microsoft use their official addresses), the model is for the chat services, the region for Microsoft; the local model sends no key. All services used to share one endpoint field, and an address left there from another service sent the local model's requests there (401); the local model now always uses 127.0.0.1:39281. From WinShun 0.53.0 the card shows only what the chosen service needs; older versions show every field as before. Permissions unchanged."
   }
 }

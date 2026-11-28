@@ -2,10 +2,10 @@
   "id": "winshun.gestures",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "2.2.2",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.2.2/winshun.gestures-2.2.2.wsplugin",
-  "sha256": "f5a3e91a698bd16374afd372c888af6501901ca3daff15feb3a074d70034c501",
-  "size": 1516514,
+  "version": "2.3.0",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.gestures-v2.3.0/winshun.gestures-2.3.0.wsplugin",
+  "sha256": "2953ef1e16df76733f497565f35eaaf42ab9a9dbc74c132457bcfa6224d57e94",
+  "size": 1526997,
   "name": {
     "zh": "鼠标手势",
     "en": "Mouse gestures"
@@ -34,10 +34,10 @@
     "program": "WinShunGestures.exe"
   },
   "minWinShun": "0.41.0",
-  "releaseDate": "2026-11-28T04:30:39Z",
+  "releaseDate": "2026-11-28T10:10:14Z",
   "dateAdded": "2026-11-18T02:57:12Z",
   "notes": {
-    "zh": "窗口用上了 Win顺 0.52.0 更省内存的界面零件：一个图标从五个对象变成一个，焦点框、开关的光晕、按钮尾巴上的图标这些平时看不到的部分第一次要用时才做出来；输入框的光标对齐到整像素，125% 缩放下不再看不见（#501）。Windows 内存用到 70% 以上时，闲着时照样把内存让出来；以前到 80% 就一点都不还（#500）。权限不变。",
-    "en": "Its windows use the lighter controls of WinShun 0.52.0: an icon is one object instead of five, and parts hardly ever shown (focus rings, a switch's glow, a button's trailing icon) are made the first time they are wanted; the caret of its text fields sits on a whole pixel, so it shows at 125 % (#501). With 70 % or more of the memory in use it gives its memory back while idle all the same; from 80 % it used to give nothing back (#500). Permissions unchanged."
+    "zh": "手势设成 `Ctrl+↑`、`Shift+↑` 这类组合键时，WPS 里只当成按了方向键：Ctrl、Shift 按下和松开几乎在同一瞬间，WPS 检查时它们已经松开了。现在组合键先全部按下，停 40 毫秒再松开，WPS 和别的程序里都正常（#472）。\n\n每个手势可以写自己的提示文字（#472）：在设置窗口里点动作，弹出面板最下面的“提示文字”里写上“上移段落”这样的话，画手势时轨迹旁就显示它，列表里这一行也用它当标题；不填还是显示动作本身。触发角、摩擦边、快捷键的提示也一样；关机这类先倒数的动作，倒数卡片上照旧写实际要做的事。设快捷键时不再收小键盘的键。权限不变。",
+    "en": "A gesture set to `Ctrl+Up` or `Shift+Up` only moved the caret in WPS: Ctrl or Shift went down and up at once, and WPS looked after they were up. Every key of a combination now goes down first and up 40 ms later, in WPS and everywhere else (#472).\n\nA gesture can have hint text of its own (#472): click its action in the settings window and write, say, \"Move paragraph up\" in 提示文字 at the bottom of the panel; the hint by the trail shows it and the gesture's row takes it as its title, or the action's name when left empty. Hot corners, rubbed edges and shortcuts too; the countdown card of shut down and the like still says what it will do. Hotkeys no longer take a number-pad key. Permissions unchanged."
   }
 }

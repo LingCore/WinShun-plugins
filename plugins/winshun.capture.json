@@ -2,10 +2,10 @@
   "id": "winshun.capture",
   "repo": "LingCore/WinShun-plugins",
   "autoUpdate": false,
-  "version": "1.1.42",
-  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.42/winshun.capture-1.1.42.wsplugin",
-  "sha256": "894b81c40fb19578ebf3b0712844fb30252c22c5d21eb6190737f8fd7786e22d",
-  "size": 11354783,
+  "version": "1.1.43",
+  "url": "https://github.com/LingCore/WinShun-plugins/releases/download/winshun.capture-v1.1.43/winshun.capture-1.1.43.wsplugin",
+  "sha256": "687f460d6bac064340005499022d77bfdea26c8a4104252f38ae910fd2d728f6",
+  "size": 11354821,
   "name": {
     "zh": "截图与录屏",
     "en": "Screenshot and recording"
@@ -34,10 +34,10 @@
     "program": "WinShunCapture.exe"
   },
   "minWinShun": "0.18.0",
-  "releaseDate": "2026-11-28T04:30:30Z",
+  "releaseDate": "2026-11-28T10:09:56Z",
   "dateAdded": "2026-11-01T08:10:30Z",
   "notes": {
-    "zh": "截图插件闲着时，Windows 内存用到 70% 以上也让出内存，只留常用的部分；以前到 80% 就一点都不还，开着大型软件时几百 MB 的图片一直占着（#500）。截图设置等窗口用上了 Win顺 0.52.0 更省内存的界面零件（一个图标从五个对象变成一个，平时看不到的部分要用时才做出来），输入框的光标对齐到整像素（#501）。权限不变。",
-    "en": "While idle with 70 % or more of the memory in use, the screenshot plugin gives memory back, keeping only its hot pages; from 80 % it used to give nothing back and kept hundreds of MB of pictures while a large program ran (#500). Its windows use the lighter controls of WinShun 0.52.0 (an icon is one object instead of five, parts hardly ever shown made when wanted), and the caret of its text fields sits on a whole pixel (#501). Permissions unchanged."
+    "zh": "设快捷键时不再收小键盘的键：以前按小键盘的 `0` 会录成主键盘的 `0`，按下去却不对，现在提示换一个键。截图设置里输入框的“清空”按钮有了英文。权限不变。",
+    "en": "Hotkeys no longer take a number-pad key: one used to be recorded as the main row's key and then did not fire; the recorder now asks for another. The Clear button of its text fields is translated in English. Permissions unchanged."
   }
 }
